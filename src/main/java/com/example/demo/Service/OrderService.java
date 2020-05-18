@@ -25,8 +25,8 @@ public class OrderService {
         Order order = new Order();
         long nights = getNights(co.getStartDate(), co.getEndDate());
         String season = getSeason(co.getStartDate());
-        int priceNightly = calculatePrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
-        double price = calculatePrice(season, priceNightly, nights);
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+        double price = getSeasonalPrice(season, priceNightly);
     }
 
     public long getNights(String startDate, String endDate){
@@ -52,7 +52,7 @@ public class OrderService {
         }
     }
 
-    public double getSeasonalPrice(String season, double priceNightly, long nights){
+    public double getSeasonalPrice(String season, double priceNightly){
         if (season.equalsIgnoreCase("low")){
             return priceNightly;
         } else if (season.equalsIgnoreCase("middle")){
@@ -73,7 +73,7 @@ public class OrderService {
 
     }
 
-    public double getFullPrice(double extras, double deposit, double seasonalPrice){
-
+    public double getFullPrice(double extras, double deposit, double seasonalPrice, long nights){
+        return (seasonalPrice * nights) + extras + deposit;
     }
 }
