@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>NRM: Create Order</title>
+</head>
+<body>
+    <form id="create-customer-form" th:action="@{/createOrder}" method="post">
+        <table>
+            <tr> <!-- TODO få 'for' til at virke i label -->
+                <td><label>Name: </label></td>
+                <td><input type="text" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td><input type="text" id="last-name" name="lastName" placeholder="Efternavn"></td>
+            </tr>
+            <tr>
+                <td><label>Adresse: </label></td>
+                <!-- TODO Opsæt adresse i flere felter-->
+                <td><input type="text" id="address" name="address" placeholder="Adresse"></td>
+            </tr>
+            <tr>
+                <td><label>Telefon:</label></td>
+                <td><input type="text" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td><label>E-mail: </label></td>
+                <td><input type="text" id="email" name="email" placeholder="E-mail"></td>
+            </tr>
+            <tr>
+                <td><label>Kort information: </label></td>
+                <!-- TODO Del op ift. tal og sådan-->
+                <td><input type="text" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+            </tr>
+<!--            <tr></tr>-->
+<!--            <tr> &lt;!&ndash; TODO Lav dropdown menuer &ndash;&gt;-->
+<!--                <td><label>Motorhome ID: </label></td>-->
+<!--                <td><input type="text" id="motorhome-id" name="motorhomeId" placeholder="Motorhome ID"></td>-->
+<!--                <td><label>Kunde ID: </label></td>-->
+<!--                <td><input type="text" id="customer-id" name="customerId" placeholder="Kunde ID"></td>-->
+<!--                <td><label>Extra ID: </label></td>-->
+<!--                <td><input type="text" id="extra-id" name="extraId" place="Extras ID"></td>-->
+<!--                <td><label>Pickup: </label></td>-->
+<!--                <td><input type="text" id="pick-up" name="pickup"></td>-->
+<!--            </tr>-->
+        </table>
+    </form>
+    <input type="submit" name="new-order" id="new-order-submit" value="CREATE" form="create-customer-form">
+</body>
+</html>
