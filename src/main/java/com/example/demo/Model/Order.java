@@ -11,6 +11,9 @@ public class Order {
     private int nights;
     private int deposit;
 
+    public Order() {
+    }
+
     public Order(int id, int customerId, int extraId, String pickup, String dropoff, String startDate, String endDate, int nights, int deposit) {
         this.id = id;
         this.customerId = customerId;

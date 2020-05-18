@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.DBManager.TestException;
+import com.example.demo.Model.Customer;
+import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,11 +20,6 @@ public class HomeController {
     @GetMapping("/")
     public String index(){
         return "index";
-    }
-
-    @GetMapping("/create-order")
-    public String createOrder(ModelMap model){
-        return "create-order";
     }
 
     //TEST / EXAMPLE

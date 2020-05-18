@@ -5,11 +5,11 @@
     <title>NRM: Create Order</title>
 </head>
 <body>
-    <form id="create-customer-form" th:action="@{/createOrder}" method="post">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
         <table>
             <tr> <!-- TODO få 'for' til at virke i label -->
                 <td><label>Name: </label></td>
-                <td><input type="text" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td><input type="text" id="first-name" th:value="" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
                 <td><input type="text" id="last-name" name="lastName" placeholder="Efternavn"></td>
             </tr>
             <tr>
@@ -28,17 +28,27 @@
                 <!-- TODO Del op ift. tal og sådan-->
                 <td><input type="text" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
             </tr>
-<!--            <tr></tr>-->
-<!--            <tr> &lt;!&ndash; TODO Lav dropdown menuer &ndash;&gt;-->
-<!--                <td><label>Motorhome ID: </label></td>-->
-<!--                <td><input type="text" id="motorhome-id" name="motorhomeId" placeholder="Motorhome ID"></td>-->
-<!--                <td><label>Kunde ID: </label></td>-->
-<!--                <td><input type="text" id="customer-id" name="customerId" placeholder="Kunde ID"></td>-->
-<!--                <td><label>Extra ID: </label></td>-->
-<!--                <td><input type="text" id="extra-id" name="extraId" place="Extras ID"></td>-->
-<!--                <td><label>Pickup: </label></td>-->
-<!--                <td><input type="text" id="pick-up" name="pickup"></td>-->
-<!--            </tr>-->
+            <tr></tr>
+            <tr> <!-- TODO Lav dropdown menuer -->
+                <td><label>Motorhome ID: </label></td>
+                <td><input type="text" id="motorhome-id" name="motorhomeId" placeholder="Motorhome ID"></td>
+                <td><label>Kunde ID: </label></td>
+                <td><input type="text" id="customer-id" name="customerId" placeholder="Kunde ID"></td>
+                <td><label>Extra ID: </label></td>
+                <td><input type="text" id="extra-id" name="extraId" place="Extras ID"></td>
+            </tr>
+            <tr>
+                <td><label>Pickup: </label></td>
+                <td><input type="text" id="pick-up" name="pickup"></td>
+                <td><label>Dropoff: </label></td>
+                <td><input type="text" id="drop-off" name="dropoff"></td>
+            </tr>
+            <tr>
+                <td><label>Startdato: </label></td>
+                <td><input type="text" id="start-date" name="startDate"></td>
+                <td><label>Slutdato:</label></td>
+                <td><input type="text" id="end-date" name="endDate"></td>
+            </tr>
         </table>
     </form>
     <input type="submit" name="new-order" id="new-order-submit" value="CREATE" form="create-customer-form">
