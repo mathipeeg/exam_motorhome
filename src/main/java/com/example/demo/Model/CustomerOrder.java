@@ -8,15 +8,25 @@ public class CustomerOrder {
     private String address;
     private int cardInfo;
     private int motorhomeId;
-    private int extraId;
     private String pickup;
     private String dropoff;
     private String startDate;
     private String endDate;
-    private int nights;
-    private int deposit;
+    private String existingEmail;
 
-    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, int extraId, String pickup, String dropoff, String startDate, String endDate, int nights, int deposit) {
+    public CustomerOrder() {
+    }
+
+    public CustomerOrder(int motorhomeId, String pickup, String dropoff, String startDate, String endDate, String existingEmail) {
+        this.motorhomeId = motorhomeId;
+        this.pickup = pickup;
+        this.dropoff = dropoff;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.existingEmail = existingEmail;
+    }
+
+    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, String pickup, String dropoff, String startDate, String endDate, String existingEmail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
@@ -24,13 +34,11 @@ public class CustomerOrder {
         this.address = address;
         this.cardInfo = cardInfo;
         this.motorhomeId = motorhomeId;
-        this.extraId = extraId;
         this.pickup = pickup;
         this.dropoff = dropoff;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.nights = nights;
-        this.deposit = deposit;
+        this.existingEmail = existingEmail;
     }
 
     public String getFirstName() {
@@ -81,14 +89,6 @@ public class CustomerOrder {
         this.cardInfo = cardInfo;
     }
 
-    public int getExtraId() {
-        return extraId;
-    }
-
-    public void setExtraId(int extraId) {
-        this.extraId = extraId;
-    }
-
     public String getPickup() {
         return pickup;
     }
@@ -121,27 +121,19 @@ public class CustomerOrder {
         this.endDate = endDate;
     }
 
-    public int getNights() {
-        return nights;
-    }
-
-    public void setNights(int nights) {
-        this.nights = nights;
-    }
-
-    public int getDeposit() {
-        return deposit;
-    }
-
-    public void setDeposit(int deposit) {
-        this.deposit = deposit;
-    }
-
     public int getMotorhomeId() {
         return motorhomeId;
     }
 
     public void setMotorhomeId(int motorhomeId) {
         this.motorhomeId = motorhomeId;
+    }
+
+    public String getExistingEmail() {
+        return existingEmail;
+    }
+
+    public void setExistingEmail(String existingEmail) {
+        this.existingEmail = existingEmail;
     }
 }

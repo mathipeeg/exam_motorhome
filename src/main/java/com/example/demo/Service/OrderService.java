@@ -1,32 +1,47 @@
 package com.example.demo.Service;
 
-import com.example.demo.DBManager.TestException;
+import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Order;
+import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.stereotype.Service;
+import java.time.temporal.ChronoUnit;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
 
-    public void submitOrder(CustomerOrder co) throws TestException {
-        Customer customer = new Customer();
+    public void submitOrder(CustomerOrder co) throws OrderException {
         Order order = new Order();
-        long nights = getNights(co.getStartDate(), co.getEndDate());
+        int customerId;
+        if(!co.getExistingEmail().contains("@")){
+            orderRepository.newCustomer(co);
+            customerId = orderRepository.getLastCustomerId();
+        } else {
+            customerId = orderRepository.getCustomer(co.getExistingEmail()).getId();
+        }
+        int nights = (int)getNights(co.getStartDate(), co.getEndDate());
         String season = getSeason(co.getStartDate());
-        int priceNightly = calculatePrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
-        double price = calculatePrice(season, priceNightly, nights);
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice(), nights);
+        order.setMotorhomeId(orderRepository.getMotorhome(co.getMotorhomeId()).getId());
+        order.setCustomerId(customerId);
+        order.setPickup(co.getPickup());
+        order.setDropoff(co.getDropoff());
+        order.setStartDate(co.getStartDate());
+        order.setEndDate(co.getEndDate());
+        order.setNights(nights);
+        order.setDeposit(priceNightly * 2);
+        orderRepository.newOrder(order);
+
+        double price = getSeasonalPrice(season, priceNightly, nights);
     }
 
     public long getNights(String startDate, String endDate){
@@ -34,7 +49,7 @@ public class OrderService {
 
         LocalDate date1 = LocalDate.parse(startDate, dtf);
         LocalDate date2 = LocalDate.parse(endDate, dtf);
-        long nights = Duration.between(date1, date2).toDays();
+        long nights = ChronoUnit.DAYS.between(date1, date2);
         System.out.println("Nights: " + nights);
         return nights;
     }
@@ -65,15 +80,23 @@ public class OrderService {
         }
     }
 
-    public double getDeposit(double seasonalPrice){
+//    public double getDeposit(double seasonalPrice){
+//
+//    }
+//
+//    public double getExtras(){
+//
+//    }
+//
+//    public double getFullPrice(double extras, double deposit, double seasonalPrice){
+//
+//    }
 
-    }
-
-    public double getExtras(){
-
-    }
-
-    public double getFullPrice(double extras, double deposit, double seasonalPrice){
-
+    public void addExtra(int extraId) throws OrderException {
+        OrderExtras orderExtras = new OrderExtras();
+        orderExtras.setExtraId(extraId);
+        System.out.println(orderRepository.getLastOrderId());
+        orderExtras.setOrderId(orderRepository.getLastOrderId());
+        orderRepository.addExtra(orderExtras);
     }
 }

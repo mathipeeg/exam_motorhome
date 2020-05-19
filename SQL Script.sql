@@ -42,7 +42,6 @@ create table `order`
 	id int auto_increment,
 	motorhome_id int not null,
 	customer_id int not null,
-	extra_id int not null,
 	pickup varchar(254) not null,
 	dropoff varchar(254) not null,
 	start_date varchar(254) not null,
@@ -76,6 +75,19 @@ create table staff
 		primary key (id)
 );
 
+create table order_extras
+(
+	id int auto_increment,
+	extra_id int not null,
+	order_id int not null,
+	constraint order_extras_pk
+		primary key (id),
+	constraint order_extras_extras_fk
+		foreign key (extra_id) references extras (id),
+	constraint order_extras_order_fk
+		foreign key (order_id) references `order` (id)
+);
+
 alter table motorhome
 	add constraint motorhome_brand_fk
 		foreign key (brand_id) references brand (id);
@@ -88,9 +100,6 @@ alter table `order`
 	add constraint order_customer_fk
 		foreign key (customer_id) references customer (id);
 
-alter table `order`
-	add constraint order_extras_fk
-		foreign key (extra_id) references extras (id);
         
 INSERT INTO staff VALUES (default, 'Jens', 'Jensen', 27819283, 'Jens@NordicRental.dk', 'Jensensvej 123, 2800 Lyngby', 'admin', 'JENS123');
 INSERT INTO staff VALUES (default, 'Hans', 'Hansen', 99887766, 'Hans@NordicRental.dk', 'Hansensvej 987, 2800 Lyngby', 'sales', 'HANS123');

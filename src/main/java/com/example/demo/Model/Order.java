@@ -2,22 +2,22 @@ package com.example.demo.Model;
 
 public class Order {
     private int id;
+    private int motorhomeId;
     private int customerId;
-    private int extraId;
     private String pickup;
     private String dropoff;
     private String startDate;
     private String endDate;
     private int nights;
-    private int deposit;
+    private double deposit;
 
     public Order() {
     }
 
-    public Order(int id, int customerId, int extraId, String pickup, String dropoff, String startDate, String endDate, int nights, int deposit) {
+    public Order(int id, int motorhomeId, int customerId, String pickup, String dropoff, String startDate, String endDate, int nights, double deposit) {
         this.id = id;
+        this.motorhomeId = motorhomeId;
         this.customerId = customerId;
-        this.extraId = extraId;
         this.pickup = pickup;
         this.dropoff = dropoff;
         this.startDate = startDate;
@@ -34,20 +34,20 @@ public class Order {
         this.id = id;
     }
 
+    public int getMotorhomeId() {
+        return motorhomeId;
+    }
+
+    public void setMotorhomeId(int motorhomeId) {
+        this.motorhomeId = motorhomeId;
+    }
+
     public int getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
-    }
-
-    public int getExtraId() {
-        return extraId;
-    }
-
-    public void setExtraId(int extraId) {
-        this.extraId = extraId;
     }
 
     public String getPickup() {
@@ -90,11 +90,11 @@ public class Order {
         this.nights = nights;
     }
 
-    public int getDeposit() {
+    public double getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(int deposit) {
+    public void setDeposit(double deposit) {
         this.deposit = deposit;
     }
 }

@@ -1,9 +1,5 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DBManager.TestException;
-import com.example.demo.Model.Customer;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +10,6 @@ import com.example.demo.Service.*;
 
 @Controller
 public class HomeController {
-
-    testService testS = new testService();
 
     @GetMapping("/")
     public String index(){

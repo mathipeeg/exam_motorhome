@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>NRM: Add Extras</title>
+</head>
+<script>
+    function getExtras() {
+        var extras = document.getElementsByName("extras");
+        //var extraId = document.getElementsByName("extras").id;
+        for (var i = 0; i < extras.length; i++) {
+            if (extras[i].id === "check" && extras[i].checked) {
+                addExtras(extras[i].value)
+            }
+        }
+        console.log("hej :3")
+        window.location.href = "http://localhost:8080/order-submitted";
+    }
+
+    function addExtras(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/addExtra?extraId="+id, true);
+        xhttp.send();
+    }
+</script>
+<body>
+    <table>
+        <tr th:each="extra : ${extras}">
+            <td><input type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}">
+            <label for="extras" th:text="${extra.description}"></label></td>
+        </tr>
+        <button onclick="getExtras()" id="add-extras">Add extras</button>
+    </table>
+</body>
+</html>

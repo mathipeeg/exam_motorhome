@@ -4,53 +4,70 @@
     <meta charset="UTF-8">
     <title>NRM: Create Order</title>
 </head>
+<script>
+    function Submit (){
+        document.getElementById("telephone").value = -1;
+        document.getElementById("card-info").value = -1;
+        document.getElementById("create-customer-form").submit();
+    }
+
+</script>
 <body>
+<div id="create-customer-div">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
-        <table>
+        <table> <!--todo HVORFOR VIL DEN HAVE ALLE VÆRDIERNE GODDAMMIT-->
             <tr> <!-- TODO få 'for' til at virke i label -->
-                <td><label>Name: </label></td>
-                <td><input type="text" id="first-name" th:value="" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td><label for="first-name">Fornavn: </label></td>
+                <td><input type="text" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td><label for="last-name">Efternavn: </label></td>
                 <td><input type="text" id="last-name" name="lastName" placeholder="Efternavn"></td>
             </tr>
             <tr>
-                <td><label>Adresse: </label></td>
+                <td><label for="address">Adresse: </label></td>
                 <!-- TODO Opsæt adresse i flere felter-->
                 <td><input type="text" id="address" name="address" placeholder="Adresse"></td>
             </tr>
             <tr>
-                <td><label>Telefon:</label></td>
-                <td><input type="text" id="telephone" name="telephone" placeholder="Telefonnr."></td>
-                <td><label>E-mail: </label></td>
+                <td><label for="telephone">Telefon:</label></td>
+                <td><input type="number" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td><label for="email">E-mail: </label></td>
                 <td><input type="text" id="email" name="email" placeholder="E-mail"></td>
             </tr>
             <tr>
-                <td><label>Kort information: </label></td>
+                <td><label for="card-info">Kort information: </label></td>
                 <!-- TODO Del op ift. tal og sådan-->
-                <td><input type="text" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-            </tr>
-            <tr></tr>
+                <td><input type="number" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+            </tr> <!--todo to / en form? -->
             <tr> <!-- TODO Lav dropdown menuer -->
-                <td><label>Motorhome ID: </label></td>
-                <td><input type="text" id="motorhome-id" name="motorhomeId" placeholder="Motorhome ID"></td>
-                <td><label>Kunde ID: </label></td>
-                <td><input type="text" id="customer-id" name="customerId" placeholder="Kunde ID"></td>
-                <td><label>Extra ID: </label></td>
-                <td><input type="text" id="extra-id" name="extraId" place="Extras ID"></td>
+                <td id="existing-email-td"><label for="existing-email">Kundes e-mail: </label></td>
+                <td><input type="text" id="existing-email" name="existingEmail" placeholder="Kundes E-mail"></td>
             </tr>
             <tr>
-                <td><label>Pickup: </label></td>
-                <td><input type="text" id="pick-up" name="pickup"></td>
-                <td><label>Dropoff: </label></td>
+                <td><label for="motorhome-id">Motorhome ID: </label></td>
+                <td><input type="number" id="motorhome-id" name="motorhomeId" placeholder="Motorhome ID"></td>
+            </tr>
+            <tr>
+                <td><label for="pick-up">Pickup: </label></td>
+                <td><input type="text" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
+                <td><label for="drop-off">Dropoff: </label></td>
                 <td><input type="text" id="drop-off" name="dropoff"></td>
             </tr>
             <tr>
-                <td><label>Startdato: </label></td>
+                <td><label for="start-date">Startdato: </label></td> <!--todo foreslå dato -->
                 <td><input type="text" id="start-date" name="startDate"></td>
-                <td><label>Slutdato:</label></td>
+                <td><label for="end-date">Slutdato:</label></td>
                 <td><input type="text" id="end-date" name="endDate"></td>
+            </tr>
+<!--            <tr th:each="extra : ${extras}"> &lt;!&ndash;todo remember to get extra in w/ modelattribute (make sure it's extras, NOT order_extras) &ndash;&gt;-->
+<!--                <td><input type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}">-->
+<!--                <label for="extras" th:text="${extra.description}"></label></td>-->
+<!--            </tr>-->
+            <tr>
+<!--                <td><button onclick="getExtras()" id="add-extras">Add extras</button></td>-->
+                <td><button onclick="Submit()">CREATE</button></td>
             </tr>
         </table>
     </form>
-    <input type="submit" name="new-order" id="new-order-submit" value="CREATE" form="create-customer-form">
+</div>
 </body>
 </html>
