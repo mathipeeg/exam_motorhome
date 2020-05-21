@@ -6,8 +6,12 @@
 </head>
 <script>
     function Submit (){
-        document.getElementById("telephone").value = -1;
-        document.getElementById("card-info").value = -1;
+        var phone = document.getElementById("telephone").value;
+        var card = document.getElementById("card-info").value;
+        if(!document.getElementById("existing-email").value.contains("@")){
+            phone = -1;
+            card = -1;
+        }
         document.getElementById("create-customer-form").submit();
     }
 

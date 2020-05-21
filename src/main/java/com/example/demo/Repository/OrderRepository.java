@@ -6,8 +6,6 @@ import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @Repository
@@ -59,20 +57,20 @@ public class OrderRepository {
         return null;
     }
 
-    public void addExtra(OrderExtras orderExtras) throws OrderException {
+    public void addExtra(OrderExtras orderExtras) {
         try {
-            Connection connection = DBManager.getConnection();
-            String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, orderExtras.getExtraId());
-            prepStatement.setInt(2, orderExtras.getOrderId());
-            prepStatement.executeUpdate();
+        Connection connection = DBManager.getConnection();
+        String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
+        PreparedStatement prepStatement = connection.prepareStatement(sql);
+        prepStatement.setInt(1, orderExtras.getExtraId());
+        prepStatement.setInt(2, orderExtras.getOrderId());
 
-        }catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new OrderException("Student already exists");
-            }
+            prepStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
         // TODO: 19/05/2020 ÆNDR -1 TIL ORDER ID NÅR ORDREN BLIVER OPRETTET! so imppppooorrtatnt :c  
     }
 
@@ -200,6 +198,36 @@ public class OrderRepository {
             return extraArray;
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Order getOrder(int getLastOrderId) throws OrderException
+    {
+        try {
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM `order` WHERE id=?";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            prepStatement.setInt(1, getLastOrderId);
+            ResultSet rs = prepStatement.executeQuery();
+            if (rs.next()) {
+                int orderId = rs.getInt("id");
+                int motorhomeId = rs.getInt("motorhome_id");
+                int customerId = rs.getInt("customer_id");
+                String pickUp = rs.getString("pickup");
+                String dropOff = rs.getString("dropoff");
+                String startDate = rs.getString("start_date");
+                String endDate = rs.getString("end_date");
+                int nights = rs.getInt("nights");
+                int deposit = rs.getInt("deposit");
+                Order order = new Order(orderId, motorhomeId, customerId, pickUp, dropOff, startDate, endDate, nights, deposit);
+                return order;
+            }
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
+                // TODO: 18/05/2020 Lav ny exception
+                throw new OrderException("test exception");
+            }
         }
         return null;
     }

@@ -1,17 +1,12 @@
 package com.example.demo.Service;
 
 import com.example.demo.DBManager.OrderException;
-import com.example.demo.Model.Customer;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Order;
-import com.example.demo.Model.OrderExtras;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -98,4 +93,11 @@ public class OrderService {
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
+
+//    public void addReceipt(int receiptId) throws OrderException {
+//        OrderReceipt orderReceipt = new OrderReceipt();
+//        orderReceipt.setReceiptId(receiptId);
+//        System.out.println(orderRepository.getReceipt());
+//        orderReceipt.setReceiptId(orderRepository.getReceipt());
+//    }
 }
