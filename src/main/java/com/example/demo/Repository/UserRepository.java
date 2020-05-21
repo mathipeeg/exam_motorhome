@@ -1,9 +1,7 @@
 package com.example.demo.Repository;
 
-import com.example.demo.DBManager.DBManager;
-import com.example.demo.DBManager.CustomException;
-import com.example.demo.DBManager.LoginException;
-import com.example.demo.Model.Staff;
+import com.example.demo.DBManager.*;
+import com.example.demo.Model.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 

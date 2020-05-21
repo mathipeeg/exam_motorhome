@@ -1,7 +1,6 @@
 package com.example.demo.Repository;
 
-import com.example.demo.DBManager.DBManager;
-import com.example.demo.DBManager.CustomException;
+import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
@@ -242,29 +241,6 @@ public class OrderRepository {
                 return allMotorhomesArray;
         }catch (SQLException e){
             e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ArrayList<Brand> getBrand(){
-        ArrayList<Brand> getBrandArray = new ArrayList<>();
-
-        try{
-            Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM brand";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            ResultSet rs = prepStatement.executeQuery();
-
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                Brand brand = new Brand(id, name);
-                getBrandArray.add(brand);
-            }
-            return getBrandArray;
-        }catch (SQLException e){
-            e.printStackTrace();
-
         }
         return null;
     }

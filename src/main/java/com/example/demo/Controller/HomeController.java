@@ -42,7 +42,6 @@ public class HomeController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@ModelAttribute Staff staff, HttpServletRequest request){
-        System.out.println(staff.getPassword() + " " + staff.getEmail());
         if(loginService.checkLogin(staff)){
             HttpSession session = request.getSession();
             session.setAttribute("user", staff);

@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Service
@@ -20,8 +22,19 @@ public class LoginService {
         return userRepository.checkLogin(staff.getEmail(), staff.getPassword());
     }
 
+    public String checkCurrentUser(HttpServletRequest request, String page){
+        HttpSession session = request.getSession();
+        Staff user = (Staff) session.getAttribute("user");
+        if (user != null) {
+            return page;
+        }
+        else
+            return "login";
+    }
+
+    //Bruges én gang første gang, for at kryptere passwords,
+    //da brugere ikke bliver oprettet via hjemmesiden, men manuelt
     public void encryptPasswords(){
-        //String hashed = BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt());
         ArrayList<Staff> staffArray = userRepository.getAllStaff();
         for (Staff staff : staffArray) {
             staff.setPassword(BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt()));

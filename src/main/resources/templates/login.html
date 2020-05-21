@@ -16,13 +16,10 @@
                 if (xhr.status === 200){
                     window.location.href = "http://localhost:8080/";
                 } else{
-                    // window.location.href = "http://localhost:8080/failed-login";
-                    // console.log("lal")
                     alert("Info didn't match. Try again.")
                 }
             }
         }
-
         let form = new FormData(document.forms.namedItem("login-form"));
         form.append(email, password);
 

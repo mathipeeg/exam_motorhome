@@ -1,11 +1,11 @@
 package com.example.demo.Service;
-import com.example.demo.DBManager.CustomException;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Order;
-import com.example.demo.Model.OrderExtras;
-import com.example.demo.Repository.OrderRepository;
+import com.example.demo.DBManager.*;
+import com.example.demo.Model.*;
+import com.example.demo.Repository.*;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,19 +27,18 @@ public class OrderService {
         } else {
             customerId = orderRepository.getCustomer(co.getExistingEmail()).getId();
         }
-        int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
         String season = getSeason(dateFormat.format(co.getStartDate()));
         double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+
         order.setMotorhomeId(orderRepository.getMotorhome(co.getMotorhomeId()).getId());
         order.setCustomerId(customerId);
         order.setPickup(co.getPickup());
         order.setDropoff(co.getDropoff());
         order.setStartDate(co.getStartDate());
         order.setEndDate(co.getEndDate());
-        order.setNights(nights);
+        order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
         orderRepository.newOrder(order);
-        double price = getSeasonalPrice(season, priceNightly);
     }
 
     public double getNights(String startDate, String endDate){
@@ -93,8 +92,6 @@ public class OrderService {
     public Order getOrder(int lastOrderId) throws CustomException {
         Order order = orderRepository.getOrder(lastOrderId);
         order.setStartDate(order.getStartDate());
-
-
         return null;
     }
 }
