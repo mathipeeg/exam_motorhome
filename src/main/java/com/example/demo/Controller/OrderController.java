@@ -16,9 +16,12 @@ public class OrderController {
     OrderRepository orderRepository = new OrderRepository();
 
     @GetMapping("/create-order")
-    public String createOrder(){
+    public String createOrder(Model model){
+        model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
+        model.addAttribute("brand", orderRepository.getBrand());
         return "create-order";
     }
+
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) throws OrderException {

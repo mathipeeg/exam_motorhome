@@ -117,23 +117,25 @@ INSERT INTO brand VALUES(default, 'NorthWood');
 INSERT INTO brand VALUES(default, 'Dynamax');
 
 INSERT INTO motorhome VALUES (default, 1, 1);
-INSERT INTO motorhome VALUES (default, 2, 1);
-INSERT INTO motorhome VALUES (default, 3, 1);
 INSERT INTO motorhome VALUES (default, 1, 2);
-INSERT INTO motorhome VALUES (default, 2, 2);
-INSERT INTO motorhome VALUES (default, 3, 2);
 INSERT INTO motorhome VALUES (default, 1, 3);
+INSERT INTO motorhome VALUES (default, 2, 1);
+INSERT INTO motorhome VALUES (default, 2, 2);
 INSERT INTO motorhome VALUES (default, 2, 3);
+INSERT INTO motorhome VALUES (default, 3, 1);
+INSERT INTO motorhome VALUES (default, 3, 2);
 INSERT INTO motorhome VALUES (default, 3, 3);
-INSERT INTO motorhome VALUES (default, 1, 4);
-INSERT INTO motorhome VALUES (default, 2, 4);
-INSERT INTO motorhome VALUES (default, 3, 4);
-INSERT INTO motorhome VALUES (default, 1, 5);
-INSERT INTO motorhome VALUES (default, 2, 5);
-INSERT INTO motorhome VALUES (default, 2, 5);
+INSERT INTO motorhome VALUES (default, 4, 1);
+INSERT INTO motorhome VALUES (default, 4, 2);
+INSERT INTO motorhome VALUES (default, 4, 3);
+INSERT INTO motorhome VALUES (default, 5, 1);
+INSERT INTO motorhome VALUES (default, 5, 2);
+INSERT INTO motorhome VALUES (default, 5, 3);
 
 INSERT INTO extras VALUES (default, 'Bike rack', 25);
 INSERT INTO extras VALUES (default, 'Bed linen', 10);
 INSERT INTO extras VALUES (default, 'Chairs', 10);
 INSERT INTO extras VALUES (default, 'Child seat', 10);
 INSERT INTO extras VALUES (default, 'Picnic table', 10);
+
+alter table size change name size_name varchar(254) not null;
