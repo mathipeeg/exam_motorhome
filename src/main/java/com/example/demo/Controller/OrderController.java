@@ -1,6 +1,9 @@
 package com.example.demo.Controller;
 import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.CustomerOrder;
+import com.example.demo.Model.Extras;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.OrderExtras;
 import com.example.demo.Model.Staff;
 import com.example.demo.Repository.OrderRepository;
 import com.example.demo.Service.OrderService;
@@ -10,10 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.engine.IterationStatusVar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 @Controller
 public class OrderController {
     OrderService orderService = new OrderService();
     OrderRepository orderRepository = new OrderRepository();
+    Order order = new Order();
+
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
         model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
@@ -41,7 +47,13 @@ public class OrderController {
         return "order-submitted";
     }
     @GetMapping("/order-submitted")
-    public String orderSubmitted(){
+    public String orderSubmitted(Model model) throws OrderException
+    {
+        orderRepository.getOrder(orderRepository.getLastOrderId());
+        System.out.println(orderRepository.getLastOrderId());
+
+        model.addAttribute("order", order);
+
         return "order-submitted";
     }
 }

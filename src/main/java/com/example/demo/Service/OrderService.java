@@ -1,13 +1,12 @@
 package com.example.demo.Service;
-
 import com.example.demo.DBManager.OrderException;
+import com.example.demo.Model.*;
 import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -75,17 +74,7 @@ public class OrderService {
             return percent + priceNightly;
         }
     }
-//    public double getDeposit(double seasonalPrice){
-//
-//    }
-//
-//    public double getExtras(){
-//
-//    }
-//
-//    public double getFullPrice(double extras, double deposit, double seasonalPrice){
-//
-//    }
+
 
     public void addExtra(int extraId) throws OrderException {
         OrderExtras orderExtras = new OrderExtras();

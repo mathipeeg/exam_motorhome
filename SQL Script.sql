@@ -95,12 +95,12 @@ alter table motorhome
 alter table motorhome
 	add constraint motorhome_size_fk
 		foreign key (size_id) references size (id);
-        
+
 alter table `order`
 	add constraint order_customer_fk
 		foreign key (customer_id) references customer (id);
 
-        
+
 INSERT INTO staff VALUES (default, 'Jens', 'Jensen', 27819283, 'Jens@NordicRental.dk', 'Jensensvej 123, 2800 Lyngby', 'admin', 'JENS123');
 INSERT INTO staff VALUES (default, 'Hans', 'Hansen', 99887766, 'Hans@NordicRental.dk', 'Hansensvej 987, 2800 Lyngby', 'sales', 'HANS123');
 INSERT INTO staff VALUES (default, 'Ulla', 'Møtrik', 83746595, 'Ulla@NordicRental.dk', 'Ullaensvej 999, 2800 Lyngby', 'mechanic', 'ULLA123');
