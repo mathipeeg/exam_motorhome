@@ -4,7 +4,6 @@ import com.example.demo.DBManager.DBManager;
 import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -202,6 +201,7 @@ public class OrderRepository {
         return null;
     }
 
+
     public Order getOrder(int getLastOrderId) throws OrderException
     {
         try {
@@ -228,6 +228,54 @@ public class OrderRepository {
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
+        }
+        return null;
+    }
+
+    public ArrayList<Motorhome> getAllMotorhomes(){
+        ArrayList<Motorhome> allMotorhomesArray = new ArrayList<>();
+
+        try{
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM motorhome inner join brand on motorhome.brand_id = brand.id inner join  size on motorhome.size_id =size.id";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            ResultSet rs = prepStatement.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int brand_id = rs.getInt("brand_id");
+                int size_id = rs.getInt("size_id");
+                String brandName = rs.getString("name");
+                String sizeName = rs.getString("size_name");
+                Motorhome motorhome = new Motorhome(id, brand_id, size_id, brandName, sizeName);
+                allMotorhomesArray.add(motorhome);
+            }
+                return allMotorhomesArray;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Brand> getBrand(){
+        ArrayList<Brand> getBrandArray = new ArrayList<>();
+
+        try{
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM brand";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            ResultSet rs = prepStatement.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Brand brand = new Brand(id, name);
+                getBrandArray.add(brand);
+            }
+            return getBrandArray;
+        }catch (SQLException e){
+            e.printStackTrace();
+
         }
         return null;
     }

@@ -1,11 +1,12 @@
 package com.example.demo.Service;
-
 import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.*;
+import com.example.demo.Model.CustomerOrder;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -45,7 +46,6 @@ public class OrderService {
         LocalDate date1 = LocalDate.parse(startDate, dtf);
         LocalDate date2 = LocalDate.parse(endDate, dtf);
         long nights = ChronoUnit.DAYS.between(date1, date2);
-        System.out.println("Nights: " + nights);
         return nights;
     }
 
@@ -74,30 +74,12 @@ public class OrderService {
             return percent + priceNightly;
         }
     }
-//    public double getDeposit(double seasonalPrice){
-//
-//    }
-//
-//    public double getExtras(){
-//
-//    }
-//
-//    public double getFullPrice(double extras, double deposit, double seasonalPrice){
-//
-//    }
+
 
     public void addExtra(int extraId) throws OrderException {
         OrderExtras orderExtras = new OrderExtras();
         orderExtras.setExtraId(extraId);
-        System.out.println(orderRepository.getLastOrderId());
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
-
-//    public void addReceipt(int receiptId) throws OrderException {
-//        OrderReceipt orderReceipt = new OrderReceipt();
-//        orderReceipt.setReceiptId(receiptId);
-//        System.out.println(orderRepository.getReceipt());
-//        orderReceipt.setReceiptId(orderRepository.getReceipt());
-//    }
 }

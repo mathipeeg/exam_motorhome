@@ -132,8 +132,11 @@ INSERT INTO motorhome VALUES (default, 5, 1);
 INSERT INTO motorhome VALUES (default, 5, 2);
 INSERT INTO motorhome VALUES (default, 5, 3);
 
+
 INSERT INTO extras VALUES (default, 'Bike rack', 25);
 INSERT INTO extras VALUES (default, 'Bed linen', 10);
 INSERT INTO extras VALUES (default, 'Chairs', 10);
 INSERT INTO extras VALUES (default, 'Child seat', 10);
 INSERT INTO extras VALUES (default, 'Picnic table', 10);
+
+alter table size change name size_name varchar(254) not null;
