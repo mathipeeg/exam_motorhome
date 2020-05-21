@@ -132,6 +132,7 @@ INSERT INTO motorhome VALUES (default, 5, 1);
 INSERT INTO motorhome VALUES (default, 5, 2);
 INSERT INTO motorhome VALUES (default, 5, 3);
 
+
 INSERT INTO extras VALUES (default, 'Bike rack', 25);
 INSERT INTO extras VALUES (default, 'Bed linen', 10);
 INSERT INTO extras VALUES (default, 'Chairs', 10);

@@ -7,8 +7,12 @@
 </head>
 <script>
     function Submit (){
-        document.getElementById("telephone").value = -1;
-        document.getElementById("card-info").value = -1;
+        var phone = document.getElementById("telephone").value;
+        var card = document.getElementById("card-info").value;
+        if(!document.getElementById("existing-email").value.contains("@")){
+            phone = -1;
+            card = -1;
+        }
         document.getElementById("create-customer-form").submit();
     }
 
@@ -16,10 +20,13 @@
 <body>
 <div id="create-customer-div">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+
         <p>Kunde Information</p>
         <hr size="4">
         <table class="table-class"> <!--todo HVORFOR VIL DEN HAVE ALLE VÆRDIERNE GODDAMMIT-->
             <tr> <!-- TODO få 'for' til at virke i label -->
+
+            <tr>
                 <td><label for="first-name">Fornavn: </label></td>
                 <td><input type="text" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
                 <td><label for="last-name">Efternavn: </label></td>
@@ -40,7 +47,7 @@
                 <td><label for="card-info">Kort information: </label></td>
                 <!-- TODO Del op ift. tal og sådan-->
                 <td><input type="number" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-            </tr> <!--todo to / en form? -->
+            </tr>
             <tr> <!-- TODO Lav dropdown menuer -->
                 <td id="existing-email-td"><label for="existing-email">Kundes e-mail: </label></td>
                 <div id="kunde-email-td"><td><input type="text" id="existing-email" name="existingEmail" placeholder="Kundes E-mail"></td></div>
@@ -60,6 +67,9 @@
                 <td><input type="text" id="start-date" name="startDate"></td>
                 <td><label for="end-date">Slutdato:</label></td>
                 <td><input type="text" id="end-date" name="endDate"></td>
+            </tr>
+            <tr>
+                <td><button onclick="Submit()">CREATE</button></td>
             </tr>
         </table>
 

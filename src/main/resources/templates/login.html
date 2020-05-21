@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/stylesheet.css">
+    <title>NRM: Login</title>
+</head>
+<script>
+    function test() {
+        var xhr = new XMLHttpRequest();
+        <!-- rename here -->
+        let email = document.getElementById("test1").value
+        let password = document.getElementById("test2").value
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                <!-- remove -->
+                console.log(xhr.response);
+                if (xhr.status === 200){
+                    <!-- reroute index?? -->
+                    window.location.href = "http://localhost:8080/";
+                } else{
+                    window.location.href = "http://localhost:8080/failed-login";
+                    console.log("lal")
+                }
+            }
+        }
+
+        <!-- rename here -->
+        let t = new FormData(document.forms.namedItem("test"));
+        t.append(email, password);
+
+        <!-- remove -->
+        console.log(email);
+        console.log(password);
+
+        xhr.open('post', "http://localhost:8080/login", true);
+        xhr.send(t);
+    }
+</script>
+<body>
+    <div class="loginContainer">
+        <div th:replace="fragments/header :: header"></div>
+        <form class="center" id="test">
+            <!-- rename here -->
+            <input type="text" id="test1" name="email" placeholder="email">
+            <input type="password" id="test2" name="password" placeholder="Password">
+        </form>
+        <button onclick="test()">heyheyhey</button>
+    </div>
+</body>
+</html>

@@ -10,6 +10,9 @@ public class Staff {
     private String position;
     private String password;
 
+    public Staff() {
+    }
+
     public Staff(int id, String firstName, String lastName, int telephone, String email, String address, String position, String password) {
         this.id = id;
         this.firstName = firstName;
@@ -18,6 +21,11 @@ public class Staff {
         this.email = email;
         this.address = address;
         this.position = position;
+        this.password = password;
+    }
+
+    public Staff(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 

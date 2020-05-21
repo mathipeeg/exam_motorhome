@@ -4,10 +4,7 @@ import com.example.demo.DBManager.DBManager;
 import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @Repository
