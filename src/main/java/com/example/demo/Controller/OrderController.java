@@ -15,7 +15,8 @@ public class OrderController {
     OrderService orderService = new OrderService();
     OrderRepository orderRepository = new OrderRepository();
     @GetMapping("/create-order")
-    public String createOrder(HttpServletRequest request){
+    public String createOrder(HttpServletRequest request, Model model){
+        model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
         HttpSession session = request.getSession();
         Staff user = (Staff) session.getAttribute("user");
         if (user != null) {

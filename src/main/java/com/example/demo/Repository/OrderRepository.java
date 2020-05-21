@@ -42,7 +42,7 @@ public class OrderRepository {
             ResultSet rs = prepStatement.executeQuery();
             if(rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("size_name");
                 int price = rs.getInt("price");
                 Size size = new Size(id, name, price);
                 return size;

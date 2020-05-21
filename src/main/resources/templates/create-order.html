@@ -18,9 +18,20 @@
 
 </script>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div id="create-customer-div">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
-
+        <p>Eksisterende kunde</p>
+        <hr size="4">
+        <table id="table-øverst">
+        <tr> <!-- TODO Lav dropdown menuer -->
+            <td id="existing-email-td"><label for="existing-email"></label></td>
+            <div id="kunde-email-td"><td>
+                <input id="input-eksisterende" type="text" id="existing-email" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
+            </div>
+        </tr>
+        </table>
         <p>Kunde Information</p>
         <hr size="4">
         <table class="table-class"> <!--todo HVORFOR VIL DEN HAVE ALLE VÆRDIERNE GODDAMMIT-->
@@ -48,10 +59,6 @@
                 <!-- TODO Del op ift. tal og sådan-->
                 <td><input type="number" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
             </tr>
-            <tr> <!-- TODO Lav dropdown menuer -->
-                <td id="existing-email-td"><label for="existing-email">Kundes e-mail: </label></td>
-                <div id="kunde-email-td"><td><input type="text" id="existing-email" name="existingEmail" placeholder="Kundes E-mail"></td></div>
-            </tr>
         </table>
             <p id="p1">Teknisk information</p>
             <hr id="hr1" size="4">
@@ -68,15 +75,14 @@
                 <td><label for="end-date">Slutdato:</label></td>
                 <td><input type="text" id="end-date" name="endDate"></td>
             </tr>
-            <tr>
-                <td><button onclick="Submit()">CREATE</button></td>
-            </tr>
+
         </table>
 
 
         <div class="drop-down-motorhomes">
-            <select class="form-control" id="motorhome-id" name="motorhome-id">
-                <option value="">Motorhome type</option>
+            <label for="motorhome-id"></label>
+            <select class="form-control" id="motorhome-id" name="motorhomeId">
+               <option>Motorhome types</option>
                 <option th:each="motorhome : ${motorhomes}"
                         th:value="${motorhome.id}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"></option>
