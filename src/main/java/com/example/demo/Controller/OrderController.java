@@ -23,7 +23,6 @@ public class OrderController {
     public String createOrder(HttpServletRequest request){
         HttpSession session = request.getSession();
         Staff user = (Staff) session.getAttribute("user");
-        // Hvis bruger er logget ind, kan han/hun se secretstuff siden
         if (user != null) {
             return "create-order";
         }

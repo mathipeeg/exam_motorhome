@@ -1,0 +1,16 @@
+.header {
+    padding: 30px;
+    height: 250px;
+    text-align: center;
+    background: cadetblue;
+    color: darkslategrey;
+    font-size: 30px;
+}
+.button{
+    color: lightgrey;
+    background:cadetblue;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 12px;
+}
