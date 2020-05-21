@@ -35,6 +35,8 @@ public class HomeController {
         return "login";
     }
 
+
+
     @GetMapping("/failed-login")
     public String failedLogin(){
         return "failed-login";
@@ -51,4 +53,5 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
-}
+
+  }
