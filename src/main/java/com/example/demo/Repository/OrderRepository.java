@@ -1,7 +1,7 @@
 package com.example.demo.Repository;
 
 import com.example.demo.DBManager.DBManager;
-import com.example.demo.DBManager.OrderException;
+import com.example.demo.DBManager.CustomException;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Repository
 public class OrderRepository {
 
-    public Motorhome getMotorhome(int motorhomeId) throws OrderException {
+    public Motorhome getMotorhome(int motorhomeId) throws CustomException {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome WHERE id=?";
@@ -26,14 +26,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("Motorhome couldn't be found.");
             }
         }
         return null;
     }
 
-    public Size getSize(int sizeId) throws OrderException {
+    public Size getSize(int sizeId) throws CustomException {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM size WHERE id=?";
@@ -42,15 +41,14 @@ public class OrderRepository {
             ResultSet rs = prepStatement.executeQuery();
             if(rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("size_name");
                 int price = rs.getInt("price");
                 Size size = new Size(id, name, price);
                 return size;
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("Size can't be found.");
             }
         }
         return null;
@@ -68,12 +66,9 @@ public class OrderRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-        // TODO: 19/05/2020 ÆNDR -1 TIL ORDER ID NÅR ORDREN BLIVER OPRETTET! so imppppooorrtatnt :c  
     }
 
-    public void newCustomer(CustomerOrder co) throws OrderException {
+    public void newCustomer(CustomerOrder co) throws CustomException {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO customer VALUES(default, ?, ?, ?, ?, ?, ?)";
@@ -87,12 +82,12 @@ public class OrderRepository {
             prepStatement.executeUpdate();
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new OrderException("Woah what");
+                throw new CustomException("Woah what");
             }
         }
     }
 
-    public int getLastCustomerId() throws OrderException {
+    public int getLastCustomerId() throws CustomException {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
@@ -104,14 +99,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("Customer's ID was not found.");
             }
         }
         return -1;
     }
 
-    public int getLastOrderId() throws OrderException {
+    public int getLastOrderId() throws CustomException {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT id FROM `order` ORDER BY id DESC LIMIT 1";
@@ -123,14 +117,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("The ID for this order was not found.");
             }
         }
         return -1;
     }
 
-    public Customer getCustomer(String existingEmail) throws OrderException {
+    public Customer getCustomer(String existingEmail) throws CustomException {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE email=?";
@@ -150,14 +143,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("Customer couldn't be found.");
             }
         }
         return null;
     }
 
-    public void newOrder(Order order) throws OrderException {
+    public void newOrder(Order order) throws CustomException {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO `order` VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -166,19 +158,18 @@ public class OrderRepository {
             prepStatement.setInt(2, order.getCustomerId());
             prepStatement.setString(3, order.getPickup());
             prepStatement.setString(4, order.getDropoff());
-            prepStatement.setString(5, order.getStartDate());
-            prepStatement.setString(6, order.getEndDate());
+            prepStatement.setDate(5, new java.sql.Date(order.getStartDate().getTime()));
+            prepStatement.setDate(6, new java.sql.Date(order.getEndDate().getTime()));
             prepStatement.setInt(7, order.getNights());
             prepStatement.setDouble(8, order.getDeposit());
             prepStatement.executeUpdate();
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new OrderException("Woah what");
+                throw new CustomException("Woah what");
             }
         }
     }
 
-    // TODO: 19/05/2020 Datoer lavet til Dates og ikke String
     public ArrayList<Extras> getAllExtras() {
         ArrayList<Extras> extraArray = new ArrayList<>();
 
@@ -202,8 +193,7 @@ public class OrderRepository {
     }
 
 
-    public Order getOrder(int getLastOrderId) throws OrderException
-    {
+    public Order getOrder(int getLastOrderId) throws CustomException {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM `order` WHERE id=?";
@@ -216,8 +206,8 @@ public class OrderRepository {
                 int customerId = rs.getInt("customer_id");
                 String pickUp = rs.getString("pickup");
                 String dropOff = rs.getString("dropoff");
-                String startDate = rs.getString("start_date");
-                String endDate = rs.getString("end_date");
+                Date startDate = rs.getDate("start_date");
+                Date endDate = rs.getDate("end_date");
                 int nights = rs.getInt("nights");
                 int deposit = rs.getInt("deposit");
                 Order order = new Order(orderId, motorhomeId, customerId, pickUp, dropOff, startDate, endDate, nights, deposit);
@@ -225,8 +215,7 @@ public class OrderRepository {
             }
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
-                throw new OrderException("test exception");
+                throw new CustomException("Order couldn't be found, unfortunately. Maybe try another ID?");
             }
         }
         return null;

@@ -23,9 +23,8 @@
 
         <p>Kunde Information</p>
         <hr size="4">
-        <table class="table-class"> <!--todo HVORFOR VIL DEN HAVE ALLE VÆRDIERNE GODDAMMIT-->
-            <tr> <!-- TODO få 'for' til at virke i label -->
-
+        <table class="table-class">
+            <tr>
             <tr>
                 <td><label for="first-name">Fornavn: </label></td>
                 <td><input type="text" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
@@ -39,14 +38,14 @@
             </tr>
             <tr>
                 <td><label for="telephone">Telefon:</label></td>
-                <td><input type="number" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td><input type="number" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
                 <td><label for="email">E-mail: </label></td>
                 <td><input type="text" id="email" name="email" placeholder="E-mail"></td>
             </tr>
             <tr>
                 <td><label for="card-info">Kort information: </label></td>
                 <!-- TODO Del op ift. tal og sådan-->
-                <td><input type="number" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                <td><input type="number" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
             </tr>
             <tr> <!-- TODO Lav dropdown menuer -->
                 <td id="existing-email-td"><label for="existing-email">Kundes e-mail: </label></td>
@@ -64,22 +63,17 @@
             </tr>
             <tr>
                 <td><label for="start-date">Startdato: </label></td> <!--todo foreslå dato -->
-                <td><input type="text" id="start-date" name="startDate"></td>
+                <td><input type="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
                 <td><label for="end-date">Slutdato:</label></td>
-                <td><input type="text" id="end-date" name="endDate"></td>
-            </tr>
-            <tr>
-                <td><button onclick="Submit()">CREATE</button></td>
+                <td><input type="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
             </tr>
         </table>
-
-
         <div class="drop-down-motorhomes">
-            <select class="form-control" id="motorhome-id" name="motorhome-id">
-                <option value="">Motorhome type</option>
+            <label for="motorhome-id">Motorhome type</label>
+            <select class="form-control" id="motorhome-id" name="motorhomeId">
                 <option th:each="motorhome : ${motorhomes}"
-                        th:value="${motorhome.id}"
-                        th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"></option>
+                        th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
+                        th:value="${motorhome.id}"></option>
 
             </select>
         </div>

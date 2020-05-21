@@ -17,7 +17,6 @@ public class LoginService {
     UserRepository userRepository = new UserRepository();
 
     public boolean checkLogin(Staff staff) {
-        System.out.println(staff.getPassword());
         return userRepository.checkLogin(staff.getEmail(), staff.getPassword());
     }
 

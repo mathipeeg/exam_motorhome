@@ -1,9 +1,8 @@
 package com.example.demo.Repository;
 
 import com.example.demo.DBManager.DBManager;
-import com.example.demo.DBManager.OrderException;
-import com.example.demo.Model.Extras;
-import com.example.demo.Model.Motorhome;
+import com.example.demo.DBManager.CustomException;
+import com.example.demo.DBManager.LoginException;
 import com.example.demo.Model.Staff;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
@@ -34,11 +33,10 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
                 try {
-                    throw new OrderException("test exception");
-                } catch (OrderException orderException) {
-                    orderException.printStackTrace();
+                    throw new LoginException("Error occured. Couldn't login.");
+                } catch (LoginException loginException) {
+                    loginException.printStackTrace();
                 }
             }
         }
@@ -67,11 +65,10 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                // TODO: 18/05/2020 Lav ny exception
                 try {
-                    throw new OrderException("test exception");
-                } catch (OrderException orderException) {
-                    orderException.printStackTrace();
+                    throw new LoginException("Error occured. Couldn't find user with those credentials.");
+                } catch (LoginException loginException) {
+                    loginException.printStackTrace();
                 }
             }
         }
@@ -116,9 +113,9 @@ public class UserRepository {
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
                 try {
-                    throw new OrderException("Student idk can't be updated lmao");
-                } catch (OrderException orderException) {
-                    orderException.printStackTrace();
+                    throw new CustomException("Student idk can't be updated lmao");
+                } catch (CustomException customException) {
+                    customException.printStackTrace();
                 }
             }
         }

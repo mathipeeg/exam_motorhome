@@ -17,7 +17,7 @@ public class HomeController {
 
     LoginService loginService = new LoginService();
 
-    @GetMapping("/") // TODO: 20/05/2020 add index-HTML
+    @GetMapping("/")
     public String index(){
         return "index";
     }
@@ -47,10 +47,8 @@ public class HomeController {
             HttpSession session = request.getSession();
             session.setAttribute("user", staff);
             session.setAttribute("role", staff.getPosition());
-            System.out.println("hej");
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            System.out.println("farvel");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }

@@ -48,7 +48,7 @@ hr{
     justify-content: center;
     align-items: center;
 }
-.btn button{
+.btn button {
     margin-top: 20px;
     padding: 20px;
     width: 100%;
@@ -58,6 +58,7 @@ hr{
     background-color: white;
     cursor: pointer;
 }
+
 .btn button:hover{
     background-color: lightgreen;
     color: black;
@@ -80,12 +81,6 @@ hr{
 
 .table-class {
 }
-
-
-
-
-
-
 
 .header {
     padding: 30px;
