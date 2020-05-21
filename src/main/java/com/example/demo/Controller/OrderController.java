@@ -2,12 +2,16 @@ package com.example.demo.Controller;
 
 import com.example.demo.DBManager.OrderException;
 import com.example.demo.Model.CustomerOrder;
+import com.example.demo.Model.Staff;
 import com.example.demo.Repository.OrderRepository;
 import com.example.demo.Service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.engine.IterationStatusVar;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class OrderController {
@@ -16,8 +20,15 @@ public class OrderController {
     OrderRepository orderRepository = new OrderRepository();
 
     @GetMapping("/create-order")
-    public String createOrder(){
-        return "create-order";
+    public String createOrder(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Staff user = (Staff) session.getAttribute("user");
+        // Hvis bruger er logget ind, kan han/hun se secretstuff siden
+        if (user != null) {
+            return "create-order";
+        }
+        else
+            return"login";
     }
 
     @PostMapping("/submit-order")

@@ -1,30 +1,57 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.Staff;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.Service.*;
-// TODO: 18/05/2020 Encrypt password
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    LoginService loginService = new LoginService();
+
+    @GetMapping("/") // TODO: 20/05/2020 add index-HTML
     public String index(){
         return "index";
     }
 
-    //TEST / EXAMPLE
-//    @PostMapping("/test-create")
-//    public String testCreate(@ModelAttribute Test test) throws TestException {
-//        testS.testCreate(test);
-//        return "test-html";
-//    }
-//
-//    @GetMapping("/test-html")
-//    public String test(){
-//        return "test-html";
-//    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        session.removeAttribute("role");
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/failed-login")
+    public String failedLogin(){
+        return "failed-login";
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@ModelAttribute Staff staff, HttpServletRequest request){
+        System.out.println(staff.getPassword() + " " + staff.getEmail());
+        if(loginService.checkLogin(staff)){
+            HttpSession session = request.getSession();
+            session.setAttribute("user", staff);
+            session.setAttribute("role", staff.getPosition());
+            System.out.println("hej");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            System.out.println("farvel");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

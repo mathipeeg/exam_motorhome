@@ -1,7 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.DBManager.OrderException;
-import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
@@ -9,9 +8,7 @@ import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -50,7 +47,6 @@ public class OrderService {
         LocalDate date1 = LocalDate.parse(startDate, dtf);
         LocalDate date2 = LocalDate.parse(endDate, dtf);
         long nights = ChronoUnit.DAYS.between(date1, date2);
-        System.out.println("Nights: " + nights);
         return nights;
     }
 
@@ -94,7 +90,6 @@ public class OrderService {
     public void addExtra(int extraId) throws OrderException {
         OrderExtras orderExtras = new OrderExtras();
         orderExtras.setExtraId(extraId);
-        System.out.println(orderRepository.getLastOrderId());
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
