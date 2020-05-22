@@ -1,13 +1,19 @@
 package com.example.demo.Model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class Order {
     private int id;
     private int motorhomeId;
     private int customerId;
     private String pickup;
     private String dropoff;
-    private String startDate;
-    private String endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
     private int nights;
     private double deposit;
 
@@ -15,7 +21,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, int motorhomeId, int customerId, String pickup, String dropoff, String startDate, String endDate, int nights, double deposit) {
+    public Order(int id, int motorhomeId, int customerId, String pickup, String dropoff, Date startDate, Date endDate, int nights, double deposit) {
         this.id = id;
         this.motorhomeId = motorhomeId;
         this.customerId = customerId;
@@ -68,19 +74,19 @@ public class Order {
         this.dropoff = dropoff;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

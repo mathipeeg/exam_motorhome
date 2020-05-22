@@ -6,47 +6,59 @@
     <title>NRM: Login</title>
 </head>
 <script>
-    function test() {
+    window.onload = function () {
+        var inputs = document.getElementsByTagName("input");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener("keyup", function (event) {
+                console.log(event.key)
+                if(event.key === "Enter"){
+                    login()
+                }
+            })
+        }
+    }
+
+    function login() {
         var xhr = new XMLHttpRequest();
         <!-- rename here -->
-        var email = document.getElementById("test1").value
-        var password = document.getElementById("test2").value
+        var email = document.getElementById("login-email").value
+        var password = document.getElementById("password").value
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                <!-- remove -->
-                console.log(xhr.response);
                 if (xhr.status === 200){
-                    <!-- reroute index?? -->
-                    window.location.href = "http://localhost:8080/";
+                    window.location.href = "http://localhost:8080/create-order";
                 } else{
-                    window.location.href = "http://localhost:8080/failed-login";
-                    console.log("lal")
+                    alert("Info didn't match. Try again.")
                 }
             }
         }
-
         <!-- rename here -->
-        var t = new FormData(document.forms.namedItem("test"));
-        t.append(email, password);
+        var form = new FormData(document.forms.namedItem("login-form"));
+        form.append(email, password);
 
-        <!-- remove -->
-        console.log(email);
-        console.log(password);
 
         xhr.open('post', "http://localhost:8080/login", true);
-        xhr.send(t);
+        xhr.send(form);
     }
 </script>
 <body>
-    <div class="loginContainer">
-        <div th:replace="fragments/header :: header"></div>
-        <form class="center" id="test">
-            <!-- rename here -->
-            <input type="text" id="test1" name="email" placeholder="email">
-            <input type="password" id="test2" name="password" placeholder="Password">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="login-container">
+        <form class="center" id="login-form">
+            <input type="text" id="login-email" name="email" placeholder="email" autofocus>
+            <br>
+            <input type="password" id="password" name="password" placeholder="Password">
         </form>
-        <button onclick="test()">heyheyhey</button>
+        <button class="login-btn" onclick="login()">Login</button>
     </div>
+    <footer>
+        <div class="footer"><p>
+            <b>Nordic Rental Motorhomes</b><br>
+            Københavnsvej 334, 2600 Glostrup
+            <br> Telefon: 23 65 78 45 </br>
+            <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a>
+        </p></div>
+    </footer>
 </body>
 </html>
