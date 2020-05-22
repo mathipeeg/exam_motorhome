@@ -1,9 +1,19 @@
 package com.example.demo.Service;
+//import com.example.demo.DBManager.OrderException;
+import com.example.demo.Model.Customer;
+import com.example.demo.Model.CustomerOrder;
+import com.example.demo.Model.Order;
+import com.example.demo.Model.OrderExtras;
+import com.example.demo.Repository.OrderRepository;
+import org.springframework.stereotype.Service;
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
@@ -11,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
 
 @Service
 public class OrderService {
@@ -37,8 +48,10 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
+
         orderRepository.newOrder(order);
     }
+
 
     public double getNights(String startDate, String endDate){
         long nights = -1;
@@ -52,11 +65,13 @@ public class OrderService {
         return nights;
     }
 
+
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit)
     {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
+
 
     public String getSeason(String startDate){
         String monthAndYear = startDate.split("/")[1];
@@ -71,6 +86,7 @@ public class OrderService {
         }
     }
 
+
     public double getSeasonalPrice(String season, double priceNightly){
         if (season.equalsIgnoreCase("low")){
             return priceNightly;
@@ -81,12 +97,38 @@ public class OrderService {
         }
     }
 
+
     public void addExtra(int extraId) throws CustomException {
         OrderExtras orderExtras = new OrderExtras();
         orderExtras.setExtraId(extraId);
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
+
+
+    public double totalPrice(Order co, String string) throws CustomException
+    {
+        getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
+
+        int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
+        String season = getSeason(dateFormat.format(co.getStartDate()));
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+        double nightsTotalPrice = (nights * priceNightly);
+        double allExtraPrice = 0;
+
+        for (int i = 0; i < orderRepository.getExtraInfo(co.getId()).size() ; i++) {
+            allExtraPrice+=orderRepository.getExtraInfo(co.getId()).get(i).getPrice();
+        }
+
+        double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
+
+        if (string.equalsIgnoreCase("totalPriceAll")){
+            return totalPriceAll;
+        }else{
+            return  nightsTotalPrice;
+        }
+    }
+
 
     public Order getOrder(int lastOrderId) throws CustomException {
         Order order = orderRepository.getOrder(lastOrderId);

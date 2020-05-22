@@ -17,6 +17,7 @@ public class Order {
     private int nights;
     private double deposit;
 
+
     public Order() {
     }
 
@@ -30,6 +31,7 @@ public class Order {
         this.endDate = endDate;
         this.nights = nights;
         this.deposit = deposit;
+
     }
 
     public int getId() {
@@ -103,4 +105,6 @@ public class Order {
     public void setDeposit(double deposit) {
         this.deposit = deposit;
     }
+
+
 }

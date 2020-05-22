@@ -5,6 +5,7 @@
 
 body{
     background-color: beige;
+    padding-bottom: 200px;
 }
 
 body{
@@ -152,7 +153,7 @@ table{
 
 .login-container {
     background-color: lightblue;
-    margin: auto;
+    margin: auto auto 100px;
     width: 50%;
     padding: 20px;
     height: auto;

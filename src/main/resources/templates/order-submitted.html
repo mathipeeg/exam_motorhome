@@ -9,40 +9,72 @@
 
 <h1>ORDER IS SUBMITTED</h1>
 
-<!--    <div class="order-info-div">-->
-<!--        <table>-->
+    <div class="order-info-div">
 
-<!--            <tr>-->
-<!--                <td th:text="'Order ID: ' + ${order.id}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'MotorhomeId: ' + ${order.motorhomeId}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'CustomerId: ' + ${order.customerId}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Pickup: ' + ${order.pickup}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Dropoff: ' + ${order.dropoff}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Startdate: ' + ${order.startDate}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Enddate: ' + ${order.endDate}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Nights: ' + ${order.nights}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="'Deposit: ' + ${order.deposit} + ' £'"></td>-->
-<!--            </tr>-->
+        <table>
 
-<!--        </table>-->
-<!--    </div>-->
-
-
+            <tr>
+                <td th:text="'Order ID: ' + ${order.id}"></td>
+            </tr>
+            <tr>
+                <td th:text="'First Name: ' + ${customer.firstName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Last Name: ' + ${customer.lastName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Telephone: ' + ${customer.telephone}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Email: ' + ${customer.email}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Address: ' + ${customer.address}"></td>
+            </tr>
+            <tr>
+                <td th:text="'CardInfo: ' + ${customer.cardInfo}"></td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td th:text="'Startdate: ' + ${order.startDate}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Enddate: ' + ${order.endDate}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Nights: ' + ${order.nights}"></td>
+                <td th:text="${nightstotalprice}"></td>
+                <td th:text="${totalprice}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Deposit: ' + ${order.deposit} + ' £'"></td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td th:text="'Pickup: ' + ${order.pickup}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Dropoff: ' + ${order.dropoff}"></td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td th:text="'Brand Name: ' + ${motorhome.brandName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Size: ' + ${motorhome.sizeName}"></td>
+                <td th:text="'Size Price: ' + ${motorhome.sizePrice}"></td>
+            </tr>
+            <tr th:each="orderextras : ${orderextra}">
+                <td th:text="'Extras: ' + ${orderextras.description}"></td>
+                <td th:text="'Extras Price: ' + ${orderextras.price}"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
