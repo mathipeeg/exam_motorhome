@@ -17,9 +17,9 @@ public class HomeController {
 
     LoginService loginService = new LoginService();
 
-    @GetMapping("/") // TODO: 20/05/2020 add index-HTML
+    @GetMapping("/")
     public String index(){
-        return "index";
+        return "login";
     }
 
     @GetMapping("/logout")
@@ -42,15 +42,12 @@ public class HomeController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@ModelAttribute Staff staff, HttpServletRequest request){
-        System.out.println(staff.getPassword() + " " + staff.getEmail());
         if(loginService.checkLogin(staff)){
             HttpSession session = request.getSession();
             session.setAttribute("user", staff);
             session.setAttribute("role", staff.getPosition());
-            System.out.println("hej");
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            System.out.println("farvel");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }

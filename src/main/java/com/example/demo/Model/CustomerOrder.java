@@ -1,5 +1,9 @@
 package com.example.demo.Model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class CustomerOrder {
     private String firstName;
     private String lastName;
@@ -10,14 +14,16 @@ public class CustomerOrder {
     private int motorhomeId;
     private String pickup;
     private String dropoff;
-    private String startDate;
-    private String endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
     private String existingEmail;
 
     public CustomerOrder() {
     }
 
-    public CustomerOrder(int motorhomeId, String pickup, String dropoff, String startDate, String endDate, String existingEmail) {
+    public CustomerOrder(int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
         this.motorhomeId = motorhomeId;
         this.pickup = pickup;
         this.dropoff = dropoff;
@@ -26,7 +32,7 @@ public class CustomerOrder {
         this.existingEmail = existingEmail;
     }
 
-    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, String pickup, String dropoff, String startDate, String endDate, String existingEmail) {
+    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
@@ -105,19 +111,19 @@ public class CustomerOrder {
         this.dropoff = dropoff;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

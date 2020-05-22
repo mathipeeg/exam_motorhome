@@ -5,6 +5,8 @@ public class OrderExtras {
     private int id;
     private int extraId;
     private int orderId;
+    private String description;
+    private int price;
 
     public OrderExtras(int id, int extraId, int orderId) {
         this.id = id;
@@ -13,6 +15,13 @@ public class OrderExtras {
     }
 
     public OrderExtras() {
+    }
+
+    public OrderExtras(int extraId, String description, int price)
+    {
+        this.extraId = extraId;
+        this.description = description;
+        this.price = price;
     }
 
     public int getId() {
@@ -37,5 +46,25 @@ public class OrderExtras {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public int getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(int price)
+    {
+        this.price = price;
     }
 }
