@@ -11,6 +11,9 @@ public class CustomerOrder {
     private String email;
     private String address;
     private int cardInfo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date expDate;
+    private int cvs;
     private int motorhomeId;
     private String pickup;
     private String dropoff;
@@ -32,13 +35,31 @@ public class CustomerOrder {
         this.existingEmail = existingEmail;
     }
 
-    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
+//    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.telephone = telephone;
+//        this.email = email;
+//        this.address = address;
+//        this.cardInfo = cardInfo;
+//        this.motorhomeId = motorhomeId;
+//        this.pickup = pickup;
+//        this.dropoff = dropoff;
+//        this.startDate = startDate;
+//        this.endDate = endDate;
+//        this.existingEmail = existingEmail;
+//    }
+
+
+    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, Date expDate, int cvs, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
         this.email = email;
         this.address = address;
         this.cardInfo = cardInfo;
+        this.expDate = expDate;
+        this.cvs = cvs;
         this.motorhomeId = motorhomeId;
         this.pickup = pickup;
         this.dropoff = dropoff;
@@ -141,5 +162,21 @@ public class CustomerOrder {
 
     public void setExistingEmail(String existingEmail) {
         this.existingEmail = existingEmail;
+    }
+
+    public Date getExpDate() {
+        return expDate;
+    }
+
+    public void setExpDate(Date expDate) {
+        this.expDate = expDate;
+    }
+
+    public int getCvs() {
+        return cvs;
+    }
+
+    public void setCvs(int cvs) {
+        this.cvs = cvs;
     }
 }

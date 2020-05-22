@@ -19,15 +19,15 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telephone = telephone;
-        this.email = email;
-        this.address = address;
-        this.cardInfo = cardInfo;
-    }
+//    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.telephone = telephone;
+//        this.email = email;
+//        this.address = address;
+//        this.cardInfo = cardInfo;
+//    }
 
     public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo, Date expDate, int cvs) {
         this.id = id;
