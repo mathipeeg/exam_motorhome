@@ -140,3 +140,9 @@ INSERT INTO extras VALUES (default, 'Child seat', 10);
 INSERT INTO extras VALUES (default, 'Picnic table', 10);
 
 alter table size change name size_name varchar(254) not null;
+
+alter table customer
+	add card_date date not null;
+
+alter table customer
+	add card_cvs int not null;
