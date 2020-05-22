@@ -86,7 +86,7 @@ public class OrderRepository
             prepStatement.setInt(3, co.getTelephone());
             prepStatement.setString(4, co.getEmail());
             prepStatement.setString(5, co.getAddress());
-            prepStatement.setInt(6, co.getCardInfo());
+            prepStatement.setString(6, co.getCardInfo());
             prepStatement.setDate(7, new java.sql.Date(co.getExpDate().getTime()));
             prepStatement.setInt(8, co.getCvs());
             prepStatement.executeUpdate();
@@ -151,7 +151,7 @@ public class OrderRepository
                 int telephone = rs.getInt("telephone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-                int cardInfo = rs.getInt("card_info");
+                String cardInfo = rs.getString("card_info");
                 Date expDate = rs.getDate("card_date");
                 int cardCvs = rs.getInt("card_cvs");
                 Customer customer = new Customer(id, firstName, lastName, telephone, email, address, cardInfo, expDate, cardCvs);
@@ -310,7 +310,7 @@ public class OrderRepository
                 int telephone = rs.getInt("telephone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-                int cardInfo = rs.getInt("card_info");
+                String cardInfo = rs.getString("card_info");
                 Date expDate = rs.getDate("card_date");
                 int cardCvs = rs.getInt("card_cvs");
                 Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo, expDate, cardCvs);

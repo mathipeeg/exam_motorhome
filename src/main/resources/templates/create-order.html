@@ -30,6 +30,7 @@
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
+        checkInput("motorhome", 2);
     }
 
     function validatePhone() {
@@ -98,7 +99,7 @@
         let cardDate = document.getElementById("card-date");
         let cardCvs = document.getElementById("card-cvs");
         cardInfo.addEventListener("keydown", function(event) {
-            if (cardInfo.value.length === 10) {
+            if (cardInfo.value.length === 11) {
                 if (!inputDigits.includes(event.key)) {
                     setBg(cardInfo, "rgb(152,251,152,0.5)")
                     cardDate.focus();
@@ -106,16 +107,18 @@
             }
         })
         cardDate.addEventListener("keydown", function (event) {
-            // let date = this.value;
             let year = this.value.split("-")[0];
-            if (year.charAt(0) === "2") {
-                if (!inputDigits.includes(event.key)) {
+            if (!inputDigits.includes(event.key)) {
+                if (year.charAt(0) === "2") {
                     setBg(cardDate, "rgb(152,251,152,0.5)")
                     cardCvs.focus();
-                    if(cardCvs.value.length === 2){
-                        setBg(cardCvs, "rgb(152,251,152,0.5)")
-                    }
                 }
+            }
+        })
+        cardCvs.addEventListener("keydown", function (event){
+            if(cardCvs.value.length === 3){
+                setBg(cardCvs, "rgb(152,251,152,0.5)")
+                document.getElementById("pick-up").focus();
             }
         })
     }
@@ -135,18 +138,31 @@
             for (let i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
                     // let date = this.value;
-                    console.log(dates[i])
                     let year = this.value.split("-")[0];
-                    console.log(year)
                     if (year.charAt(0) === "2") {
-                        console.log("HEY IT'S GOOD")
-                        setBg(dates[i], "rgb(152,251,152,0.5)")
+                        setBg(dates[i], "rgb(152,251,152,0.5)");
                     } else {
                         setBg(dates[i], "#FFFFFF");
                     }
                 })
             }
-        } else {
+        } else if(specification === "motorhome"){
+            let element = document.getElementById("motorhome-id");
+            element.addEventListener("click", function(event) {
+                let selected = element.options.selectedIndex;
+                if (selected !== 0){
+                    setBg(element, "rgb(152,251,152,0.5)")
+                    setBg(element.options[selected], "rgba(152,251,152,0.5)");
+                    for (let i = 0; i < element.options.length; i++) {
+                        if(element.options[i].index !== selected){
+                            setBg(element.options[i], "#FFFFFF")
+                        }
+                    }
+                } else {
+                    setBg(element, "#FFFFFF");
+                }
+            })
+        }else {
             let elements = document.getElementsByClassName(specification);
             for (let i = 0; i < elements.length; i++) {
                 elements[i].addEventListener("keydown", function (event) {
@@ -173,6 +189,7 @@
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
         <p>Eksisterende kunde</p>
         <hr size="4">
+        <div>
         <table id="table-øverst">
         <tr> <!-- TODO Lav dropdown menuer -->
             <td id="existing-email-td"><label for="input-eksisterende"></label></td>
@@ -208,10 +225,11 @@
                 <td><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
             </tr>
             <tr>
-                <td><input type="date" id="card-date" name="cardDate" placeholder="Udløbsdato"></td>
+                <td><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td> <!--todo hvorfor er den null?-->
                 <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
         </table>
+        </div>
             <p id="p1">Teknisk information</p>
             <hr id="hr1" size="4">
         <table class="table-class">

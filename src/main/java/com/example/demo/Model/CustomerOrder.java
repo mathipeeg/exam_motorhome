@@ -10,7 +10,7 @@ public class CustomerOrder {
     private int telephone;
     private String email;
     private String address;
-    private int cardInfo;
+    private String cardInfo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expDate;
     private int cvs;
@@ -51,7 +51,7 @@ public class CustomerOrder {
 //    }
 
 
-    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, int cardInfo, Date expDate, int cvs, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
+    public CustomerOrder(String firstName, String lastName, int telephone, String email, String address, String cardInfo, Date expDate, int cvs, int motorhomeId, String pickup, String dropoff, Date startDate, Date endDate, String existingEmail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
@@ -108,11 +108,11 @@ public class CustomerOrder {
         this.address = address;
     }
 
-    public int getCardInfo() {
+    public String getCardInfo() {
         return cardInfo;
     }
 
-    public void setCardInfo(int cardInfo) {
+    public void setCardInfo(String cardInfo) {
         this.cardInfo = cardInfo;
     }
 

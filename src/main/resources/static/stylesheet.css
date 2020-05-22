@@ -199,3 +199,7 @@ table{
 a{
     color: white;
 }
+
+input {
+    border: transparent;
+}
