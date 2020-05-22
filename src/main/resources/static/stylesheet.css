@@ -4,13 +4,10 @@
 }
 
 body{
-    background-color: beige;
-    padding-bottom: 200px;
+    background-color: azure;
+    padding-bottom: 5rem;
 }
 
-body{
-    background-color: azure;
-}
 p{
     font-weight: bold;
     text-align: left;
@@ -41,14 +38,30 @@ hr{
 
 #input-eksisterende{
     display: flex;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    width: 99%;
+    height: auto;
     font-size: larger;
-    background-color: white;
-    cursor: text;
     text-align: left;
-    padding-right: 7px;
-    margin-right: 550px;
-    margin-left: -1%;
+}
+
+.table-class{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: auto;
+    height: auto;
+    text-align: left;
+    padding-top:2rem;
+    padding-bottom:1rem;
+}
+
+.table-class, input{
+    margin-right: 20px;
 }
 
 #create-customer-form{
