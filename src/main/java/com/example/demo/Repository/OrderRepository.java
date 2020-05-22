@@ -311,7 +311,9 @@ public class OrderRepository
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 int cardInfo = rs.getInt("card_info");
-                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo);
+                Date expDate = rs.getDate("card_date");
+                int cardCvs = rs.getInt("card_cvs");
+                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo, expDate, cardCvs);
                 return customer;
             }
         } catch (SQLException e) {
