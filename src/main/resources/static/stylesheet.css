@@ -225,3 +225,8 @@ input {
     display: flex;
     padding-right: 22px;
 }
+
+#failed-login{
+    text-align: center;
+    display: none;
+}
