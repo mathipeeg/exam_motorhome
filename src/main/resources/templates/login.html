@@ -9,8 +9,8 @@
     function test() {
         var xhr = new XMLHttpRequest();
         <!-- rename here -->
-        let email = document.getElementById("test1").value
-        let password = document.getElementById("test2").value
+        var email = document.getElementById("test1").value
+        var password = document.getElementById("test2").value
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
@@ -27,7 +27,7 @@
         }
 
         <!-- rename here -->
-        let t = new FormData(document.forms.namedItem("test"));
+        var t = new FormData(document.forms.namedItem("test"));
         t.append(email, password);
 
         <!-- remove -->

@@ -25,7 +25,7 @@ public class LoginService {
         //String hashed = BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt());
         ArrayList<Staff> staffArray = userRepository.getAllStaff();
         for (Staff staff : staffArray) {
-            staff.setPassword(passwordEncoder.encode(staff.getPassword()));
+            staff.setPassword(BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt()));
             userRepository.updatePassword(staff);
         }
     }

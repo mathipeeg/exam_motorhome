@@ -21,8 +21,10 @@ public class UserRepository {
             prepStatement.setString(1, loginEmail);
             ResultSet rs = prepStatement.executeQuery();
             String password = null;
+
             if(rs.next()) {
                 password = rs.getString("password");
+
             }
             if (password != null) {
                 if (BCrypt.checkpw(loginPassword, password)) {

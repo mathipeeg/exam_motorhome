@@ -8,24 +8,26 @@ import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
-public class OrderRepository {
+public class OrderRepository
+{
 
-    public Motorhome getMotorhome(int motorhomeId) throws OrderException {
-        try{
+    public Motorhome getMotorhome(int motorhomeId) throws OrderException
+    {
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, motorhomeId);
             ResultSet rs = prepStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
                 int brandId = rs.getInt("brand_id");
                 int sizeId = rs.getInt("size_id");
                 Motorhome motorhome = new Motorhome(id, brandId, sizeId);
                 return motorhome;
             }
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
@@ -33,22 +35,23 @@ public class OrderRepository {
         return null;
     }
 
-    public Size getSize(int sizeId) throws OrderException {
-        try{
+    public Size getSize(int sizeId) throws OrderException
+    {
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM size WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, sizeId);
             ResultSet rs = prepStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("size_name");
                 int price = rs.getInt("price");
                 Size size = new Size(id, name, price);
                 return size;
             }
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
@@ -56,13 +59,14 @@ public class OrderRepository {
         return null;
     }
 
-    public void addExtra(OrderExtras orderExtras) {
+    public void addExtra(OrderExtras orderExtras)
+    {
         try {
-        Connection connection = DBManager.getConnection();
-        String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
-        PreparedStatement prepStatement = connection.prepareStatement(sql);
-        prepStatement.setInt(1, orderExtras.getExtraId());
-        prepStatement.setInt(2, orderExtras.getOrderId());
+            Connection connection = DBManager.getConnection();
+            String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            prepStatement.setInt(1, orderExtras.getExtraId());
+            prepStatement.setInt(2, orderExtras.getOrderId());
 
             prepStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,7 +77,8 @@ public class OrderRepository {
         // TODO: 19/05/2020 ÆNDR -1 TIL ORDER ID NÅR ORDREN BLIVER OPRETTET! so imppppooorrtatnt :c  
     }
 
-    public void newCustomer(CustomerOrder co) throws OrderException {
+    public void newCustomer(CustomerOrder co) throws OrderException
+    {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO customer VALUES(default, ?, ?, ?, ?, ?, ?)";
@@ -85,25 +90,26 @@ public class OrderRepository {
             prepStatement.setString(5, co.getAddress());
             prepStatement.setInt(6, co.getCardInfo()); // TODO: 19/05/2020 Ændr måske? til string? måske??
             prepStatement.executeUpdate();
-        }catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
                 throw new OrderException("Woah what");
             }
         }
     }
 
-    public int getLastCustomerId() throws OrderException {
-        try{
+    public int getLastCustomerId() throws OrderException
+    {
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
                 return id;
             }
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
@@ -111,18 +117,19 @@ public class OrderRepository {
         return -1;
     }
 
-    public int getLastOrderId() throws OrderException {
-        try{
+    public int getLastOrderId() throws OrderException
+    {
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT id FROM `order` ORDER BY id DESC LIMIT 1";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
                 return id;
             }
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
@@ -130,14 +137,15 @@ public class OrderRepository {
         return -1;
     }
 
-    public Customer getCustomer(String existingEmail) throws OrderException {
-        try{
+    public Customer getCustomer(String existingEmail) throws OrderException
+    {
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE email=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setString(1, existingEmail);
             ResultSet rs = prepStatement.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
@@ -148,8 +156,8 @@ public class OrderRepository {
                 Customer customer = new Customer(id, firstName, lastName, telephone, email, address, cardInfo);
                 return customer;
             }
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
                 // TODO: 18/05/2020 Lav ny exception
                 throw new OrderException("test exception");
             }
@@ -157,7 +165,8 @@ public class OrderRepository {
         return null;
     }
 
-    public void newOrder(Order order) throws OrderException {
+    public void newOrder(Order order) throws OrderException
+    {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO `order` VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -171,23 +180,24 @@ public class OrderRepository {
             prepStatement.setInt(7, order.getNights());
             prepStatement.setDouble(8, order.getDeposit());
             prepStatement.executeUpdate();
-        }catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
                 throw new OrderException("Woah what");
             }
         }
     }
 
     // TODO: 19/05/2020 Datoer lavet til Dates og ikke String
-    public ArrayList<Extras> getAllExtras() {
+    public ArrayList<Extras> getAllExtras()
+    {
         ArrayList<Extras> extraArray = new ArrayList<>();
 
-        try{
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM extras";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String description = rs.getString("description");
                 int price = rs.getInt("price");
@@ -220,6 +230,8 @@ public class OrderRepository {
                 String endDate = rs.getString("end_date");
                 int nights = rs.getInt("nights");
                 int deposit = rs.getInt("deposit");
+
+
                 Order order = new Order(orderId, motorhomeId, customerId, pickUp, dropOff, startDate, endDate, nights, deposit);
                 return order;
             }
@@ -232,16 +244,17 @@ public class OrderRepository {
         return null;
     }
 
-    public ArrayList<Motorhome> getAllMotorhomes(){
+    public ArrayList<Motorhome> getAllMotorhomes()
+    {
         ArrayList<Motorhome> allMotorhomesArray = new ArrayList<>();
 
-        try{
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome inner join brand on motorhome.brand_id = brand.id inner join  size on motorhome.size_id =size.id";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 int brand_id = rs.getInt("brand_id");
                 int size_id = rs.getInt("size_id");
@@ -250,32 +263,144 @@ public class OrderRepository {
                 Motorhome motorhome = new Motorhome(id, brand_id, size_id, brandName, sizeName);
                 allMotorhomesArray.add(motorhome);
             }
-                return allMotorhomesArray;
-        }catch (SQLException e){
+            return allMotorhomesArray;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ArrayList<Brand> getBrand(){
+    public ArrayList<Brand> getBrand()
+    {
         ArrayList<Brand> getBrandArray = new ArrayList<>();
 
-        try{
+        try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM brand";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 Brand brand = new Brand(id, name);
                 getBrandArray.add(brand);
             }
             return getBrandArray;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+        return null;
+    }
+
+    public Customer getCustomerInfo(int getLastOrderId) throws OrderException
+    {
+        try {
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM customer WHERE id=?";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            prepStatement.setInt(1, getLastOrderId());
+            ResultSet rs = prepStatement.executeQuery();
+            if (rs.next()) {
+                int customerId = rs.getInt("id");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                int telephone = rs.getInt("telephone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                int cardInfo = rs.getInt("card_info");
+                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo);
+                return customer;
+            }
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
+                // TODO: 18/05/2020 Lav ny exception
+                throw new OrderException("test exception");
+            }
+        }
+        return null;
+    }
+
+
+//    public Customer getStaffInfo(int getLastOrderId) throws OrderException
+//    {
+//        try {
+//            Connection connection = DBManager.getConnection();
+//            String sql = "SELECT * FROM customer WHERE id=?";
+//            PreparedStatement prepStatement = connection.prepareStatement(sql);
+//            prepStatement.setInt(1, getLastOrderId());
+//            ResultSet rs = prepStatement.executeQuery();
+//            if (rs.next()) {
+//                int customerId = rs.getInt("id");
+//                String firstName = rs.getString("first_name");
+//                String lastName = rs.getString("last_name");
+//                int telephone = rs.getInt("telephone");
+//                String email = rs.getString("email");
+//                String address = rs.getString("address");
+//                int cardInfo = rs.getInt("card_info");
+//                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo);            return customer;
+//            }
+//        } catch (SQLException e) {
+//            if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
+//                // TODO: 18/05/2020 Lav ny exception
+//                throw new OrderException("test exception");
+//            }
+//        }
+//        return null;
+//    }
+
+    public Motorhome getMotorhomeInfo(int getLastOrderId)
+    {
+
+        try {
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM motorhome INNER JOIN brand ON motorhome.brand_id = brand.id INNER JOIN size on motorhome.size_id = size.id WHERE motorhome.id=?";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            prepStatement.setInt(1, getLastOrderId());
+            ResultSet rs = prepStatement.executeQuery();
+
+            if (rs.next()) {
+                int motorhomeId = rs.getInt("id");
+                int brand_id = rs.getInt("brand_id");
+                int size_id = rs.getInt("size_id");
+                String brandName = rs.getString("name");
+                String sizeName = rs.getString("size_name");
+                int price = rs.getInt("price");
+                Motorhome motorhome = new Motorhome(motorhomeId, brand_id, size_id, brandName, sizeName, price);
+                return motorhome;
+            }
+        } catch (SQLException | OrderException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<OrderExtras> getExtraInfo(int getLastOrderId)
+    {
+        ArrayList<OrderExtras> getOrderExtrasArray = new ArrayList<>();
+
+        try {
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM order_extras INNER JOIN extras ON order_extras.extra_id = extras.id WHERE order_extras.order_id=?";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            prepStatement.setInt(1, getLastOrderId());
+            ResultSet rs = prepStatement.executeQuery();
+
+
+            while (rs.next()) {
+                int extraId = rs.getInt("id");
+                String description = rs.getString("description");
+                int price = rs.getInt("price");
+
+
+                OrderExtras orderExtras = new OrderExtras(extraId, description, price);
+                getOrderExtrasArray.add(orderExtras);
+            }
+            return getOrderExtrasArray;
+
+        } catch (SQLException | OrderException e) {
+            e.printStackTrace();
         }
         return null;
     }

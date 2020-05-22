@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 import com.example.demo.DBManager.OrderException;
-import com.example.demo.Model.*;
+import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 @Service
 public class OrderService {
@@ -35,9 +36,10 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights(nights);
         order.setDeposit(priceNightly * 2);
+
+
         orderRepository.newOrder(order);
 
-        double price = getSeasonalPrice(season, priceNightly);
     }
 
     public long getNights(String startDate, String endDate){
@@ -82,4 +84,31 @@ public class OrderService {
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
+
+    public double totalPrice(Order co, String string) throws OrderException
+    {
+
+        int nights = (int)getNights(co.getStartDate(), co.getEndDate());
+        String season = getSeason(co.getStartDate());
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+        double nightsTotalPrice = (nights * priceNightly);
+        double allExtraPrice = 0;
+
+        for (int i = 0; i < orderRepository.getExtraInfo(co.getId()).size() ; i++) {
+            allExtraPrice+=orderRepository.getExtraInfo(co.getId()).get(i).getPrice();
+        }
+
+        double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
+
+
+        if (string.equalsIgnoreCase("totalPriceAll")){
+            return totalPriceAll;
+        }else{
+            return  nightsTotalPrice;
+        }
+
+
+    }
+
+
 }

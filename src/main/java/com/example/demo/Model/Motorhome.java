@@ -6,6 +6,7 @@ public class Motorhome {
     private int sizeId;
     private String brandName;
     private String sizeName;
+    private int sizePrice;
 
     public Motorhome(int id, int brandId, int sizeId) {
         this.id = id;
@@ -19,6 +20,16 @@ public class Motorhome {
         this.sizeId = sizeId;
         this.brandName = brandName;
         this.sizeName = sizeName;
+    }
+
+    public Motorhome(int id, int brandId, int sizeId, String brandName, String sizeName, int sizePrice)
+    {
+        this.id = id;
+        this.brandId = brandId;
+        this.sizeId = sizeId;
+        this.brandName = brandName;
+        this.sizeName = sizeName;
+        this.sizePrice = sizePrice;
     }
 
     public int getId() {
@@ -59,5 +70,15 @@ public class Motorhome {
 
     public void setSizeName(String sizeName) {
         this.sizeName = sizeName;
+    }
+
+    public int getSizePrice()
+    {
+        return sizePrice;
+    }
+
+    public void setSizePrice(int sizePrice)
+    {
+        this.sizePrice = sizePrice;
     }
 }
