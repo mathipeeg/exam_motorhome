@@ -29,7 +29,6 @@ public class OrderService {
         }
         String season = getSeason(dateFormat.format(co.getStartDate()));
         double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
-
         order.setMotorhomeId(orderRepository.getMotorhome(co.getMotorhomeId()).getId());
         order.setCustomerId(customerId);
         order.setPickup(co.getPickup());

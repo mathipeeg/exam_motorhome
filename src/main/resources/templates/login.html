@@ -6,20 +6,33 @@
     <title>NRM: Login</title>
 </head>
 <script>
+    window.onload = function () {
+        let inputs = document.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener("keyup", function (event) {
+                console.log(event.key)
+                if(event.key === "Enter"){
+                    login()
+                }
+            })
+        }
+    }
+
     function login() {
         var xhr = new XMLHttpRequest();
-        let email = document.getElementById("email").value
+        let email = document.getElementById("login-email").value
         let password = document.getElementById("password").value
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200){
-                    window.location.href = "http://localhost:8080/";
+                    window.location.href = "http://localhost:8080/create-order";
                 } else{
                     alert("Info didn't match. Try again.")
                 }
             }
         }
+
         let form = new FormData(document.forms.namedItem("login-form"));
         form.append(email, password);
 
@@ -29,12 +42,21 @@
 </script>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div class="loginContainer">
+    <div class="login-container">
         <form class="center" id="login-form">
-            <input type="text" id="email" name="email" placeholder="email">
+            <input type="text" id="login-email" name="email" placeholder="email" autofocus>
+            <br>
             <input type="password" id="password" name="password" placeholder="Password">
         </form>
-        <button class="btn" onclick="login()">Login</button>
+        <button class="login-btn" onclick="login()">Login</button>
     </div>
+    <footer>
+        <div class="footer"><p>
+            <b>Nordic Rental Motorhomes</b><br>
+            Københavnsvej 334, 2600 Glostrup
+            <br> Telefon: 23 65 78 45 </br>
+            <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a>
+        </p></div>
+    </footer>
 </body>
 </html>

@@ -1,5 +1,9 @@
 package com.example.demo.Model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class Customer {
     private int id;
     private String firstName;
@@ -8,6 +12,9 @@ public class Customer {
     private String email;
     private String address;
     private int cardInfo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date expDate;
+    private int cvs;
 
     public Customer() {
     }
@@ -20,6 +27,18 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.cardInfo = cardInfo;
+    }
+
+    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo, Date expDate, int cvs) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.email = email;
+        this.address = address;
+        this.cardInfo = cardInfo;
+        this.expDate = expDate;
+        this.cvs = cvs;
     }
 
     public int getId() {
@@ -76,5 +95,21 @@ public class Customer {
 
     public void setCardInfo(int cardInfo) {
         this.cardInfo = cardInfo;
+    }
+
+    public Date getExpDate() {
+        return expDate;
+    }
+
+    public void setExpDate(Date expDate) {
+        this.expDate = expDate;
+    }
+
+    public int getCvs() {
+        return cvs;
+    }
+
+    public void setCvs(int cvs) {
+        this.cvs = cvs;
     }
 }

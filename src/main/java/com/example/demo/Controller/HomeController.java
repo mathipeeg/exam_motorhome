@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(){
-        return "index";
+        return "login";
     }
 
     @GetMapping("/logout")
@@ -34,8 +34,6 @@ public class HomeController {
     public String login(){
         return "login";
     }
-
-
 
     @GetMapping("/failed-login")
     public String failedLogin(){
@@ -53,5 +51,4 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
-
-  }
+}

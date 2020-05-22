@@ -6,16 +6,63 @@
     <title>NRM: Create Order</title>
 </head>
 <script>
-    function Submit (){
-        var phone = document.getElementById("telephone").value;
-        var card = document.getElementById("card-info").value;
+    let digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
+        "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete"]
+    function submit (){
+        let phone = document.getElementById("telephone").value;
+        let card = document.getElementById("card-info").value;
         if(!document.getElementById("existing-email").value.contains("@")){
             phone = -1;
             card = -1;
         }
         document.getElementById("create-customer-form").submit();
     }
+    window.onload = function (){
+        validateCard();
+        validatePhone();
+        eventOnEnter();
+    }
 
+    function validatePhone() {
+        let inputTelephone = document.getElementById("telephone");
+        inputTelephone.addEventListener("keydown", function (event) {
+            console.log(event)
+            if(!digits.includes(event.key)){
+                inputTelephone.style.backgroundColor = "#FF0000";
+                event.preventDefault();
+            }else{
+                inputTelephone.style.backgroundColor = "#FFFFFF";
+            }
+        })
+        //Hvis længden er 8, så grøn
+    }
+
+    //todo når man når den rigtige længde, så grøn.
+    //todo evt. streg i kort?
+
+    function validateCard() {
+        let inputCard = document.getElementById("card-info");
+        inputCard.addEventListener("keydown", function (event) {
+            if(!digits.includes(event.key)){
+                inputCard.style.backgroundColor = "#FF0000";
+                event.preventDefault();
+            }else{
+                inputCard.style.backgroundColor = "#FFFFFF";
+            }
+        })
+    }
+
+    function eventOnEnter() {
+        let inputs = document.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].addEventListener("keyup", function (event) {
+                console.log(event.key)
+                if(event.key === "Enter"){
+                    submit()
+                }
+            })
+        }
+    }
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -48,15 +95,15 @@
                 <td><input type="text" id="address" name="address" placeholder="Adresse"></td>
             </tr>
             <tr>
-                <td><label for="telephone">Telefon:</label></td>
-                <td><input type="number" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td><label for="telephone">Telefon:</label></td> <!-- -->
+                <td><input type="text" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
                 <td><label for="email">E-mail: </label></td>
                 <td><input type="text" id="email" name="email" placeholder="E-mail"></td>
             </tr>
             <tr>
                 <td><label for="card-info">Kort information: </label></td>
                 <!-- TODO Del op ift. tal og sådan-->
-                <td><input type="number" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                <td><input type="text" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
             </tr>
         </table>
             <p id="p1">Teknisk information</p>
@@ -82,11 +129,18 @@
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
                         th:value="${motorhome.id}"></option>
-
             </select>
         </div>
-        <div class="btn"> <button onclick="Submit()">OPRET ORDRE</button></div>
+        <div class="btn"> <button onclick="submit()">OPRET ORDRE</button></div>
     </form>
 </div>
+<!--<footer>-->
+<!--    <div class="footer">-->
+<!--        <p><b>Nordic Rental Motorhomes</b> <br>-->
+<!--            Københavnsvej 334, 2600 Glostrup-->
+<!--            <br> Telefon: 23 65 78 45 </br>-->
+<!--            <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a></p>-->
+<!--    </div>-->
+<!--</footer>-->
 </body>
 </html>
