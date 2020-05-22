@@ -13,6 +13,9 @@ p{
     text-align: left;
     padding-right: 25px;
 }
+#fornavn-test{
+
+}
 hr{
     opacity: 75%;
     background-color: azure;
@@ -62,6 +65,7 @@ hr{
 
 .table-class, input{
     margin-right: 20px;
+    display: flex;
 }
 
 #create-customer-form{
@@ -95,11 +99,11 @@ hr{
     /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
 }
 
-.drop-down-motorhomes{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/*.drop-down-motorhomes{*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
 
 .drop-down-motorhomes .form-control{
     margin-top: 20px;
@@ -136,10 +140,10 @@ hr{
     padding-right: 20px;
 }
 
-table{
-    margin-left: auto;
-    margin-right: auto;
-}
+/*table{*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*}*/
 
 #btn-header-left, #btn-header-right{
     padding: 10px;
@@ -211,4 +215,10 @@ table{
 }
 a{
     color: white;
+}
+#input-date, .input-font-color{
+    font-family: "Arial";
+    color: dimgrey;
+    display: flex;
+    padding-right: 22px;
 }
