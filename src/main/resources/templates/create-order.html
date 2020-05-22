@@ -9,7 +9,7 @@
     var digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete",
         "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
-    let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
+    var inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
 
     function submit (){
@@ -67,7 +67,7 @@
     }
 
     function validateCardCvs() {
-        let inputCard = document.getElementById("card-cvs");
+        var inputCard = document.getElementById("card-cvs");
         inputCard.addEventListener("keydown", function (event) {
             if(!digits.includes(event.key)){
                 setBg(inputCard, "rgb(250,128,114,0.6)")
@@ -95,9 +95,9 @@
     //todo tjek om man kan tjekke om input felt er aktiveret
 
     function autofocus(){
-        let cardInfo = document.getElementById("card-info");
-        let cardDate = document.getElementById("card-date");
-        let cardCvs = document.getElementById("card-cvs");
+        var cardInfo = document.getElementById("card-info");
+        var cardDate = document.getElementById("card-date");
+        var cardCvs = document.getElementById("card-cvs");
         cardInfo.addEventListener("keydown", function(event) {
             if (cardInfo.value.length === 11) {
                 if (!inputDigits.includes(event.key)) {
@@ -125,7 +125,7 @@
 
     function checkInput(specification, length){
         if (specification === "email"){
-            let element = document.getElementById(specification)
+            var element = document.getElementById(specification)
             element.addEventListener("keydown", function (event){
                 if (element.value.includes("@") && element.value.includes(".")){
                     setBg(element, "rgb(152,251,152,0.5)");
@@ -134,11 +134,13 @@
                 }
             })
         } else if (specification === "date"){
-            let dates = document.getElementsByClassName("date")
-            for (let i = 0; i < dates.length; i++) {
+            var dates = document.getElementsByClassName("date")
+            for (var i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
                     // let date = this.value;
+                    console.log(dates[i])
                     let year = this.value.split("-")[0];
+                    console.log(year)
                     if (year.charAt(0) === "2") {
                         setBg(dates[i], "rgb(152,251,152,0.5)");
                     } else {
@@ -189,7 +191,6 @@
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
         <p>Eksisterende kunde</p>
         <hr size="4">
-        <div>
         <table id="table-øverst">
         <tr> <!-- TODO Lav dropdown menuer -->
             <td id="existing-email-td"><label for="input-eksisterende"></label></td>
@@ -197,9 +198,10 @@
                 <input class="input-length-js" id="input-eksisterende" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
-        </table>
+
         <p>Kunde Information</p>
         <hr size="4">
+        <div style="overflow-x:auto">
         <table class="table-class">
             <tr>
             <tr>
@@ -223,15 +225,17 @@
                 <td><label for="card-info">Kort information: </label></td>
                 <!-- TODO Del op ift. tal og sådan-->
                 <td><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                <td><label>Udløbsdato: </label></td>
+                <td><input type="date" id="card-date" name="cardDate" placeholder="Udløbsdato"></td>
             </tr>
             <tr>
-                <td><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td> <!--todo hvorfor er den null?-->
+                <td><label>Kontrolcifre:</label></td>
                 <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
         </table>
-        </div>
             <p id="p1">Teknisk information</p>
             <hr id="hr1" size="4">
+        <div style="overflow:auto">
         <table class="table-class">
             <tr>
                 <td><label for="pick-up">Pickup:&emsp;&emsp;&emsp;&emsp;</label></td>
@@ -247,6 +251,8 @@
                 <td><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
             </tr>
         </table>
+        </div>
+
         <div class="drop-down-motorhomes">
             <label for="motorhome-id"></label>
             <select class="form-control" id="motorhome-id" name="motorhomeId">
