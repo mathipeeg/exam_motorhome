@@ -95,9 +95,9 @@
     //todo tjek om man kan tjekke om input felt er aktiveret
 
     function autofocus(){
-        var cardInfo = document.getElementById("card-info");
-        var cardDate = document.getElementById("card-date");
-        var cardCvs = document.getElementById("card-cvs");
+        let cardInfo = document.getElementById("card-info");
+        let cardDate = document.getElementById("card-date");
+        let cardCvs = document.getElementById("card-cvs");
         cardInfo.addEventListener("keydown", function(event) {
             if (cardInfo.value.length === 11) {
                 if (!inputDigits.includes(event.key)) {
@@ -201,6 +201,7 @@
 
         <p>Kunde Information</p>
         <hr size="4">
+        </table>
         <div style="overflow-x:auto">
         <table class="table-class">
             <tr>
@@ -223,13 +224,12 @@
             </tr>
             <tr>
                 <td><label for="card-info">Kort information: </label></td>
-                <!-- TODO Del op ift. tal og sådan-->
                 <td><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-                <td><label>Udløbsdato: </label></td>
-                <td><input type="date" id="card-date" name="cardDate" placeholder="Udløbsdato"></td>
+                <td><label for="card-date">Udløbsdato: </label></td>
+                <td><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
             </tr>
             <tr>
-                <td><label>Kontrolcifre:</label></td>
+                <td><label for="card-cvs">Kontrolcifre:</label></td>
                 <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
         </table>
@@ -252,7 +252,6 @@
             </tr>
         </table>
         </div>
-
         <div class="drop-down-motorhomes">
             <label for="motorhome-id"></label>
             <select class="form-control" id="motorhome-id" name="motorhomeId">
@@ -263,6 +262,7 @@
             </select>
         </div>
         <div class="btn"> <button onclick="submit()">OPRET ORDRE</button></div>
+    </div>
     </form>
 </div>
 

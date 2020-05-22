@@ -295,13 +295,13 @@ public class OrderRepository
         return null;
     }
 
-    public Customer getCustomerInfo(int getLastOrderId) throws CustomException
+    public Customer getCustomerInfo(int id) throws CustomException
     {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId());
+            prepStatement.setInt(1, id);
             ResultSet rs = prepStatement.executeQuery();
             if (rs.next()) {
                 int customerId = rs.getInt("id");
@@ -324,7 +324,7 @@ public class OrderRepository
         return null;
     }
 
-    public Motorhome getMotorhomeInfo(int getLastOrderId) throws CustomException
+    public Motorhome getMotorhomeInfo(int id)
     {
 
         try {
@@ -332,7 +332,7 @@ public class OrderRepository
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome INNER JOIN brand ON motorhome.brand_id = brand.id INNER JOIN size on motorhome.size_id = size.id WHERE motorhome.id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId());
+            prepStatement.setInt(1, id);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next()) {
