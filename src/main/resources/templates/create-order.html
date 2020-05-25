@@ -8,7 +8,7 @@
 <script>
     var digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete"]
-    let deleteDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
+    var deleteDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
     function submit (){
         var phone = document.getElementById("telephone").value;
@@ -63,7 +63,7 @@
     }
 
     function validateCardCvs() {
-        let inputCard = document.getElementById("card-cvs");
+        var inputCard = document.getElementById("card-cvs");
         inputCard.addEventListener("keydown", function (event) {
             if(!digits.includes(event.key)){
                 inputCard.style.backgroundColor = "#FF0000";
@@ -91,7 +91,7 @@
     //todo tjek om man kan tjekke om input felt er aktiveret
 
     function autofocus(){
-        let element = document.getElementById("card-info");
+        var element = document.getElementById("card-info");
         element.addEventListener("keydown", function(event) {
             if (element.value.length === 10) {
                 console.log("FON")
@@ -101,8 +101,8 @@
                     document.getElementById("card-date").focus();
                     document.getElementById("card-date").addEventListener("keydown", function (event) {
                         console.log("DATE")
-                        let date = this.value;
-                        let year = date.split("-")[0];
+                        var date = this.value;
+                        var year = date.split("-")[0];
                         if (year.charAt(0) === "2") {
                             if (!digits.includes(event.key)) {
                                 console.log("cvs")
