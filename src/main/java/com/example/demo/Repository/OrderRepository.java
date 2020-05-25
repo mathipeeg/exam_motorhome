@@ -86,7 +86,7 @@ public class OrderRepository
             prepStatement.setInt(3, co.getTelephone());
             prepStatement.setString(4, co.getEmail());
             prepStatement.setString(5, co.getAddress());
-            prepStatement.setInt(6, co.getCardInfo());
+            prepStatement.setString(6, co.getCardInfo());
             prepStatement.setDate(7, new java.sql.Date(co.getExpDate().getTime()));
             prepStatement.setInt(8, co.getCvs());
             prepStatement.executeUpdate();
@@ -151,7 +151,7 @@ public class OrderRepository
                 int telephone = rs.getInt("telephone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-                int cardInfo = rs.getInt("card_info");
+                String cardInfo = rs.getString("card_info");
                 Date expDate = rs.getDate("card_date");
                 int cardCvs = rs.getInt("card_cvs");
                 Customer customer = new Customer(id, firstName, lastName, telephone, email, address, cardInfo, expDate, cardCvs);
@@ -295,13 +295,13 @@ public class OrderRepository
         return null;
     }
 
-    public Customer getCustomerInfo(int getLastOrderId) throws CustomException
+    public Customer getCustomerInfo(int id) throws CustomException
     {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId());
+            prepStatement.setInt(1, id);
             ResultSet rs = prepStatement.executeQuery();
             if (rs.next()) {
                 int customerId = rs.getInt("id");
@@ -310,8 +310,10 @@ public class OrderRepository
                 int telephone = rs.getInt("telephone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-                int cardInfo = rs.getInt("card_info");
-                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo);
+                String cardInfo = rs.getString("card_info");
+                Date expDate = rs.getDate("card_date");
+                int cardCvs = rs.getInt("card_cvs");
+                Customer customer = new Customer(customerId, firstName, lastName, telephone, email, address, cardInfo, expDate, cardCvs);
                 return customer;
             }
         } catch (SQLException e) {
@@ -322,7 +324,7 @@ public class OrderRepository
         return null;
     }
 
-    public Motorhome getMotorhomeInfo(int getLastOrderId) throws CustomException
+    public Motorhome getMotorhomeInfo(int id)
     {
 
         try {
@@ -330,7 +332,7 @@ public class OrderRepository
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome INNER JOIN brand ON motorhome.brand_id = brand.id INNER JOIN size on motorhome.size_id = size.id WHERE motorhome.id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId());
+            prepStatement.setInt(1, id);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next()) {

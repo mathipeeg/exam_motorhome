@@ -11,7 +11,7 @@ public class Customer {
     private int telephone;
     private String email;
     private String address;
-    private int cardInfo;
+    private String cardInfo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expDate;
     private int cvs;
@@ -19,7 +19,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo) {
+    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, String cardInfo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,7 +29,7 @@ public class Customer {
         this.cardInfo = cardInfo;
     }
 
-    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, int cardInfo, Date expDate, int cvs) {
+    public Customer(int id, String firstName, String lastName, int telephone, String email, String address, String cardInfo, Date expDate, int cvs) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -91,11 +91,11 @@ public class Customer {
         this.address = address;
     }
 
-    public int getCardInfo() {
+    public String getCardInfo() {
         return cardInfo;
     }
 
-    public void setCardInfo(int cardInfo) {
+    public void setCardInfo(String cardInfo) {
         this.cardInfo = cardInfo;
     }
 

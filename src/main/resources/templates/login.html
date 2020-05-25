@@ -12,8 +12,6 @@
             inputs[i].addEventListener("keyup", function (event) {
                 console.log(event.key)
                 if(event.key === "Enter"){
-                    console.log("Test");
-
                     login()
                 }
             })
@@ -34,10 +32,10 @@
                     console.log("hej")
                     window.location.href = "http://localhost:8080/create-order";
                 } else{
-                    // alert("Info didn't match. Try again.")
-                    console.log("Allan");
-
-
+                    document.getElementById("failed-login").style.display = "block";
+                    document.addEventListener("click", function(e) {
+                        document.getElementById("failed-login").style.display = "none";
+                    })
                 }
             }
         }
@@ -54,11 +52,15 @@
     <div th:replace="fragments/header :: header"></div>
     <div class="login-container">
         <form class="center" id="login-form">
-            <input type="text" id="login-email" name="email" placeholder="email" autofocus>
+            <input type="text" id="login-email" name="email" placeholder="Email" autofocus>
             <br>
             <input type="password" id="password" name="password" placeholder="Password">
         </form>
         <button class="login-btn" onclick="login()">Login</button>
+    </div>
+
+    <div id="failed-login"> <!--todo: DIV SKAL CSS?-->
+        <h3>Info didn't match. Try again.</h3>
     </div>
     <footer>
         <div class="footer"><p>
