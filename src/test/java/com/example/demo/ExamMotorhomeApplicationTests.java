@@ -1,10 +1,9 @@
 package com.example.demo;
 
 import com.example.demo.DBManager.CustomException;
-import com.example.demo.Repository.OrderRepository;
+import com.example.demo.Repository.*;
 import com.example.demo.Repository.UserRepository;
-import com.example.demo.Service.LoginService;
-import com.example.demo.Service.OrderService;
+import com.example.demo.Service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
