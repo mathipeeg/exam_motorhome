@@ -1,26 +1,20 @@
 package com.example.demo.Controller;
-//import com.example.demo.DBManager.OrderException;
-import com.example.demo.Model.*;
-import com.example.demo.Repository.OrderRepository;
-import com.example.demo.Service.OrderService;
-import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
 import com.example.demo.Service.*;
+import com.example.demo.DBManager.*;
+import com.example.demo.Model.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class OrderController {
     OrderService orderService = new OrderService();
     LoginService loginService = new LoginService();
     OrderRepository orderRepository = new OrderRepository();
-
-
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){

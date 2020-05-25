@@ -25,10 +25,7 @@ public class UserRepository {
             }
             if (password != null) {
                 if (BCrypt.checkpw(loginPassword, password)) {
-                    System.out.println("It matches");
                     return true;
-                } else {
-                    System.out.println("It does not match");
                 }
             }
         } catch(SQLException e){

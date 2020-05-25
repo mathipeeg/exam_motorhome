@@ -66,7 +66,7 @@ public class OrderService {
     }
 
 
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit)
+    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit)
     {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -76,25 +76,24 @@ public class OrderService {
     public String getSeason(String startDate){
         String monthAndYear = startDate.split("/")[1];
         int month = Integer.parseInt(monthAndYear.split("-")[0]);
-        if(month == 10 || month == 11 || month == 12 || month == 1 || month == 2 || month == 3){
-            return "low";
-            // TODO: 18/05/2020 Hvorfor virker > < ikke? >.<'
-        } else if(month == 4 || month == 5 || month == 9){
-            return "middle";
-        } else{
-            return "high";
-        }
+
+        if(month > 9 && month <12 || month >= 1 && month < 4) return "low";
+        else if(month > 3 && month < 6 || month == 9) return "middle";
+        else return "high";
+//        if(month == 10 || month == 11 || month == 12 || month == 1 || month == 2 || month == 3){
+//            return "low";
+//        } else if(month == 4 || month == 5 || month == 9){
+//            return "middle";
+//        } else{
+//            return "high";
+//        }
     }
 
 
     public double getSeasonalPrice(String season, double priceNightly){
-        if (season.equalsIgnoreCase("low")){
-            return priceNightly;
-        } else if (season.equalsIgnoreCase("middle")){
-            return ((priceNightly/100) * 30) + priceNightly;
-        } else {
-            return ((priceNightly/100) * 60) + priceNightly;
-        }
+        if (season.equalsIgnoreCase("low"))return priceNightly;
+        else if (season.equalsIgnoreCase("middle")) return ((priceNightly/100) * 30) + priceNightly;
+        else return ((priceNightly/100) * 60) + priceNightly;
     }
 
 
@@ -122,11 +121,8 @@ public class OrderService {
 
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
-        if (string.equalsIgnoreCase("totalPriceAll")){
-            return totalPriceAll;
-        }else{
-            return  nightsTotalPrice;
-        }
+        if (string.equalsIgnoreCase("totalPriceAll")) return totalPriceAll;
+        else return  nightsTotalPrice;
     }
 
 
