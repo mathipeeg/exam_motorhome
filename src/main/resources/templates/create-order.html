@@ -242,22 +242,27 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div id="create-customer-div">
+<div class="container">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
-        <p>Eksisterende kunde</p>
-        <hr size="4">
+        <p class="p-create-order">Eksisterende kunde</p>
+        <hr class="hr-create-order" size="4">
         <table id="table-upper">
-            <td id="existing-email-td"><label for="input-existing"></label></td>
+            <tr id="existing-email-td"><label for="input-existing"></label></tr>
             <div id="kunde-email-td"><td>
                 <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
-
-        <p>Kunde Information</p>
-        <hr size="4">
         </table>
+<<<<<<< HEAD
         <div>
+=======
+
+        <p class="p-create-order">Kunde Information</p>
+        <hr class="hr-create-order" size="4">
+        <div style="overflow-x:auto">
+>>>>>>> 8883d69544df74f94f6b20ed9d8d8f753ae3ee60
         <table class="table-class">
+            <tbody id="table-class-costumer-info">
             <tr>
             <tr>
                 <td><label for="first-name">Fornavn: </label></td>
@@ -286,15 +291,23 @@
                 <td><label for="card-cvs">Kontrolcifre:</label></td>
                 <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
+            </tbody>
         </table>
+<<<<<<< HEAD
             <p id="p1">Teknisk information</p>
             <hr id="hr1" size="4">
         <div>
+=======
+        </div>
+            <p class="p-create-order">Teknisk information</p>
+            <hr class="hr-create-order" size="4">
+        <div style="overflow:auto">
+>>>>>>> 8883d69544df74f94f6b20ed9d8d8f753ae3ee60
         <table class="table-class">
             <tr>
-                <td><label for="pick-up">Pickup:&emsp;&emsp;&emsp;&emsp;</label></td>
+                <td><label for="pick-up">Pickup:</label></td>
                 <td><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
-                <td><label for="drop-off">Dropoff:&ensp;&nbsp;</label></td>
+                <td><label for="drop-off">Dropoff:</label></td>
                 <td><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
             </tr>
             <tr>
@@ -314,7 +327,7 @@
                         th:value="${motorhome.id}"></option>
             </select>
         </div>
-        <div class="btn"> <button type="submit" form="create-customer-form">OPRET ORDRE</button></div>
+        <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
     </div>
     </form>
 </div>
