@@ -163,3 +163,5 @@ alter table staff modify address varchar(35) not null;
 alter table staff modify position varchar(9) not null;
 alter table staff modify password varchar(70) not null;
 
+alter table motorhome
+	add img longblob null;

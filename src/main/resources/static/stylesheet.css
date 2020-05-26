@@ -230,3 +230,24 @@ input {
     text-align: center;
     display: none;
 }
+
+#fleet-td{
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+#fleet-tbody{
+    width: 100%
+}
+#fleet-table{
+    width: 80%;
+}
+
+#fleet-tr:nth-child(even){
+    background-color: azure;
+}
+
+.fleet-th{
+    background-color: cornflowerblue;
+    color: white;
+}

@@ -1,9 +1,12 @@
 package com.example.demo.Model;
 
+import java.awt.image.BufferedImage;
+
 public class Motorhome {
     private int id;
     private int brandId;
     private int sizeId;
+    private BufferedImage img;
     private String brandName;
     private String sizeName;
     private int sizePrice;
@@ -30,6 +33,19 @@ public class Motorhome {
         this.brandName = brandName;
         this.sizeName = sizeName;
         this.sizePrice = sizePrice;
+    }
+
+    public Motorhome(int id, int brandId, int sizeId, BufferedImage img, String brandName, String sizeName, int sizePrice) {
+        this.id = id;
+        this.brandId = brandId;
+        this.sizeId = sizeId;
+        this.img = img;
+        this.brandName = brandName;
+        this.sizeName = sizeName;
+        this.sizePrice = sizePrice;
+    }
+
+    public Motorhome() {
     }
 
     public int getId() {
@@ -80,5 +96,13 @@ public class Motorhome {
     public void setSizePrice(int sizePrice)
     {
         this.sizePrice = sizePrice;
+    }
+
+    public BufferedImage getImg() {
+        return img;
+    }
+
+    public void setImg(BufferedImage img) {
+        this.img = img;
     }
 }
