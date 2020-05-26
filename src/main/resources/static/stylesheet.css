@@ -154,10 +154,6 @@ body{
     width: 100%;
     margin-bottom: 1rem;
 }
-#failed-login{
-    text-align: center;
-    display: none;
-}
 /*---LOGIN SLUT---*/
 
 /*---FOOTER---*/
@@ -171,8 +167,3 @@ body{
     text-align-last: center;
 }
 /*---FOOTER SLUT---*/
-
-#failed-login{
-    text-align: center;
-    display: none;
-}
