@@ -28,7 +28,8 @@
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200){
-                    console.log("Allan");
+
+                    console.log("hej")
                     window.location.href = "http://localhost:8080/create-order";
                 } else{
                     document.getElementById("failed-login").style.display = "block";

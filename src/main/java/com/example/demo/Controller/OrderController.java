@@ -20,9 +20,16 @@ public class OrderController {
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
         model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
+<<<<<<< HEAD
         model.addAttribute("customers", userRepository.getAllCustomers());
         return loginService.checkCurrentUser(request, "create-order");
 //        return "create-order";
+=======
+
+//        return loginService.checkCurrentUser(request, "create-order");
+        return "create-order";
+
+>>>>>>> 7e577d6210cc5d776f5ca9431c3b6ab236828a27
     }
 
 
