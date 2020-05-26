@@ -34,11 +34,6 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/failed-login")
-    public String failedLogin(){
-        return "failed-login";
-    }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@ModelAttribute Staff staff, HttpServletRequest request){
         if(loginService.checkLogin(staff)){
