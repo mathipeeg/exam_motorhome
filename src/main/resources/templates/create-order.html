@@ -5,38 +5,72 @@
     <link rel="stylesheet" href="../static/stylesheet.css">
     <title>NRM: Create Order</title>
 </head>
-<script>
-
-    var digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
+<script th:inline="javascript"> //TODO få over i et seperat dokument
+    let digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete",
         "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
-    var inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
+    let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
+    let customerDb = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs"];
+    // let customerModel = ["firstName", "lastName", "telephone", "email", "address", "cardInfo", "expDate", "cvs"];
 
-
-    function submit (){
-        var phone = document.getElementById("telephone").value;
-        var card = document.getElementById("card-info").value;
-        if(!document.getElementById("existing-email").value.contains("@")){
-            phone = -1;
-            card = -1;
-        }
-        document.getElementById("create-customer-form").submit();
-    }
     window.onload = function (){
         validateCard();
         validateCardCvs();
         validatePhone();
         eventOnEnter();
         autofocus();
+        autofillCustomer();
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
     }
 
+    function autofillCustomer(){
+        let element = document.getElementById("input-existing");
+        let form = document.forms["create-customer-form"];
+        element.addEventListener("keyup", function (event) {
+            /*<![CDATA[*/
+            let customers = /*[[${customers}]]*/ 'default';
+            for (let i = 0; i < customers.length; i++) {
+                if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
+                    setValues(customers[i], form);
+                    setBackground("rgb(152,251,152,0.5)");
+                } else {
+                    removeValues(form);
+                    setBackground("#FFFFFF");
+                }
+            }
+            /*]]>*/
+        })
+    }
+
+    function setValues(customer, form){
+        form["first-name"].value = customer.firstName;
+        form["last-name"].value = customer.lastName;
+        form["address"].value = customer.address;
+        form["telephone"].value = customer.telephone;
+        form["email"].value = customer.email;
+        form["card-info"].value = customer.cardInfo;
+        form["card-date"].value = customer.expDate;
+        form["card-cvs"].value = customer.cvs;
+    }
+
+    function setBackground(colour) {
+        for (let i = 0; i < customerDb.length; i++) {
+            setBg(document.getElementById(customerDb[i]), colour);
+        }
+    }
+
+    function removeValues(form) {
+        for (let i = 0; i < customerDb.length; i++) {
+            form[customerDb[i]].value = null;
+        }
+    }
+
     function validatePhone() {
-        var inputTelephone = document.getElementById("telephone");
+        let inputTelephone = document.getElementById("telephone");
         inputTelephone.addEventListener("keydown", function (event) {
             console.log(inputTelephone.value.length);
             if(!digits.includes(event.key)){
@@ -51,10 +85,8 @@
         });
     }
 
-    //todo evt. streg i kort?
-
     function validateCard() {
-        var inputCard = document.getElementById("card-info");
+        let inputCard = document.getElementById("card-info");
         inputCard.addEventListener("keydown", function (event) {
             if(!digits.includes(event.key)){
                 setBg(inputCard, "rgb(250,128,114,0.6)");
@@ -69,7 +101,7 @@
     }
 
     function validateCardCvs() {
-        var inputCard = document.getElementById("card-cvs");
+        let inputCard = document.getElementById("card-cvs");
         inputCard.addEventListener("keydown", function (event) {
             if(!digits.includes(event.key)){
                 setBg(inputCard, "rgb(250,128,114,0.6)");
@@ -84,88 +116,86 @@
     }
 
     function eventOnEnter() {
-        var inputs = document.getElementsByTagName("input");
-        for (var i = 0; i < inputs.length; i++) {
+        let inputs = document.getElementsByTagName("input");
+        let form = document.forms["create-customer-form"];
+        for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener("keyup", function (event) {
-                // console.log(event.key)
                 if(event.key === "Enter"){
-                    submit()
+                    form.submit()
                 }
             });
         }
     }
-    //todo tjek om man kan tjekke om input felt er aktiveret
 
-    function autofocus(){
-        var element = document.getElementById("card-info");
-        element.addEventListener("keydown", function(event) {
-            if (element.value.length === 10) {
-                console.log("FON");
-                if (!digits.includes(event.key)) {
-                    console.log("FON uden digits");
-                    // console.log(element.value.length)
-                    document.getElementById("card-date").focus();
-                    document.getElementById("card-date").addEventListener("keydown", function (event) {
-                        console.log("DATE");
-                        var date = this.value;
-                        var year = date.split("-")[0];
-                        if (year.charAt(0) === "2") {
-                            if (!digits.includes(event.key)) {
-                                console.log("cvs");
-                                document.getElementById("card-cvs").focus();
+    function autofocus() {
+        let cardInfo = document.getElementById("card-info");
+        let cardDate = document.getElementById("card-date");
+        let cardCvs = document.getElementById("card-cvs");
+        cardInfo.addEventListener("keyup", function (event) {
+            let element = document.getElementById("card-info");
+            element.addEventListener("keydown", function (event) {
+                if (element.value.length === 10) {
+                    console.log("FON");
+                    if (!digits.includes(event.key)) {
+                        console.log("FON uden digits");
+                        // console.log(element.value.length)
+                        document.getElementById("card-date").focus();
+                        document.getElementById("card-date").addEventListener("keydown", function (event) {
+                            console.log("DATE");
+                            let date = this.value;
+                            let year = date.split("-")[0];
+                            if (year.charAt(0) === "2") {
+                                if (!digits.includes(event.key)) {
+                                    console.log("cvs");
+                                    document.getElementById("card-cvs").focus();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
-            }
-        })
+            })
 
-        var cardInfo = document.getElementById("card-info");
-        var cardDate = document.getElementById("card-date");
-        var cardCvs = document.getElementById("card-cvs");
-        cardInfo.addEventListener("keydown", function(event) {
-            if (cardInfo.value.length === 11) {
+            cardInfo.addEventListener("keyup", function (event) {
+                if (cardInfo.value.length === 11) {
+                    if (!inputDigits.includes(event.key)) {
+                        setBg(cardInfo, "rgb(152,251,152,0.5)");
+                        cardDate.focus();
+                    }
+                }
+            })
+            cardDate.addEventListener("keyup", function (event) {
+                let year = this.value.split("-")[0];
                 if (!inputDigits.includes(event.key)) {
-                    setBg(cardInfo, "rgb(152,251,152,0.5)");
-                    cardDate.focus();
+                    if (year.charAt(0) === "2") {
+                        setBg(cardDate, "rgb(152,251,152,0.5)")
+                        cardCvs.focus();
+                    }
                 }
-            }
-        });
-        cardDate.addEventListener("keydown", function (event) {
-            var year = this.value.split("-")[0];
-            if (!inputDigits.includes(event.key)) {
-                if (year.charAt(0) === "2") {
-                    setBg(cardDate, "rgb(152,251,152,0.5)")
-                    cardCvs.focus();
-
+            })
+            cardCvs.addEventListener("keyup", function (event) {
+                if (cardCvs.value.length === 3) {
+                    setBg(cardCvs, "rgb(152,251,152,0.5)")
+                    document.getElementById("pick-up").focus();
                 }
-            }
-        });
-        cardCvs.addEventListener("keydown", function (event){
-            if(cardCvs.value.length === 3){
-                setBg(cardCvs, "rgb(152,251,152,0.5)")
-                document.getElementById("pick-up").focus();
-            }
-        });
+            });
+        })
     }
 
-    function checkInput(specification, length){
-        if (specification === "email"){
-            var element = document.getElementById(specification)
-            element.addEventListener("keydown", function (event){
-                if (element.value.includes("@") && element.value.includes(".")){
+    function checkInput(specification, length) {
+        if (specification === "email") {
+            let element = document.getElementById(specification)
+            element.addEventListener("keydown", function (event) {
+                if (element.value.includes("@") && element.value.includes(".")) {
                     setBg(element, "rgb(152,251,152,0.5)");
                 } else {
                     setBg(element, "#FFFFFF");
                 }
             })
-        } else if (specification === "date"){
-            var dates = document.getElementsByClassName("date")
-            for (var i = 0; i < dates.length; i++) {
+        } else if (specification === "date") {
+            let dates = document.getElementsByClassName("date")
+            for (let i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
-                    // let date = this.value;
-                    console.log(dates[i])
-                    var year = this.value.split("-")[0];
+                    let year = this.value.split("-")[0];
                     console.log(year)
                     if (year.charAt(0) === "2") {
                         setBg(dates[i], "rgb(152,251,152,0.5)");
@@ -174,15 +204,15 @@
                     }
                 })
             }
-        } else if(specification === "motorhome"){
-            var element = document.getElementById("motorhome-id");
-            element.addEventListener("click", function(event) {
-                var selected = element.options.selectedIndex;
-                if (selected !== 0){
+        } else if (specification === "motorhome") {
+            let element = document.getElementById("motorhome-id");
+            element.addEventListener("click", function (event) {
+                let selected = element.options.selectedIndex;
+                if (selected !== 0) {
                     setBg(element, "rgb(152,251,152,0.5)")
                     setBg(element.options[selected], "rgba(152,251,152,0.5)");
-                    for (var i = 0; i < element.options.length; i++) {
-                        if(element.options[i].index !== selected){
+                    for (let i = 0; i < element.options.length; i++) {
+                        if (element.options[i].index !== selected) {
                             setBg(element.options[i], "#FFFFFF")
                         }
                     }
@@ -190,9 +220,9 @@
                     setBg(element, "#FFFFFF");
                 }
             })
-        }else {
-            var elements = document.getElementsByClassName(specification);
-            for (var i = 0; i < elements.length; i++) {
+        } else {
+            let elements = document.getElementsByClassName(specification);
+            for (let i = 0; i < elements.length; i++) {
                 elements[i].addEventListener("keydown", function (event) {
                     if (elements[i].value.length > length) {
                         setBg(elements[i], "rgb(152,251,152,0.5)")
@@ -208,28 +238,27 @@
     function setBg(element, colour){
         element.style.backgroundColor = colour;
     }
-
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div id="create-customer-div">
+<div class="container">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
-        <p>Eksisterende kunde</p>
-        <hr size="4">
-        <table id="table-øverst">
-        <tr> <!-- TODO Lav dropdown menuer -->
-            <td><label for="input-eksisterende"></label></td>
-            <div id="kunde-email-td"><td id="existing-email-td">
-                <input class="input-length-js" id="input-eksisterende" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
+        <p class="p-create-order">Eksisterende kunde</p>
+        <hr class="hr-create-order" size="4">
+        <table id="table-upper">
+            <tr id="existing-email-td"><label for="input-existing"></label></tr>
+            <div id="kunde-email-td"><td>
+                <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
         </table>
 
-        <p>Kunde Information</p>
-        <hr size="4">
+        <p class="p-create-order">Kunde Information</p>
+        <hr class="hr-create-order" size="4">
         <div style="overflow-x:auto">
         <table class="table-class">
+            <tbody id="table-class-costumer-info">
             <tr>
             <tr>
                 <td><label for="first-name">Fornavn: </label></td>
@@ -246,7 +275,7 @@
                 <td><label for="telephone">Telefon:</label></td> <!-- -->
                 <td><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
                 <td><label for="email">E-mail: </label></td>
-                <td><input type="text" id="email" name="email" placeholder="E-mail"></td> <!--todo email @-->
+                <td><input type="text" id="email" name="email" placeholder="E-mail"></td>
             </tr>
             <tr>
                 <td><label for="card-info">Kort information: </label></td>
@@ -258,9 +287,11 @@
                 <td><label for="card-cvs">Kontrolcifre:</label></td>
                 <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
+            </tbody>
         </table>
-            <p id="p1">Teknisk information</p>
-            <hr id="hr1" size="4">
+        </div>
+            <p class="p-create-order">Teknisk information</p>
+            <hr class="hr-create-order" size="4">
         <div style="overflow:auto">
         <table class="table-class">
             <tr>
@@ -270,10 +301,9 @@
                 <td><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
             </tr>
             <tr>
-                <td><label for="start-date">Startdato: </label></td> <!--todo foreslå dato -->
+                <td><label for="start-date">Startdato: </label></td>
                 <td><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
-                <td><label for="end-date">Slutdato:</label></td> <!--todo date -->
-
+                <td><label for="end-date">Slutdato:</label></td>
                 <td><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
             </tr>
         </table>
@@ -287,7 +317,7 @@
                         th:value="${motorhome.id}"></option>
             </select>
         </div>
-        <div class="btn"> <button onclick="submit()">OPRET ORDRE</button></div>
+        <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
     </div>
     </form>
 </div>

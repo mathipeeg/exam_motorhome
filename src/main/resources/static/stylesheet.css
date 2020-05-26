@@ -1,155 +1,27 @@
-
-.order-info-div{
-    background-color: aquamarine;
-}
-
-#existing-email-td{
-    width: 430px;
-}
-
-body{
-    background-color: azure;
-    padding-bottom: 5rem;
-}
-
-p{
-    font-weight: bold;
-    text-align: left;
-    padding-right: 25px;
-}
-
-hr{
-    opacity: 75%;
-    background-color: azure;
-    border: transparent;
-}
-
-#table-øverst{
-    padding-top:15px;
-    padding-bottom: 5px;
-    box-sizing: border-box;
-    width: -webkit-fill-available;
-}
-#p1{
-    font-weight: bold;
-    text-align: left;
-    padding-right: 25px;
-    padding-top: 25px;
-}
-
-#hr1 {
-    opacity: 75%;
-    background-color: azure;
-    border: transparent;
-}
-
-#input-eksisterende{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-    width: 99%;
-    height: auto;
-    font-size: larger;
-    text-align: left;
-}
-
-.table-class{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    width: auto;
-    height: auto;
-    text-align: left;
-    padding-top:2rem;
-    padding-bottom:1rem;
-}
-
-.table-class, input{
-    margin-right: 20px;
-    display: flex;
-}
-
-#create-customer-form{
-    background-color: lightblue;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-    height: auto;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-
-.btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.btn button {
-    margin-top: 20px;
-    padding: 20px;
-    width: 100%;
-    transition-duration: 0.4s;
-    font-size: larger;
-    border: transparent;
-    background-color: white;
-    cursor: pointer;
-}
-
-.btn button:hover{
-    background-color: lightgreen;
-    color: black;
-    /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
-}
-
-/*.drop-down-motorhomes{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
-
-.drop-down-motorhomes .form-control{
-    margin-top: 20px;
-    width: 100%;
-    padding: 5px;
-    font-size: larger;
-    cursor: pointer;
-}
-
+/*---HEADER STUFF---*/
 .header{
     opacity: 80%;
-    text-align: center;
     background: cadetblue;
     padding-left: 10px;
     padding-right: 10px;
-    padding-top: 10px;
-    height: 180px;
+    padding-top: 5px;
+    height: 12rem;
     color: azure;
     font-size: 20px;
     /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
     margin-bottom: 35px;
     text-align: -webkit-center;
 }
-
 #header-title{
     margin-bottom: 10px;
     text-shadow: 1px 1px black;
-
 }
-
 #img{
     width: 125px;
     height: 125px;
     padding-left: 20px;
     padding-right: 20px;
 }
-
-/*table{*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
 #btn-header-left, #btn-header-right{
     padding: 10px;
     width: 100%;
@@ -159,9 +31,7 @@ hr{
     background-color: azure;
     cursor: pointer;
     border-radius: 25px;
-    /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
 }
-
 #btn-header-left:hover{
     background-color: cadetblue;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
@@ -172,29 +42,87 @@ hr{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     color: azure;
 }
+/*---HEADER STUFF SLUT---*/
 
-.login-container {
+/*---.CONTAINER BLÅ FORM---*/
+.container{
     background-color: lightblue;
-    margin: auto auto 100px;
+    margin: auto;
     width: 50%;
-    padding: 20px;
+    padding: 10px;
     height: auto;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+/*---.CONTAINER BLÅ FORM slut---*/
+
+/*---EKSISTERENDE KUNDE TOP AF FORM---*/
+#input-existing{
+    width: 100%;
+    font-size: larger;
+    text-align: left;
+}
+#table-upper {
+    padding-bottom: 1rem;
+    width:100%;
+}
+#existing-email-td{
+    width: 0%;
+}
+/*---EKSISTERENDE KUNDE TOP AF FORM SLUT---*/
+
+/*---TEXT+STREG I CREATE ORDER FORM---*/
+.p-create-order{
+    font-weight: bold;
+    text-align: left;
+    padding-right: 25px;
+}
+.hr-create-order{
+    opacity: 75%;
+    background-color: azure;
+    border: transparent;
+}
+/*---TEXT+STREG I CREATE ORDER FORM SLUT---*/
+
+/*---ORDER-INFO SECTION---*/
+.order-info-div{
+    background-color: aquamarine;
+}
+body{
+    background-color: azure;
+    padding-bottom: 5rem;
+}
+/*---ORDER-INFO SECTION SLUT---*/
+
+/*---KUNDEINFORMATION + TEKNISK INFORMATION---*/
+#table-class-costumer-info{
+    display: table-row-group;
+    vertical-align: center;
 
 }
-#login-email, #password{
+.table-class{
+    padding-bottom:1rem;
+}
+#card-date, .input-font-color, .date{
+    font-family: "Arial";
+    color: dimgrey;
     display: flex;
-    height: 35px;
+    padding-right: 22px;
+}
+/*---KUNDEINFORMATION + TEKNISK INFORMATION SLUT---*/
+
+/*---MOTORHOME TYPES DROPDOWN---*/
+.drop-down-motorhomes .form-control{
+    margin-top: 20px;
     width: 100%;
-    margin-bottom: 15px;
+    padding: 5px;
+    font-size: larger;
+    cursor: pointer;
 }
-#login-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.login-btn{
-    margin-top: 15px;
+/*---MOTORHOME TYPES DROPDOWN SLUT---*/
+
+/*---STOR KNAP (create order, login etc)---*/
+.btn{
+    margin-top: 20px;
     padding: 20px;
     width: 100%;
     transition-duration: 0.4s;
@@ -203,12 +131,25 @@ hr{
     background-color: white;
     cursor: pointer;
 }
-.login-btn:hover{
+.btn:hover {
     background-color: lightgreen;
     color: black;
-    /*box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
 }
+/*---STOR KNAP (create order, login etc) SLUT---*/
 
+/*---LOGIN---*/
+#login-email, #password{
+    font-size: medium;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+#failed-login{
+    text-align: center;
+    display: none;
+}
+/*---LOGIN SLUT---*/
+
+/*---FOOTER---*/
 .footer {
     position: fixed;
     left: 0;
@@ -218,20 +159,7 @@ hr{
     color: white;
     text-align-last: center;
 }
-a{
-    color: white;
-}
-input {
-    border: transparent;
-}
-#card-date, .input-font-color, .date{
-    font-family: "Arial";
-    color: dimgrey;
-    display: flex;
-    padding-right: 22px;
-}
+/*---FOOTER SLUT---*/
 
-#failed-login{
-    text-align: center;
-    display: none;
-}
+
+

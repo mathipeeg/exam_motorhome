@@ -140,9 +140,26 @@ INSERT INTO extras VALUES (default, 'Child seat', 10);
 INSERT INTO extras VALUES (default, 'Picnic table', 10);
 
 alter table size change name size_name varchar(254) not null;
-
+alter table `order` modify start_date date not null;
+alter table `order` modify end_date date not null;
 alter table customer
 	add card_date date not null;
-
 alter table customer
 	add card_cvs int not null;
+alter table brand modify name varchar(15) not null;
+alter table customer modify first_name varchar(10) not null;
+alter table customer modify last_name varchar(12) not null;
+alter table customer modify email varchar(32) not null;
+alter table customer modify address varchar(35) not null;
+alter table customer modify card_info varchar(12) not null;
+alter table extras modify description varchar(12) not null;
+alter table `order` modify pickup varchar(35) not null;
+alter table `order` modify dropoff varchar(35) not null;
+alter table size modify size_name varchar(6) not null;
+alter table staff modify first_name varchar(10) not null;
+alter table staff modify last_name varchar(12) not null;
+alter table staff modify email varchar(32) not null;
+alter table staff modify address varchar(35) not null;
+alter table staff modify position varchar(9) not null;
+alter table staff modify password varchar(70) not null;
+
