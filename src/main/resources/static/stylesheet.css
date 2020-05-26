@@ -15,6 +15,7 @@
 #header-title{
     margin-bottom: 10px;
     text-shadow: 1px 1px black;
+    cursor: pointer;
 }
 #img{
     width: 125px;
@@ -99,6 +100,7 @@
 body{
     background-color: azure;
     padding-bottom: 5rem;
+    font-family: Helvetica;
 }
 /*---ORDER-INFO SECTION SLUT---*/
 
@@ -170,5 +172,7 @@ body{
 }
 /*---FOOTER SLUT---*/
 
-
-
+#failed-login{
+    text-align: center;
+    display: none;
+}
