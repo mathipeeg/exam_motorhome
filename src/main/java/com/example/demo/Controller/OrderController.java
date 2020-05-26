@@ -15,10 +15,12 @@ public class OrderController {
     OrderService orderService = new OrderService();
     LoginService loginService = new LoginService();
     OrderRepository orderRepository = new OrderRepository();
+    UserRepository userRepository = new UserRepository();
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
         model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
+        model.addAttribute("customers", userRepository.getAllCustomers());
         return loginService.checkCurrentUser(request, "create-order");
 //        return "create-order";
     }
@@ -49,7 +51,7 @@ public class OrderController {
     public String orderSubmitted(HttpServletRequest request, Model model) throws CustomException
     {
         Order order = orderRepository.getOrder(orderRepository.getLastOrderId());
-        Customer customer = orderRepository.getCustomerInfo(orderRepository.getLastCustomerId());
+        Customer customer = orderRepository.getCustomerInfo(order.getCustomerId());
         Motorhome motorhome = orderRepository.getMotorhomeInfo(order.getMotorhomeId());
 
         model.addAttribute("totalprice", orderService.totalPrice(order, "totalPriceAll"));

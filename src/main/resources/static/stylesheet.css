@@ -22,7 +22,7 @@ hr{
     border: transparent;
 }
 
-#table-øverst{
+#table-upper{
     padding-top:10px;
     padding-bottom: 20px;
 }
@@ -39,7 +39,7 @@ hr{
     border: transparent;
 }
 
-#input-eksisterende{
+#input-existing{
     display: flex;
     justify-content: center;
     align-items: center;

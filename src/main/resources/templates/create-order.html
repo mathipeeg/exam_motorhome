@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../static/stylesheet.css">
     <title>NRM: Create Order</title>
 </head>
-<script>
+<script th:inline="javascript">
     let digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete",
         "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
@@ -27,10 +27,34 @@
         validatePhone();
         eventOnEnter();
         autofocus();
+        autofillCustomer();
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
+    }
+
+    function autofillCustomer(){
+        let element = document.getElementById("input-existing");
+        let form = document.forms["create-customer-form"];
+        element.addEventListener("keyup", function (event) {
+            console.log(element.value)
+            /*<![CDATA[*/
+            let customers = /*[[${customers}]]*/ 'default';
+            for (let i = 0; i < customers.length; i++) {
+                if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
+                    form["first-name"].value = customers[i].firstName;
+                    form["last-name"].value = customers[i].lastName;
+                    form["address"].value = customers[i].address;
+                    form["telephone"].value = customers[i].telephone;
+                    form["email"].value = customers[i].email;
+                    form["card-info"].value = customers[i].cardInfo;
+                    form["card-date"].value = customers[i].expDate;
+                    form["card-cvs"].value = customers[i].cvs;
+                }
+            }
+            /*]]>*/
+        })
     }
 
     function validatePhone() {
@@ -48,8 +72,6 @@
             }
         })
     }
-
-    //todo evt. streg i kort?
 
     function validateCard() {
         let inputCard = document.getElementById("card-info");
@@ -92,13 +114,12 @@
             })
         }
     }
-    //todo tjek om man kan tjekke om input felt er aktiveret
 
     function autofocus(){
         let cardInfo = document.getElementById("card-info");
         let cardDate = document.getElementById("card-date");
         let cardCvs = document.getElementById("card-cvs");
-        cardInfo.addEventListener("keydown", function(event) {
+        cardInfo.addEventListener("keyup", function(event) {
             if (cardInfo.value.length === 11) {
                 if (!inputDigits.includes(event.key)) {
                     setBg(cardInfo, "rgb(152,251,152,0.5)")
@@ -106,7 +127,7 @@
                 }
             }
         })
-        cardDate.addEventListener("keydown", function (event) {
+        cardDate.addEventListener("keyup", function (event) {
             let year = this.value.split("-")[0];
             if (!inputDigits.includes(event.key)) {
                 if (year.charAt(0) === "2") {
@@ -115,7 +136,7 @@
                 }
             }
         })
-        cardCvs.addEventListener("keydown", function (event){
+        cardCvs.addEventListener("keyup", function (event){
             if(cardCvs.value.length === 3){
                 setBg(cardCvs, "rgb(152,251,152,0.5)")
                 document.getElementById("pick-up").focus();
@@ -191,11 +212,10 @@
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
         <p>Eksisterende kunde</p>
         <hr size="4">
-        <table id="table-øverst">
-        <tr> <!-- TODO Lav dropdown menuer -->
-            <td id="existing-email-td"><label for="input-eksisterende"></label></td>
+        <table id="table-upper">
+            <td id="existing-email-td"><label for="input-existing"></label></td>
             <div id="kunde-email-td"><td>
-                <input class="input-length-js" id="input-eksisterende" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
+                <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
 

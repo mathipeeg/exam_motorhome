@@ -117,4 +117,32 @@ public class UserRepository {
             }
         }
     }
+
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customerArray = new ArrayList<>();
+
+        try{
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM customer";
+            PreparedStatement prepStatement = connection.prepareStatement(sql);
+            ResultSet rs = prepStatement.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                int telephone = rs.getInt("telephone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String cardInfo = rs.getString("card_info");
+                Date cardDate = rs.getDate("card_date");
+                int cvs = rs.getInt("card_cvs");
+                Customer customer = new Customer(id, firstName, lastName, telephone, email, address, cardInfo, cardDate, cvs);
+                customerArray.add(customer);
+            }
+            return customerArray;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
