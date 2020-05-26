@@ -55,6 +55,15 @@
 }
 /*---.CONTAINER BLÅ FORM slut---*/
 
+/*---OPSÆTNING AF td's I CREATE ORDER---*/
+.table-class-td-class{
+    width: 100%;
+}
+.table-class-td-class-fucker{
+    padding-left: 1rem;
+}
+/*---OPSÆTNING AF td's I CREATE ORDER SLUT---*/
+
 /*---EKSISTERENDE KUNDE TOP AF FORM---*/
 #input-existing{
     width: 100%;
