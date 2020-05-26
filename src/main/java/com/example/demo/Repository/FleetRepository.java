@@ -6,6 +6,9 @@ import com.example.demo.Model.Motorhome;
 import org.springframework.stereotype.Repository;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -26,7 +29,7 @@ public class FleetRepository {
                 int id = rs.getInt("id");
                 int brand_id = rs.getInt("brand_id");
                 int size_id = rs.getInt("size_id");
-                BufferedImage img = (BufferedImage)rs.getBlob("img");
+                String img = rs.getString("img");
                 String brandName = rs.getString("name");
                 String sizeName = rs.getString("size_name");
                 int sizePrice = rs.getInt("price");

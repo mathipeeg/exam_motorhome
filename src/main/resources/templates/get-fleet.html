@@ -17,7 +17,7 @@
         <th class="fleet-th">Str.</th>
         <th class="fleet-th">Pris pr. nat</th>
         <tr id="fleet-tr" th:each="motorhome : ${motorhomes}">
-            <td id="fleet-td" th:text="${motorhome.img}"></td>
+            <td><img th:src="@{${motorhome.imgPath}}" alt="test"></td>
             <td th:text="${motorhome.brandName}"></td>
             <td th:text="${motorhome.sizeName}"></td>
             <td th:text="${motorhome.sizePrice}"></td>

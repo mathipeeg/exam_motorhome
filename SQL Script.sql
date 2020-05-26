@@ -164,4 +164,8 @@ alter table staff modify position varchar(9) not null;
 alter table staff modify password varchar(70) not null;
 
 alter table motorhome
-	add img longblob null;
+	add img varchar(100) not null;
+
+UPDATE motorhome SET img='../static/img/motorhome-1.jpg' where size_id=1;
+UPDATE motorhome SET img='../static/img/motorhome-2.jpg' where size_id=2;
+UPDATE motorhome SET img='../static/img/motorhome-3.jpg' where size_id=3;
