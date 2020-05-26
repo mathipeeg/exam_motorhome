@@ -219,15 +219,15 @@
         <hr size="4">
         <table id="table-øverst">
         <tr> <!-- TODO Lav dropdown menuer -->
-            <td id="existing-email-td"><label for="input-eksisterende"></label></td>
-            <div id="kunde-email-td"><td>
+            <td><label for="input-eksisterende"></label></td>
+            <div id="kunde-email-td"><td id="existing-email-td">
                 <input class="input-length-js" id="input-eksisterende" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
+        </table>
 
         <p>Kunde Information</p>
         <hr size="4">
-        </table>
         <div style="overflow-x:auto">
         <table class="table-class">
             <tr>
@@ -264,9 +264,9 @@
         <div style="overflow:auto">
         <table class="table-class">
             <tr>
-                <td><label for="pick-up">Pickup:&emsp;&emsp;&emsp;&emsp;</label></td>
+                <td><label for="pick-up">Pickup:</label></td>
                 <td><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
-                <td><label for="drop-off">Dropoff:&ensp;&nbsp;</label></td>
+                <td><label for="drop-off">Dropoff:</label></td>
                 <td><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
             </tr>
             <tr>
