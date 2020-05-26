@@ -20,18 +20,9 @@ public class OrderController {
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
         model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
-<<<<<<< HEAD
         model.addAttribute("customers", userRepository.getAllCustomers());
         return loginService.checkCurrentUser(request, "create-order");
-//        return "create-order";
-=======
-
-//        return loginService.checkCurrentUser(request, "create-order");
-        return "create-order";
-
->>>>>>> 7e577d6210cc5d776f5ca9431c3b6ab236828a27
     }
-
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) throws CustomException {
@@ -39,20 +30,17 @@ public class OrderController {
         return "redirect:/add-extras";
     }
 
-
     @GetMapping("add-extras")
     public String addExtras(Model model){
         model.addAttribute("extras", orderRepository.getAllExtras());
         return "add-extras";
     }
 
-
     @PostMapping("/addExtra")
     public String addExtra(@RequestParam("extraId") int extraId) throws CustomException {
         orderService.addExtra(extraId);
         return "order-submitted";
     }
-
 
     @GetMapping("/order-submitted")
     public String orderSubmitted(HttpServletRequest request, Model model) throws CustomException
@@ -62,13 +50,11 @@ public class OrderController {
         Motorhome motorhome = orderRepository.getMotorhomeInfo(order.getMotorhomeId());
 
         model.addAttribute("totalprice", orderService.totalPrice(order, "totalPriceAll"));
-        model.addAttribute("nightstotalprice", orderService.totalPrice(order, "hej"));
+        model.addAttribute("nightstotalprice", orderService.totalPrice(order, ""));
         model.addAttribute("orderextra", orderRepository.getExtraInfo(orderRepository.getLastOrderId()));
         model.addAttribute("order", order);
         model.addAttribute("customer", customer);
         model.addAttribute("motorhome", motorhome);
-
         return loginService.checkCurrentUser(request, "order-submitted");
-
     }
 }

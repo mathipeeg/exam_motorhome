@@ -326,9 +326,7 @@ public class OrderRepository
 
     public Motorhome getMotorhomeInfo(int id)
     {
-
         try {
-
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM motorhome INNER JOIN brand ON motorhome.brand_id = brand.id INNER JOIN size on motorhome.size_id = size.id WHERE motorhome.id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
