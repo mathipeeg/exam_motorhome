@@ -78,6 +78,7 @@
 }
 .table-class-td-class-left{
     padding-right: 10%;
+    margin-right: 10%;
 }
 /*---OPSÆTNING AF td's I CREATE ORDER SLUT---*/
 
@@ -168,6 +169,11 @@ body{
     font-size: medium;
     width: 100%;
     margin-bottom: 1rem;
+}
+
+#failed-login{
+    display: none;
+    text-align: center;
 }
 /*---LOGIN SLUT---*/
 
