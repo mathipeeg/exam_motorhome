@@ -25,13 +25,17 @@
     }
 </script>
 <body>
+<div th:replace="fragments/header :: header"></div>
+    <div class="container">
     <table>
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}">
             <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
-        <button onclick="getExtras()" id="add-extras">Add extras</button>
+
     </table>
+        <button onclick="getExtras()" id="add-extras">Add extras</button>
+    </div>
     <footer>
         <div class="footer">
             <p><b>Nordic Rental Motorhomes</b> <br>
