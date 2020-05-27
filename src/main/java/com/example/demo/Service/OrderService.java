@@ -28,6 +28,7 @@ public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
     DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
+    FleetRepository fleetRepository = new FleetRepository();
 
     public void submitOrder(CustomerOrder co) throws CustomException {
         Order order = new Order();
@@ -39,8 +40,8 @@ public class OrderService {
             customerId = orderRepository.getCustomer(co.getExistingEmail()).getId();
         }
         String season = getSeason(dateFormat.format(co.getStartDate()));
-        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
-        order.setMotorhomeId(orderRepository.getMotorhome(co.getMotorhomeId()).getId());
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(fleetRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+        order.setMotorhomeId(fleetRepository.getMotorhome(co.getMotorhomeId()).getId());
         order.setCustomerId(customerId);
         order.setPickup(co.getPickup());
         order.setDropoff(co.getDropoff());
@@ -51,7 +52,6 @@ public class OrderService {
 
         orderRepository.newOrder(order);
     }
-
 
     public double getNights(String startDate, String endDate){
         long nights = -1;
@@ -65,13 +65,10 @@ public class OrderService {
         return nights;
     }
 
-
-    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit)
-    {
+    public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diffInMillies = date2.getTime() - date1.getTime();
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
-
 
     public String getSeason(String startDate){
         String monthAndYear = startDate.split("/")[1];
@@ -80,22 +77,13 @@ public class OrderService {
         if(month > 9 && month <12 || month >= 1 && month < 4) return "low";
         else if(month > 3 && month < 6 || month == 9) return "middle";
         else return "high";
-//        if(month == 10 || month == 11 || month == 12 || month == 1 || month == 2 || month == 3){
-//            return "low";
-//        } else if(month == 4 || month == 5 || month == 9){
-//            return "middle";
-//        } else{
-//            return "high";
-//        }
     }
-
 
     public double getSeasonalPrice(String season, double priceNightly){
         if (season.equalsIgnoreCase("low"))return priceNightly;
         else if (season.equalsIgnoreCase("middle")) return ((priceNightly/100) * 30) + priceNightly;
         else return ((priceNightly/100) * 60) + priceNightly;
     }
-
 
     public void addExtra(int extraId) throws CustomException {
         OrderExtras orderExtras = new OrderExtras();
@@ -104,14 +92,12 @@ public class OrderService {
         orderRepository.addExtra(orderExtras);
     }
 
-
-    public double totalPrice(Order co, String string) throws CustomException
-    {
+    public double totalPrice(Order co, String string) throws CustomException {
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
         String season = getSeason(dateFormat.format(co.getStartDate()));
-        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(orderRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
+        double priceNightly = getSeasonalPrice(season, orderRepository.getSize(fleetRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
 
@@ -124,7 +110,6 @@ public class OrderService {
         if (string.equalsIgnoreCase("totalPriceAll")) return totalPriceAll;
         else return  nightsTotalPrice;
     }
-
 
     public Order getOrder(int lastOrderId) throws CustomException {
         Order order = orderRepository.getOrder(lastOrderId);

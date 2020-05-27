@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/stylesheet.css">
+    <title>NRM: Fleet-oversigt</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container"> <!-- bare ændr navn idk css lmao -->
+    <div><h1 style="text-align: center">Oversigt over alle motorhome modeller</h1></div>
+    <table id="fleet-table" class="table-class">
+        <tbody id="fleet-tbody">
+        <th class="fleet-th"></th>
+        <th class="fleet-th">Mærke</th>
+        <th class="fleet-th">Str.</th>
+        <th class="fleet-th">Pris pr. nat</th>
+        <tr id="fleet-tr" th:each="motorhome : ${motorhomes}">
+            <td><img class="img" th:src="@{${motorhome.imgPath}}" alt="test"></td>
+            <td th:text="${motorhome.brandName}"></td>
+            <td th:text="${motorhome.sizeName}"></td>
+            <td th:text="${motorhome.sizePrice}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,9 +1,13 @@
 package com.example.demo.Model;
 
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+
 public class Motorhome {
     private int id;
     private int brandId;
     private int sizeId;
+    private String imgPath;
     private String brandName;
     private String sizeName;
     private int sizePrice;
@@ -30,6 +34,19 @@ public class Motorhome {
         this.brandName = brandName;
         this.sizeName = sizeName;
         this.sizePrice = sizePrice;
+    }
+
+    public Motorhome(int id, int brandId, int sizeId, String imgPath, String brandName, String sizeName, int sizePrice) {
+        this.id = id;
+        this.brandId = brandId;
+        this.sizeId = sizeId;
+        this.imgPath = imgPath;
+        this.brandName = brandName;
+        this.sizeName = sizeName;
+        this.sizePrice = sizePrice;
+    }
+
+    public Motorhome() {
     }
 
     public int getId() {
@@ -80,5 +97,13 @@ public class Motorhome {
     public void setSizePrice(int sizePrice)
     {
         this.sizePrice = sizePrice;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }

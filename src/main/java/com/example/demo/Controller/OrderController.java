@@ -16,16 +16,14 @@ public class OrderController {
     LoginService loginService = new LoginService();
     OrderRepository orderRepository = new OrderRepository();
     UserRepository userRepository = new UserRepository();
+    FleetRepository fleetRepository = new FleetRepository();
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
-        model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
-
+        model.addAttribute("motorhomes", fleetRepository.getAllMotorhomes());
         model.addAttribute("customers", userRepository.getAllCustomers());
         return loginService.checkCurrentUser(request, "create-order");
-
     }
-
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) throws CustomException {
@@ -33,13 +31,11 @@ public class OrderController {
         return "redirect:/add-extras";
     }
 
-
     @GetMapping("add-extras")
     public String addExtras(Model model){
         model.addAttribute("extras", orderRepository.getAllExtras());
         return "add-extras";
     }
-
 
     @PostMapping("/addExtra")
     public String addExtra(@RequestParam("extraId") int extraId) throws CustomException {
@@ -47,22 +43,19 @@ public class OrderController {
         return "order-submitted";
     }
 
-
     @GetMapping("/order-submitted")
     public String orderSubmitted(HttpServletRequest request, Model model) throws CustomException
     {
         Order order = orderRepository.getOrder(orderRepository.getLastOrderId());
         Customer customer = orderRepository.getCustomerInfo(order.getCustomerId());
-        Motorhome motorhome = orderRepository.getMotorhomeInfo(order.getMotorhomeId());
+        Motorhome motorhome = fleetRepository.getMotorhomeInfo(order.getMotorhomeId());
 
         model.addAttribute("totalprice", orderService.totalPrice(order, "totalPriceAll"));
-        model.addAttribute("nightstotalprice", orderService.totalPrice(order, "hej"));
+        model.addAttribute("nightstotalprice", orderService.totalPrice(order, ""));
         model.addAttribute("orderextra", orderRepository.getExtraInfo(orderRepository.getLastOrderId()));
         model.addAttribute("order", order);
         model.addAttribute("customer", customer);
         model.addAttribute("motorhome", motorhome);
-
         return loginService.checkCurrentUser(request, "order-submitted");
-
     }
 }
