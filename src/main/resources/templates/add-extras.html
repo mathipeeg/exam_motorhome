@@ -7,9 +7,9 @@
 </head>
 <script>
     function getExtras() {
-        var extras = document.getElementsByName("extras");
+        let extras = document.getElementsByName("extras");
         //var extraId = document.getElementsByName("extras").id;
-        for (var i = 0; i < extras.length; i++) {
+        for (let i = 0; i < extras.length; i++) {
             if (extras[i].id === "check" && extras[i].checked) {
                 addExtras(extras[i].value)
             }
@@ -19,7 +19,7 @@
     }
 
     function addExtras(id) {
-        var xhttp = new XMLHttpRequest();
+        let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/addExtra?extraId="+id, true);
         xhttp.send();
     }

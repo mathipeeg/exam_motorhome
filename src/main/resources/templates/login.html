@@ -7,10 +7,9 @@
 </head>
 <script>
     window.onload = function () {
-        var inputs = document.getElementsByTagName("input");
-        for (var i = 0; i < inputs.length; i++) {
+        let inputs = document.getElementsByTagName("input");
+        for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener("keyup", function (event) {
-                console.log(event.key)
                 if(event.key === "Enter"){
                     login()
                 }
@@ -19,17 +18,13 @@
     }
 
     function login() {
-        var xhr = new XMLHttpRequest();
-        <!-- rename here -->
-        var email = document.getElementById("login-email").value
-        var password = document.getElementById("password").value
-        console.log(email + password);
+        let xhr = new XMLHttpRequest();
+        let email = document.getElementById("login-email").value
+        let password = document.getElementById("password").value
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200){
-
-                    console.log("hej")
                     window.location.href = "http://localhost:8080/create-order";
                 } else{
                     document.getElementById("failed-login").style.display = "block";
@@ -39,11 +34,8 @@
                 }
             }
         }
-        <!-- rename here -->
-        var form = new FormData(document.forms.namedItem("login-form"));
+        let form = new FormData(document.forms.namedItem("login-form"));
         form.append(email, password);
-
-
         xhr.open('post', "http://localhost:8080/login", true);
         xhr.send(form);
     }
