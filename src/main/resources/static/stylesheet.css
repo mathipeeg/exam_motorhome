@@ -74,7 +74,9 @@
     padding-left: 1rem;
 }
 .table-class-td-class-left{
+
 /*   //TODO Få det til at virke*/
+    margin-right: 10%;
 }
 /*---OPSÆTNING AF td's I CREATE ORDER SLUT---*/
 
@@ -121,7 +123,6 @@ body{
 #table-class-costumer-info{
     display: table-row-group;
     vertical-align: center;
-
 }
 .table-class{
     padding-bottom:1rem;
@@ -166,6 +167,11 @@ body{
     font-size: medium;
     width: 100%;
     margin-bottom: 1rem;
+}
+
+#failed-login{
+    display: none;
+    text-align: center;
 }
 /*---LOGIN SLUT---*/
 

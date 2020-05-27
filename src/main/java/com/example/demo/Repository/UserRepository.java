@@ -103,6 +103,7 @@ public class UserRepository {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "UPDATE staff SET password=? WHERE id=?";
+
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setString(1, staff.getPassword());
             prepStatement.setInt(2, staff.getId());

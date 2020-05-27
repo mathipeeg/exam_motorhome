@@ -18,6 +18,7 @@ public class OrderController {
     UserRepository userRepository = new UserRepository();
     FleetRepository fleetRepository = new FleetRepository();
 
+
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
         model.addAttribute("motorhomes", fleetRepository.getAllMotorhomes());
