@@ -242,67 +242,69 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div id="create-customer-div">
+<div class="container">
     <form id="create-customer-form" th:action="@{/submit-order}" method="post">
-        <p>Eksisterende kunde</p>
-        <hr size="4">
+        <p class="p-create-order">Eksisterende kunde</p>
+        <hr class="hr-create-order" size="4">
         <table id="table-upper">
-            <td id="existing-email-td"><label for="input-existing"></label></td>
+            <tr id="existing-email-td"><label for="input-existing"></label></tr>
             <div id="kunde-email-td"><td>
                 <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
         </tr>
-
-        <p>Kunde Information</p>
-        <hr size="4">
         </table>
+
+        <p class="p-create-order">Kunde Information</p>
+        <hr class="hr-create-order" size="4">
         <div style="overflow-x:auto">
         <table class="table-class">
+            <tbody id="table-class-costumer-info">
             <tr>
             <tr>
-                <td><label for="first-name">Fornavn: </label></td>
-                <td><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
-                <td><label for="last-name">Efternavn: </label></td>
-                <td><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
+                <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
+                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
+                <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
             </tr>
             <tr>
-                <td><label for="address">Adresse: </label></td>
+                <td class="table-class-td-class"><label for="address">Adresse: </label></td>
                 <!-- TODO Opsæt adresse i flere felter-->
-                <td><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
+                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
             </tr>
             <tr>
-                <td><label for="telephone">Telefon:</label></td> <!-- -->
-                <td><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
-                <td><label for="email">E-mail: </label></td>
-                <td><input type="text" id="email" name="email" placeholder="E-mail"></td> <!--todo email @-->
+                <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
+                <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td class="table-class-td-class"><label for="email">E-mail: </label></td>
+                <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
             </tr>
             <tr>
-                <td><label for="card-info">Kort information: </label></td>
-                <td><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-                <td><label for="card-date">Udløbsdato: </label></td>
-                <td><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
+                <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
+                <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
+                <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
             </tr>
             <tr>
-                <td><label for="card-cvs">Kontrolcifre:</label></td>
-                <td><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
+                <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
+                <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
             </tr>
+            </tbody>
         </table>
-            <p id="p1">Teknisk information</p>
-            <hr id="hr1" size="4">
+        </div>
+            <p class="p-create-order">Teknisk information</p>
+            <hr class="hr-create-order" size="4">
         <div style="overflow:auto">
         <table class="table-class">
             <tr>
-                <td><label for="pick-up">Pickup:&emsp;&emsp;&emsp;&emsp;</label></td>
-                <td><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
-                <td><label for="drop-off">Dropoff:&ensp;&nbsp;</label></td>
-                <td><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
+                <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
+                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
+                <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
+                <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
             </tr>
             <tr>
-                <td><label for="start-date">Startdato: </label></td> <!--todo foreslå dato -->
-                <td><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
-                <td><label for="end-date">Slutdato:</label></td> <!--todo date -->
-
-                <td><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
+                <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
+                <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
+                <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
+                <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
             </tr>
         </table>
         </div>
@@ -315,11 +317,11 @@
                         th:value="${motorhome.id}"></option>
             </select>
         </div>
-        <div class="btn"> <button type="submit" form="create-customer-form">OPRET ORDRE</button></div>
-    </div>
+
+        <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
+
     </form>
 </div>
-
 <!--    <div class="footer">-->
 <!--        <p><b>Nordic Rental Motorhomes</b> <br>-->
 <!--                Københavnsvej 334, 2600 Glostrup-->

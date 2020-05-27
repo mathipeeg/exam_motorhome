@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.Service.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,11 +32,6 @@ public class HomeController {
     @GetMapping("/login")
     public String login(){
         return "login";
-    }
-
-    @GetMapping("/failed-login")
-    public String failedLogin(){
-        return "failed-login";
     }
 
     @PostMapping("/login")

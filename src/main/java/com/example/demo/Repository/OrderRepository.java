@@ -7,35 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 @Repository
-public class OrderRepository
-{
-
-
-    public Motorhome getMotorhome(int motorhomeId) throws CustomException
-    {
-        try {
-
-            Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM motorhome WHERE id=?";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, motorhomeId);
-            ResultSet rs = prepStatement.executeQuery();
-            if (rs.next()) {
-                int id = rs.getInt("id");
-                int brandId = rs.getInt("brand_id");
-                int sizeId = rs.getInt("size_id");
-                Motorhome motorhome = new Motorhome(id, brandId, sizeId);
-                return motorhome;
-            }
-
-        } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("Motorhome couldn't be found.");
-            }
-        }
-        return null;
-    }
-
+public class OrderRepository {
 
     public Size getSize(int sizeId) throws CustomException {
         try{
@@ -188,8 +160,6 @@ public class OrderRepository
         }
     }
 
-
-    // TODO: 19/05/2020 Datoer lavet til Dates og ikke String
     public ArrayList<Extras> getAllExtras()
     {
         ArrayList<Extras> extraArray = new ArrayList<>();
@@ -244,57 +214,6 @@ public class OrderRepository
         return null;
     }
 
-    public ArrayList<Motorhome> getAllMotorhomes()
-    {
-        ArrayList<Motorhome> allMotorhomesArray = new ArrayList<>();
-
-        try {
-            Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM motorhome inner join brand on motorhome.brand_id = brand.id inner join  size on motorhome.size_id =size.id";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            ResultSet rs = prepStatement.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int brand_id = rs.getInt("brand_id");
-                int size_id = rs.getInt("size_id");
-                String brandName = rs.getString("name");
-                String sizeName = rs.getString("size_name");
-                Motorhome motorhome = new Motorhome(id, brand_id, size_id, brandName, sizeName);
-                allMotorhomesArray.add(motorhome);
-            }
-            return allMotorhomesArray;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public ArrayList<Brand> getBrand()
-    {
-        ArrayList<Brand> getBrandArray = new ArrayList<>();
-
-        try {
-            Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM brand";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            ResultSet rs = prepStatement.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                Brand brand = new Brand(id, name);
-                getBrandArray.add(brand);
-            }
-            return getBrandArray;
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return null;
-    }
-
     public Customer getCustomerInfo(int id) throws CustomException
     {
         try {
@@ -324,37 +243,7 @@ public class OrderRepository
         return null;
     }
 
-    public Motorhome getMotorhomeInfo(int id)
-    {
-
-        try {
-
-            Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM motorhome INNER JOIN brand ON motorhome.brand_id = brand.id INNER JOIN size on motorhome.size_id = size.id WHERE motorhome.id=?";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, id);
-            ResultSet rs = prepStatement.executeQuery();
-
-            if (rs.next()) {
-                int motorhomeId = rs.getInt("id");
-                int brand_id = rs.getInt("brand_id");
-                int size_id = rs.getInt("size_id");
-                String brandName = rs.getString("name");
-                String sizeName = rs.getString("size_name");
-                int price = rs.getInt("price");
-                Motorhome motorhome = new Motorhome(motorhomeId, brand_id, size_id, brandName, sizeName, price);
-                return motorhome;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-
-        public ArrayList<OrderExtras> getExtraInfo(int getLastOrderId)
-    {
+    public ArrayList<OrderExtras> getExtraInfo(int getLastOrderId) {
         ArrayList<OrderExtras> getOrderExtrasArray = new ArrayList<>();
 
         try {

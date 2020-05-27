@@ -42,13 +42,13 @@
 </script>
 <body>
     <div th:replace="fragments/header :: header"></div>
-    <div class="login-container">
+    <div class="container">
         <form class="center" id="login-form">
             <input type="text" id="login-email" name="email" placeholder="Email" autofocus>
             <br>
             <input type="password" id="password" name="password" placeholder="Password">
         </form>
-        <button class="login-btn" onclick="login()">Login</button>
+        <button class="btn" onclick="login()">Login</button>
     </div>
 
     <div id="failed-login"> <!--todo: DIV SKAL CSS?-->

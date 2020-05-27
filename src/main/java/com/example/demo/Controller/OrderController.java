@@ -16,10 +16,12 @@ public class OrderController {
     LoginService loginService = new LoginService();
     OrderRepository orderRepository = new OrderRepository();
     UserRepository userRepository = new UserRepository();
+    FleetRepository fleetRepository = new FleetRepository();
+
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model){
-        model.addAttribute("motorhomes", orderRepository.getAllMotorhomes());
+        model.addAttribute("motorhomes", fleetRepository.getAllMotorhomes());
         model.addAttribute("customers", userRepository.getAllCustomers());
         return loginService.checkCurrentUser(request, "create-order");
     }
@@ -47,15 +49,14 @@ public class OrderController {
     {
         Order order = orderRepository.getOrder(orderRepository.getLastOrderId());
         Customer customer = orderRepository.getCustomerInfo(order.getCustomerId());
-        Motorhome motorhome = orderRepository.getMotorhomeInfo(order.getMotorhomeId());
+        Motorhome motorhome = fleetRepository.getMotorhomeInfo(order.getMotorhomeId());
 
         model.addAttribute("totalprice", orderService.totalPrice(order, "totalPriceAll"));
-        model.addAttribute("nightstotalprice", orderService.totalPrice(order, "hej"));
+        model.addAttribute("nightstotalprice", orderService.totalPrice(order, ""));
         model.addAttribute("orderextra", orderRepository.getExtraInfo(orderRepository.getLastOrderId()));
         model.addAttribute("order", order);
         model.addAttribute("customer", customer);
         model.addAttribute("motorhome", motorhome);
-
         return loginService.checkCurrentUser(request, "order-submitted");
     }
 }
