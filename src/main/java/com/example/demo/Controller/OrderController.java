@@ -32,9 +32,9 @@ public class OrderController {
     }
 
     @GetMapping("add-extras")
-    public String addExtras(Model model){
+    public String addExtras(Model model, HttpServletRequest request){
         model.addAttribute("extras", orderRepository.getAllExtras());
-        return "add-extras";
+        return loginService.checkCurrentUser(request, "add-extras");
     }
 
     @PostMapping("/addExtra")
