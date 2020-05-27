@@ -7,9 +7,9 @@
 </head>
 <script>
     function getExtras() {
-        var extras = document.getElementsByName("extras");
+        let extras = document.getElementsByName("extras");
         //var extraId = document.getElementsByName("extras").id;
-        for (var i = 0; i < extras.length; i++) {
+        for (let i = 0; i < extras.length; i++) {
             if (extras[i].id === "check" && extras[i].checked) {
                 addExtras(extras[i].value)
             }
@@ -19,19 +19,23 @@
     }
 
     function addExtras(id) {
-        var xhttp = new XMLHttpRequest();
+        let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/addExtra?extraId="+id, true);
         xhttp.send();
     }
 </script>
 <body>
+<div th:replace="fragments/header :: header"></div>
+    <div class="container">
     <table>
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}">
             <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
-        <button onclick="getExtras()" id="add-extras">Add extras</button>
+
     </table>
+        <button onclick="getExtras()" id="add-extras">Add extras</button>
+    </div>
     <footer>
         <div class="footer">
             <p><b>Nordic Rental Motorhomes</b> <br>

@@ -32,6 +32,8 @@ public class OrderService {
 
     public void submitOrder(CustomerOrder co) throws CustomException {
         Order order = new Order();
+        System.out.println(co.getStartDate());
+        System.out.println(co.getEndDate());
         int customerId;
         if(!co.getExistingEmail().contains("@")){
             orderRepository.newCustomer(co);
