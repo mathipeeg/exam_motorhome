@@ -30,10 +30,8 @@ public class OrderService {
     DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
     FleetRepository fleetRepository = new FleetRepository();
 
-    public void submitOrder(CustomerOrder co) throws CustomException {
+    public void submitOrder(CustomerOrder co) {
         Order order = new Order();
-        System.out.println(co.getStartDate());
-        System.out.println(co.getEndDate());
         int customerId;
         if(!co.getExistingEmail().contains("@")){
             orderRepository.newCustomer(co);
@@ -87,14 +85,14 @@ public class OrderService {
         else return ((priceNightly/100) * 60) + priceNightly;
     }
 
-    public void addExtra(int extraId) throws CustomException {
+    public void addExtra(int extraId) {
         OrderExtras orderExtras = new OrderExtras();
         orderExtras.setExtraId(extraId);
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
 
-    public double totalPrice(Order co, String string) throws CustomException {
+    public double totalPrice(Order co, String string) {
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -103,17 +101,16 @@ public class OrderService {
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
 
-        for (int i = 0; i < orderRepository.getExtraInfo(co.getId()).size() ; i++) {
-            allExtraPrice+=orderRepository.getExtraInfo(co.getId()).get(i).getPrice();
+        for (OrderExtras extra : orderRepository.getExtraInfo(co.getId())) {
+            allExtraPrice+=extra.getPrice();
         }
-
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
         if (string.equalsIgnoreCase("totalPriceAll")) return totalPriceAll;
-        else return  nightsTotalPrice;
+        else return nightsTotalPrice;
     }
 
-    public Order getOrder(int lastOrderId) throws CustomException {
+    public Order getOrder(int lastOrderId) {
         Order order = orderRepository.getOrder(lastOrderId);
         order.setStartDate(order.getStartDate());
         return null;

@@ -27,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("/submit-order")
-    public String submitOrder(@ModelAttribute CustomerOrder customerOrder) throws CustomException {
+    public String submitOrder(@ModelAttribute CustomerOrder customerOrder) {
         orderService.submitOrder(customerOrder);
         return "redirect:/add-extras";
     }
@@ -39,14 +39,13 @@ public class OrderController {
     }
 
     @PostMapping("/addExtra")
-    public String addExtra(@RequestParam("extraId") int extraId) throws CustomException {
+    public String addExtra(@RequestParam("extraId") int extraId) {
         orderService.addExtra(extraId);
         return "order-submitted";
     }
 
     @GetMapping("/order-submitted")
-    public String orderSubmitted(HttpServletRequest request, Model model) throws CustomException
-    {
+    public String orderSubmitted(HttpServletRequest request, Model model){
         Order order = orderRepository.getOrder(orderRepository.getLastOrderId());
         Customer customer = orderRepository.getCustomerInfo(order.getCustomerId());
         Motorhome motorhome = fleetRepository.getMotorhomeInfo(order.getMotorhomeId());

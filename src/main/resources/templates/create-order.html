@@ -3,17 +3,16 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/stylesheet.css">PRIMARY
+    <link rel="stylesheet" href="../static/stylesheet.css">
     <title>NRM: Create Order</title>
 </head>
-<script th:inline="javascript"> //TODO få over i et seperat dokument
+<script th:inline="javascript">
     let digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete",
         "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let customerDb = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs"];
-    // let customerModel = ["firstName", "lastName", "telephone", "email", "address", "cardInfo", "expDate", "cvs"];
 
     window.onload = function (){
         validateCard();
@@ -136,18 +135,13 @@
             let element = document.getElementById("card-info");
             element.addEventListener("keydown", function (event) {
                 if (element.value.length === 10) {
-                    console.log("FON");
                     if (!digits.includes(event.key)) {
-                        console.log("FON uden digits");
-                        // console.log(element.value.length)
                         document.getElementById("card-date").focus();
                         document.getElementById("card-date").addEventListener("keydown", function (event) {
-                            console.log("DATE");
                             let date = this.value;
                             let year = date.split("-")[0];
                             if (year.charAt(0) === "2") {
                                 if (!digits.includes(event.key)) {
-                                    console.log("cvs");
                                     document.getElementById("card-cvs").focus();
                                 }
                             }

@@ -15,13 +15,13 @@
 #header-title{
     margin-bottom: 10px;
     text-shadow: 1px 1px black;
-    cursor: pointer;
 }
 #img{
     width: 125px;
     height: 125px;
     padding-left: 20px;
     padding-right: 20px;
+    cursor: pointer;
 }
 #btn-header-left, #btn-header-right{
     padding: 10px;
@@ -198,3 +198,10 @@ body{
     text-align-last: center;
 }
 /*---FOOTER SLUT---*/
+
+/*---ERROR PAGE---*/
+#error-div{
+    text-align: center;
+    font-family: Helvetica;
+}
+/*---ERROR PAGE SLUT---*/

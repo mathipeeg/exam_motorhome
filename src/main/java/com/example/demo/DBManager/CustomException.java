@@ -1,7 +1,7 @@
-package com.example.demo.DBManager;
-
-public class CustomException extends Exception{
-    public CustomException(String message) {
-        super(message);
-    }
-}
+//package com.example.demo.DBManager;
+//
+//public class CustomException extends Exception{
+//    public CustomException(String message) {
+//        super(message);
+//    }
+//}
