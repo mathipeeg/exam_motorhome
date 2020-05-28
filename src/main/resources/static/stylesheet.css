@@ -43,19 +43,16 @@
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     color: azure;
 }
-
 #logout-png{
     height: 2rem;
     width: 2rem;
     cursor: pointer;
 }
-
 #logout-div{
     text-align: left;
     position: absolute;
     padding-top: 0.5rem;
 }
-
 /*---HEADER STUFF SLUT---*/
 
 /*---.CONTAINER BLÅ FORM---*/
@@ -77,7 +74,8 @@
     padding-left: 1rem;
 }
 .table-class-td-class-left{
-    padding-right: 10%;
+
+/*   //TODO Få det til at virke*/
     margin-right: 10%;
 }
 /*---OPSÆTNING AF td's I CREATE ORDER SLUT---*/
