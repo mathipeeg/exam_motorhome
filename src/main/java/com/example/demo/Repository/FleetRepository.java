@@ -1,6 +1,7 @@
 package com.example.demo.Repository;
 
 import com.example.demo.DBManager.DBManager;
+import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.Motorhome;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +15,7 @@ import java.util.ArrayList;
 @Repository
 public class FleetRepository {
 
-    public ArrayList<Motorhome> getAllMotorhomes()
-    {
+    public ArrayList<Motorhome> getAllMotorhomes() {
         ArrayList<Motorhome> allMotorhomesArray = new ArrayList<>();
 
         try {
@@ -37,9 +37,8 @@ public class FleetRepository {
             }
             return allMotorhomesArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+           throw new DatabaseException("Connection to database failed");
         }
-        return null;
     }
 
     public Motorhome getMotorhomeInfo(int id)
@@ -62,7 +61,7 @@ public class FleetRepository {
                 return motorhome;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("ID doesn't exist.");
         }
         return null;
     }
@@ -86,7 +85,7 @@ public class FleetRepository {
 
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new IllegalArgumentException("ID doesn't exist.");
             }
         }
         return null;

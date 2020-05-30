@@ -29,8 +29,8 @@ public class UserRepository {
                 }
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+            if(e instanceof SQLIntegrityConstraintViolationException){
+                throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }
         return false;
@@ -58,13 +58,13 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }
         return null;
     }
 
-    public ArrayList<Staff> getAllStaff(){
+    public ArrayList<Staff> getAllStaff() throws DatabaseException {
         ArrayList<Staff> staffArray = new ArrayList<>();
 
         try{
@@ -86,9 +86,8 @@ public class UserRepository {
             }
             return staffArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to database failed.");
         }
-        return null;
     }
 
     public void updatePassword(Staff staff) {
@@ -102,7 +101,7 @@ public class UserRepository {
             prepStatement.executeUpdate();
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                e.printStackTrace();
+                throw new NullPointerException("Adding staff failed, as a value is null.");
             }
         }
     }
@@ -130,8 +129,7 @@ public class UserRepository {
             }
             return customerArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to database failed.");
         }
-        return null;
     }
 }

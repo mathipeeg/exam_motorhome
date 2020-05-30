@@ -13,6 +13,7 @@
     let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let customerDb = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs"];
+    let allInput = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs", "pick-up", "drop-off", "start-date", "end-date"];
 
     window.onload = function (){
         validateCard();
@@ -27,6 +28,12 @@
         checkInput("motorhome", 2);
     }
 
+    document.addEventListener("keyup", function(event){
+        if (event.key === "Enter"){
+            checkInputOnEnter(document.forms["create-customer-form"]);
+        }
+    })
+
     function autofillCustomer(){
         let element = document.getElementById("input-existing");
         let form = document.forms["create-customer-form"];
@@ -36,10 +43,10 @@
             for (let i = 0; i < customers.length; i++) {
                 if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
                     setValues(customers[i], form);
-                    setBackground("rgb(152,251,152,0.5)");
+                    setBackground(customerDb, "rgb(152,251,152,0.5)");
                 } else {
                     removeValues(form);
-                    setBackground("#FFFFFF");
+                    setBackground(customerDb, "#FFFFFF");
                 }
             }
             /*]]>*/
@@ -57,9 +64,9 @@
         form["card-cvs"].value = customer.cvs;
     }
 
-    function setBackground(colour) {
-        for (let i = 0; i < customerDb.length; i++) {
-            setBg(document.getElementById(customerDb[i]), colour);
+    function setBackground(array, colour) {
+        for (let i = 0; i < array.length; i++) {
+            setBg(document.getElementById(array[i]), colour);
         }
     }
 
@@ -72,7 +79,6 @@
     function validatePhone() {
         let inputTelephone = document.getElementById("telephone");
         inputTelephone.addEventListener("keydown", function (event) {
-            console.log(inputTelephone.value.length);
             if(!digits.includes(event.key)){
                 setBg(inputTelephone, "rgb(250,128,114,0.6)");
                 event.preventDefault();
@@ -121,9 +127,23 @@
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener("keyup", function (event) {
                 if(event.key === "Enter"){
-                    form.submit()
+                    checkInputOnEnter(form);
                 }
             });
+        }
+    }
+
+    function checkInputOnEnter(form){
+        let list = [];
+        for (let j = 0; j < allInput.length; j++) {
+            if(document.getElementById(allInput[j]).value.length === 0){
+                list.push(allInput[j]);
+            }
+        }
+        if(list.length > 0){
+            setBackground(list, "rgb(250,128,114,0.6)");
+        } else {
+            form.submit();
         }
     }
 
@@ -238,7 +258,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeypress="return event.keyCode !== 13;">
         <p class="p-create-order">Eksisterende kunde</p>
         <hr class="hr-create-order" size="4">
         <table id="table-upper">

@@ -169,3 +169,9 @@ alter table motorhome
 UPDATE motorhome SET img='../static/img/motorhome-1.jpg' where size_id=1;
 UPDATE motorhome SET img='../static/img/motorhome-2.jpg' where size_id=2;
 UPDATE motorhome SET img='../static/img/motorhome-3.jpg' where size_id=3;
+
+create unique index customer_email_uindex
+	on customer (email);
+
+create unique index staff_email_uindex
+	on staff (email);
