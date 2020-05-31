@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class FleetController {
 
-    LoginService loginService;
-    FleetService fleetService;
+    LoginService loginService = new LoginService();
+    FleetService fleetService = new FleetService();
 
     @GetMapping("/get-fleet")
     public String getFleets(Model model, HttpServletRequest request) {

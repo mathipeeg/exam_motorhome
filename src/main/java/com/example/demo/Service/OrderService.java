@@ -46,7 +46,6 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
-
         orderRepository.newOrder(order);
     }
 

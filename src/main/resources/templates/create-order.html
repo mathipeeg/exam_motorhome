@@ -22,6 +22,7 @@
         eventOnEnter();
         autofocus();
         autofillCustomer();
+        checkAvailibility();
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
@@ -211,7 +212,6 @@
             for (let i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
                     let year = this.value.split("-")[0];
-                    console.log(year)
                     if (year.charAt(0) === "2") {
                         setBg(dates[i], "rgb(152,251,152,0.5)");
                     } else {
@@ -228,7 +228,10 @@
                     setBg(element.options[selected], "rgba(152,251,152,0.5)");
                     for (let i = 0; i < element.options.length; i++) {
                         if (element.options[i].index !== selected) {
-                            setBg(element.options[i], "#FFFFFF")
+                            let item = element.options.namedItem(element.options[i].id);
+                            if (item !== null && !item.disabled){
+                                setBg(element.options[i], "#FFFFFF")
+                            }
                         }
                     }
                 } else {
@@ -248,6 +251,41 @@
                 })
             }
         }
+    }
+
+    function checkAvailibility() {
+        /*<![CDATA[*/
+        let booked = /*[[${bookedHomes}]]*/ 'default';
+        let options = document.getElementById("motorhome-id");
+        document.getElementById("motorhome-id").addEventListener("click", function (event) {
+            let count = {};
+            for (const i of booked) {
+                count[i.motorhomeId] = (count[i.motorhomeId]||0) + 1;
+            }
+            for (let i = 0; i < booked.length; i++) {
+                let bookedStartSplit = booked[i].startDate.split("-");
+                let bookedStart = new Date(bookedStartSplit[0], parseInt(bookedStartSplit[1]) - 1, bookedStartSplit[2]);
+                let bookedEndSplit = booked[i].endDate.split("-");
+                let bookedEnd = new Date(bookedEndSplit[0], parseInt(bookedEndSplit[1]) - 1, bookedEndSplit[2]);
+
+                let dates = document.getElementsByClassName("date");
+                let startDateSplit = dates[0].value.split("-");
+                let startDate = new Date(startDateSplit[0], parseInt(startDateSplit[1]) - 1, startDateSplit[2]);
+                let endDateSplit = dates[1].value.split("-");
+                let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
+                if (count[booked[i].motorhomeId] >= 3) {
+                    if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
+                        //DATES AVAILABLE
+                        options.options.namedItem(booked[i].motorhomeId).disabled = true;
+                        setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
+                    } else {
+                        options.options.namedItem(booked[i].motorhomeId).disabled = false;
+                        setBg(options.options.namedItem(booked[i].motorhomeId), "#FFFFFF");
+                    }
+                }
+            }
+        });
+        /*]]>*/
     }
 
     function setBg(element, colour){
@@ -329,6 +367,7 @@
                <option>Motorhome types</option>
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
+                        th:id="${motorhome.id}"
                         th:value="${motorhome.id}"></option>
             </select>
         </div>
