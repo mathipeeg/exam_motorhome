@@ -8,13 +8,11 @@
 <script>
     function getExtras() {
         let extras = document.getElementsByName("extras");
-        //var extraId = document.getElementsByName("extras").id;
         for (let i = 0; i < extras.length; i++) {
             if (extras[i].id === "check" && extras[i].checked) {
                 addExtras(extras[i].value)
             }
         }
-        console.log("hej :3")
         window.location.href = "http://localhost:8080/order-submitted";
     }
 
@@ -29,11 +27,17 @@
     <div class="container">
     <table>
         <tr th:each="extra : ${extras}">
-            <td><input type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}">
+            <td><input type="checkbox" id="extras" name="extras" th:id="check" th:value="${extra.id}">
             <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
 
     </table>
+<!--    <div th:each="extra : ${extras}">-->
+<!--        <label class="label-checkbox" th:text="${extra.description}">-->
+<!--            <input type="checkbox" class="checkmark" th:id="check" th:value="${extra.id}">-->
+<!--            <span class="checkmark"></span>-->
+<!--        </label>-->
+<!--    </div>-->
         <button onclick="getExtras()" id="add-extras">Add extras</button>
     </div>
     <footer>

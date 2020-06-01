@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="../static/stylesheet.css">
     <title>NRM: Create Order</title>
 </head>
-<script th:inline="javascript"> //TODO få over i et seperat dokument
+<script th:inline="javascript">
     let digits = ["1","2","3","4","5","6","7","8","9","0", "Tab", "Backspace", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "Escape", "Shift", "CapsLock", "NumLock", "Delete",
         "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let customerDb = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs"];
-    // let customerModel = ["firstName", "lastName", "telephone", "email", "address", "cardInfo", "expDate", "cvs"];
+    let allInput = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs", "pick-up", "drop-off", "start-date", "end-date"];
 
     window.onload = function (){
         validateCard();
@@ -22,11 +22,18 @@
         eventOnEnter();
         autofocus();
         autofillCustomer();
+        checkAvailibility();
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
     }
+
+    document.addEventListener("keyup", function(event){
+        if (event.key === "Enter"){
+            checkInputOnEnter(document.forms["create-customer-form"]);
+        }
+    })
 
     function autofillCustomer(){
         let element = document.getElementById("input-existing");
@@ -37,10 +44,10 @@
             for (let i = 0; i < customers.length; i++) {
                 if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
                     setValues(customers[i], form);
-                    setBackground("rgb(152,251,152,0.5)");
+                    setBackground(customerDb, "rgb(152,251,152,0.5)");
                 } else {
                     removeValues(form);
-                    setBackground("#FFFFFF");
+                    setBackground(customerDb, "#FFFFFF");
                 }
             }
             /*]]>*/
@@ -58,9 +65,9 @@
         form["card-cvs"].value = customer.cvs;
     }
 
-    function setBackground(colour) {
-        for (let i = 0; i < customerDb.length; i++) {
-            setBg(document.getElementById(customerDb[i]), colour);
+    function setBackground(array, colour) {
+        for (let i = 0; i < array.length; i++) {
+            setBg(document.getElementById(array[i]), colour);
         }
     }
 
@@ -73,7 +80,6 @@
     function validatePhone() {
         let inputTelephone = document.getElementById("telephone");
         inputTelephone.addEventListener("keydown", function (event) {
-            console.log(inputTelephone.value.length);
             if(!digits.includes(event.key)){
                 setBg(inputTelephone, "rgb(250,128,114,0.6)");
                 event.preventDefault();
@@ -122,9 +128,23 @@
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener("keyup", function (event) {
                 if(event.key === "Enter"){
-                    form.submit()
+                    checkInputOnEnter(form);
                 }
             });
+        }
+    }
+
+    function checkInputOnEnter(form){
+        let list = [];
+        for (let j = 0; j < allInput.length; j++) {
+            if(document.getElementById(allInput[j]).value.length === 0){
+                list.push(allInput[j]);
+            }
+        }
+        if(list.length > 0){
+            setBackground(list, "rgb(250,128,114,0.6)");
+        } else {
+            form.submit();
         }
     }
 
@@ -136,18 +156,13 @@
             let element = document.getElementById("card-info");
             element.addEventListener("keydown", function (event) {
                 if (element.value.length === 10) {
-                    console.log("FON");
                     if (!digits.includes(event.key)) {
-                        console.log("FON uden digits");
-                        // console.log(element.value.length)
                         document.getElementById("card-date").focus();
                         document.getElementById("card-date").addEventListener("keydown", function (event) {
-                            console.log("DATE");
                             let date = this.value;
                             let year = date.split("-")[0];
                             if (year.charAt(0) === "2") {
                                 if (!digits.includes(event.key)) {
-                                    console.log("cvs");
                                     document.getElementById("card-cvs").focus();
                                 }
                             }
@@ -197,7 +212,6 @@
             for (let i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
                     let year = this.value.split("-")[0];
-                    console.log(year)
                     if (year.charAt(0) === "2") {
                         setBg(dates[i], "rgb(152,251,152,0.5)");
                     } else {
@@ -214,7 +228,10 @@
                     setBg(element.options[selected], "rgba(152,251,152,0.5)");
                     for (let i = 0; i < element.options.length; i++) {
                         if (element.options[i].index !== selected) {
-                            setBg(element.options[i], "#FFFFFF")
+                            let item = element.options.namedItem(element.options[i].id);
+                            if (item !== null && !item.disabled){
+                                setBg(element.options[i], "#FFFFFF")
+                            }
                         }
                     }
                 } else {
@@ -236,6 +253,41 @@
         }
     }
 
+    function checkAvailibility() {
+        /*<![CDATA[*/
+        let booked = /*[[${bookedHomes}]]*/ 'default';
+        let options = document.getElementById("motorhome-id");
+        document.getElementById("motorhome-id").addEventListener("click", function (event) {
+            let count = {};
+            for (const i of booked) {
+                count[i.motorhomeId] = (count[i.motorhomeId]||0) + 1;
+            }
+            for (let i = 0; i < booked.length; i++) {
+                let bookedStartSplit = booked[i].startDate.split("-");
+                let bookedStart = new Date(bookedStartSplit[0], parseInt(bookedStartSplit[1]) - 1, bookedStartSplit[2]);
+                let bookedEndSplit = booked[i].endDate.split("-");
+                let bookedEnd = new Date(bookedEndSplit[0], parseInt(bookedEndSplit[1]) - 1, bookedEndSplit[2]);
+
+                let dates = document.getElementsByClassName("date");
+                let startDateSplit = dates[0].value.split("-");
+                let startDate = new Date(startDateSplit[0], parseInt(startDateSplit[1]) - 1, startDateSplit[2]);
+                let endDateSplit = dates[1].value.split("-");
+                let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
+                if (count[booked[i].motorhomeId] >= 3) {
+                    if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
+                        //DATES AVAILABLE
+                        options.options.namedItem(booked[i].motorhomeId).disabled = true;
+                        setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
+                    } else {
+                        options.options.namedItem(booked[i].motorhomeId).disabled = false;
+                        setBg(options.options.namedItem(booked[i].motorhomeId), "#FFFFFF");
+                    }
+                }
+            }
+        });
+        /*]]>*/
+    }
+
     function setBg(element, colour){
         element.style.backgroundColor = colour;
     }
@@ -244,7 +296,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeypress="return event.keyCode !== 13;">
         <p class="p-create-order">Eksisterende kunde</p>
         <hr class="hr-create-order" size="4">
         <table id="table-upper">
@@ -315,6 +367,7 @@
                <option>Motorhome types</option>
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
+                        th:id="${motorhome.id}"
                         th:value="${motorhome.id}"></option>
             </select>
         </div>

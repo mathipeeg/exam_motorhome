@@ -29,12 +29,8 @@ public class UserRepository {
                 }
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                try {
-                    throw new LoginException("Error occured. Couldn't login.");
-                } catch (LoginException loginException) {
-                    loginException.printStackTrace();
-                }
+            if(e instanceof SQLIntegrityConstraintViolationException){
+                throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }
         return false;
@@ -62,17 +58,13 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                try {
-                    throw new LoginException("Error occured. Couldn't find user with those credentials.");
-                } catch (LoginException loginException) {
-                    loginException.printStackTrace();
-                }
+                throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }
         return null;
     }
 
-    public ArrayList<Staff> getAllStaff(){
+    public ArrayList<Staff> getAllStaff() throws DatabaseException {
         ArrayList<Staff> staffArray = new ArrayList<>();
 
         try{
@@ -94,9 +86,8 @@ public class UserRepository {
             }
             return staffArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to database failed.");
         }
-        return null;
     }
 
     public void updatePassword(Staff staff) {
@@ -110,11 +101,7 @@ public class UserRepository {
             prepStatement.executeUpdate();
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                try {
-                    throw new CustomException("Student idk can't be updated lmao");
-                } catch (CustomException customException) {
-                    customException.printStackTrace();
-                }
+                throw new NullPointerException("Adding staff failed, as a value is null.");
             }
         }
     }
@@ -142,8 +129,7 @@ public class UserRepository {
             }
             return customerArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to database failed.");
         }
-        return null;
     }
 }

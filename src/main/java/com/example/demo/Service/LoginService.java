@@ -14,8 +14,6 @@ import java.util.ArrayList;
 @Service
 public class LoginService {
 
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     UserRepository userRepository = new UserRepository();
 
     public boolean checkLogin(Staff staff) {
@@ -33,7 +31,7 @@ public class LoginService {
     }
 
     //Bruges én gang første gang, for at kryptere passwords,
-    //da brugere ikke bliver oprettet via hjemmesiden, men manuelt
+    //da brugere ikke bliver oprettet via hjemmesiden, men manuelt i denne version af systemet
     public void encryptPasswords(){
         ArrayList<Staff> staffArray = userRepository.getAllStaff();
         for (Staff staff : staffArray) {
