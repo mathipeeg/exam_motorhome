@@ -7,12 +7,9 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,7 +85,8 @@ public class OrderService {
         orderRepository.addExtra(orderExtras);
     }
 
-    public double totalPrice(Order co, String string) {
+
+    public double totalPrice(Order co, String string){
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -101,6 +99,7 @@ public class OrderService {
             allExtraPrice+=extra.getPrice();
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
+
 
         if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
         else return nightsTotalPrice;
@@ -116,6 +115,7 @@ public class OrderService {
 
     public Customer getCustomer(Order order) {
         return orderRepository.getCustomer(order.getCustomerId());
+
     }
 
     public ArrayList<OrderExtras> getOrderExtra() throws DatabaseException {
