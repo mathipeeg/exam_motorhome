@@ -28,7 +28,7 @@
         checkInput("date", 2);
         checkInput("motorhome", 2);
     }
-
+    //
     document.addEventListener("keyup", function(event){
         if (event.key === "Enter"){
             checkInputOnEnter(document.forms["create-customer-form"]);
@@ -169,7 +169,7 @@
                         });
                     }
                 }
-            })
+            });
 
             cardInfo.addEventListener("keyup", function (event) {
                 if (cardInfo.value.length === 11) {
@@ -178,7 +178,7 @@
                         cardDate.focus();
                     }
                 }
-            })
+            });
             cardDate.addEventListener("keyup", function (event) {
                 let year = this.value.split("-")[0];
                 if (!inputDigits.includes(event.key)) {
@@ -187,7 +187,7 @@
                         cardCvs.focus();
                     }
                 }
-            })
+            });
             cardCvs.addEventListener("keyup", function (event) {
                 if (cardCvs.value.length === 3) {
                     setBg(cardCvs, "rgb(152,251,152,0.5)")
@@ -275,7 +275,6 @@
                 let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
                 if (count[booked[i].motorhomeId] >= 3) {
                     if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
-                        //DATES AVAILABLE
                         options.options.namedItem(booked[i].motorhomeId).disabled = true;
                         setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
                     } else {
@@ -321,7 +320,6 @@
             </tr>
             <tr>
                 <td class="table-class-td-class"><label for="address">Adresse: </label></td>
-                <!-- TODO Opsæt adresse i flere felter-->
                 <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
             </tr>
             <tr>
@@ -349,7 +347,7 @@
         <table class="table-class">
             <tr>
                 <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
-                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
+                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td>
                 <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
                 <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
             </tr>

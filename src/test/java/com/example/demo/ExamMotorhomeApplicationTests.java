@@ -28,7 +28,7 @@ class ExamMotorhomeApplicationTests {
     @Test
     public void testUser(){
         String expected = "Ulla";
-        assertEquals(expected, userRepository.getStaff("Ulla@NordicRental.dk", "$2a$10$K3YQCZ9vAJdfpdUEUgOpy.Kfh4BVxCI73ORupYTQo5plgOH5sZ06K").getFirstName());
+        assertEquals(expected, userRepository.getStaff("Ulla@NordicRental.dk", "$2a$10$i5gODgRozIcullbsKeY0IOSO1xLQ1tcI4N0wC/ctfGxlIZq/s/Yci").getFirstName());
     }
 
     @Test
@@ -40,8 +40,8 @@ class ExamMotorhomeApplicationTests {
 
     @Test
     public void searchNonExistingOrder() {
-        assertNull(orderRepository.getOrder(1));
-        assertNotNull(orderRepository.getOrder(40));
+        assertNull(orderRepository.getOrder(-1));
+        assertNotNull(orderRepository.getOrder(9));
     }
 
     @Test
@@ -52,7 +52,7 @@ class ExamMotorhomeApplicationTests {
 
     @Test
     public void testLastId() {
-        assertEquals(51, orderRepository.getLastOrderId());
+        assertEquals(9, orderRepository.getLastOrderId());
     }
     //Skift funktionnavne
     //opret kunde ell. lign.
