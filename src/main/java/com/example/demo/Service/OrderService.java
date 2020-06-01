@@ -6,6 +6,10 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -95,6 +99,8 @@ public class OrderService {
     }
 
     public double totalPrice(Order co, String string) throws CustomException {
+
+
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -108,6 +114,7 @@ public class OrderService {
         }
 
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
+
 
         if (string.equalsIgnoreCase("totalPriceAll")) return totalPriceAll;
         else return  nightsTotalPrice;

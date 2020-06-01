@@ -186,3 +186,17 @@ body{
     text-align-last: center;
 }
 /*---FOOTER SLUT---*/
+
+/*---Order-submitted---*/
+
+.td-order-submitted{
+    padding-bottom: 10%;
+}
+
+.p-order-submitted {
+    font-weight: bold;
+    margin-top: 1%;
+    margin-bottom: 10%;
+}
+
+/*---Order-submitted---*/
