@@ -15,13 +15,13 @@
 #header-title{
     margin-bottom: 10px;
     text-shadow: 1px 1px black;
-    cursor: pointer;
 }
 #img{
     width: 125px;
     height: 125px;
     padding-left: 20px;
     padding-right: 20px;
+    cursor: pointer;
 }
 #btn-header-left, #btn-header-right{
     padding: 10px;
@@ -74,9 +74,7 @@
     padding-left: 1rem;
 }
 .table-class-td-class-left{
-
-/*   //TODO Få det til at virke*/
-    margin-right: 10%;
+    padding-right: 10%;
 }
 /*---OPSÆTNING AF td's I CREATE ORDER SLUT---*/
 
@@ -173,6 +171,20 @@ body{
     display: none;
     text-align: center;
 }
+
+#easter-egg{
+    text-align: center;
+    font-size: 400px;
+    font-family: "Comic Sans MS";
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 10px;
+
+}
+
+#easter-p{
+}
 /*---LOGIN SLUT---*/
 
 /*---FOOTER---*/
@@ -186,3 +198,10 @@ body{
     text-align-last: center;
 }
 /*---FOOTER SLUT---*/
+
+/*---ERROR PAGE---*/
+#error-div{
+    text-align: center;
+    font-family: Helvetica;
+}
+/*---ERROR PAGE SLUT---*/

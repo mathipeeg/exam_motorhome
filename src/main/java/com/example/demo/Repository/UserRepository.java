@@ -30,11 +30,7 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                try {
-                    throw new LoginException("Error occured. Couldn't login.");
-                } catch (LoginException loginException) {
-                    loginException.printStackTrace();
-                }
+                e.printStackTrace();
             }
         }
         return false;
@@ -62,11 +58,7 @@ public class UserRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                try {
-                    throw new LoginException("Error occured. Couldn't find user with those credentials.");
-                } catch (LoginException loginException) {
-                    loginException.printStackTrace();
-                }
+                e.printStackTrace();
             }
         }
         return null;
@@ -110,11 +102,7 @@ public class UserRepository {
             prepStatement.executeUpdate();
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                try {
-                    throw new CustomException("Student idk can't be updated lmao");
-                } catch (CustomException customException) {
-                    customException.printStackTrace();
-                }
+                e.printStackTrace();
             }
         }
     }

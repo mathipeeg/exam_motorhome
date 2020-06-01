@@ -15,6 +15,25 @@
                 }
             })
         }
+        easterEgg();
+    }
+
+    function easterEgg(){
+        let inputString = "";
+        document.addEventListener("keyup", function(event){
+            if(event.key !== undefined) {
+                inputString += event.key.toLowerCase();
+            }
+            if(inputString.includes("ayy lmao")) {
+                console.log("Hello. Easter egg is here. :-----)")
+                document.getElementById("easter-egg").style.display = "block";
+                inputString = "";
+                document.addEventListener("click", function (e) {
+                    console.clear();
+                    document.getElementById("easter-egg").style.display = "none";
+                })
+            }
+        })
     }
 
     function login() {
@@ -42,6 +61,9 @@
 </script>
 <body>
     <div th:replace="fragments/header :: header"></div>
+    <div id="easter-egg">
+        <p id="easter-p">:3</p>
+    </div>
     <div class="container">
         <form class="center" id="login-form">
             <input type="text" id="login-email" name="email" placeholder="Email" autofocus>
@@ -50,17 +72,16 @@
         </form>
         <button class="btn" onclick="login()">Login</button>
     </div>
-
     <div id="failed-login"> <!--todo: DIV SKAL CSS?-->
         <h3>Info didn't match. Try again.</h3>
     </div>
-    <footer>
-        <div class="footer"><p>
-            <b>Nordic Rental Motorhomes</b><br>
-            Københavnsvej 334, 2600 Glostrup
-            <br> Telefon: 23 65 78 45 </br>
-            <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a>
-        </p></div>
-    </footer>
+<!--    <footer>-->
+<!--        <div class="footer"><p>-->
+<!--            <b>Nordic Rental Motorhomes</b><br>-->
+<!--            Københavnsvej 334, 2600 Glostrup-->
+<!--            <br> Telefon: 23 65 78 45 </br>-->
+<!--            <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a>-->
+<!--        </p></div>-->
+<!--    </footer>-->
 </body>
 </html>

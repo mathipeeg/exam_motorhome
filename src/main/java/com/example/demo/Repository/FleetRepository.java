@@ -1,6 +1,5 @@
 package com.example.demo.Repository;
 
-import com.example.demo.DBManager.CustomException;
 import com.example.demo.DBManager.DBManager;
 import com.example.demo.Model.Motorhome;
 import org.springframework.stereotype.Repository;
@@ -68,7 +67,7 @@ public class FleetRepository {
         return null;
     }
 
-    public Motorhome getMotorhome(int motorhomeId) throws CustomException
+    public Motorhome getMotorhome(int motorhomeId)
     {
         try {
 
@@ -87,7 +86,7 @@ public class FleetRepository {
 
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("Motorhome couldn't be found.");
+                e.printStackTrace();
             }
         }
         return null;

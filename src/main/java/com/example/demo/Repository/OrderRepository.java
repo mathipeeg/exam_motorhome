@@ -9,9 +9,8 @@ import java.util.ArrayList;
 @Repository
 public class OrderRepository {
 
-    public Size getSize(int sizeId) throws CustomException {
+    public Size getSize(int sizeId){
         try{
-
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM size WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
@@ -25,8 +24,8 @@ public class OrderRepository {
                 return size;
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("Size can't be found.");
+            if(e instanceof SQLIntegrityConstraintViolationException){
+                e.printStackTrace();
             }
         }
         return null;
@@ -47,7 +46,7 @@ public class OrderRepository {
         }
     }
 
-    public void newCustomer(CustomerOrder co) throws CustomException {
+    public void newCustomer(CustomerOrder co){
 
         try {
             Connection connection = DBManager.getConnection();
@@ -65,12 +64,12 @@ public class OrderRepository {
 
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new CustomException("Woah what");
+                e.printStackTrace();
             }
         }
     }
 
-    public int getLastCustomerId() throws CustomException {
+    public int getLastCustomerId() {
         try{
 
             Connection connection = DBManager.getConnection();
@@ -83,14 +82,14 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("Customer's ID was not found.");
+                e.printStackTrace();
             }
         }
         return -1;
     }
 
 
-    public int getLastOrderId() throws CustomException {
+    public int getLastOrderId() {
         try{
 
             Connection connection = DBManager.getConnection();
@@ -103,13 +102,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("The ID for this order was not found.");
+                e.printStackTrace();
             }
         }
         return -1;
     }
 
-    public Customer getCustomer(String existingEmail) throws CustomException {
+    public Customer getCustomer(String existingEmail) {
         try{
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE email=?";
@@ -131,13 +130,13 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                throw new CustomException("Customer couldn't be found.");
+                e.printStackTrace();
             }
         }
         return null;
     }
 
-    public void newOrder(Order order) throws CustomException {
+    public void newOrder(Order order) {
 
         try {
             Connection connection = DBManager.getConnection();
@@ -155,7 +154,7 @@ public class OrderRepository {
 
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new CustomException("Woah what");
+                e.printStackTrace();
             }
         }
     }
@@ -184,7 +183,7 @@ public class OrderRepository {
     }
 
 
-    public Order getOrder(int getLastOrderId) throws CustomException {
+    public Order getOrder(int getLastOrderId) {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM `order` WHERE id=?";
@@ -208,14 +207,13 @@ public class OrderRepository {
             }
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
-                throw new CustomException("Order couldn't be found, unfortunately. Maybe try another ID?");
+                e.printStackTrace();
             }
         }
         return null;
     }
 
-    public Customer getCustomerInfo(int id) throws CustomException
-    {
+    public Customer getCustomerInfo(int id){
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE id=?";
@@ -237,7 +235,7 @@ public class OrderRepository {
             }
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
-                throw new CustomException("???");
+                e.printStackTrace();
             }
         }
         return null;
@@ -265,7 +263,7 @@ public class OrderRepository {
             }
             return getOrderExtrasArray;
 
-        } catch (SQLException | CustomException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
