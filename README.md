@@ -7,6 +7,7 @@
 * establishing database connection
 * exceptions
 * error- and errorcode-handling
+* session-based login
 
 #### To set up the database you'll need a MySQL database - like MySQL Workbench - and create a new connection with the following information:
 
