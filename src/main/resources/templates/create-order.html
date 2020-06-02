@@ -27,13 +27,13 @@
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
-    }
-    //
+    };
+
     document.addEventListener("keyup", function(event){
         if (event.key === "Enter"){
             checkInputOnEnter(document.forms["create-customer-form"]);
         }
-    })
+    });
 
     function autofillCustomer(){
         let element = document.getElementById("input-existing");
@@ -42,9 +42,13 @@
             /*<![CDATA[*/
             let customers = /*[[${customers}]]*/ 'default';
             for (let i = 0; i < customers.length; i++) {
+                console.log(customers[i].email)
+                console.log(element.value)
                 if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
+                    console.log("AHT IT FITS")
                     setValues(customers[i], form);
                     setBackground(customerDb, "rgb(152,251,152,0.5)");
+                    break;
                 } else {
                     removeValues(form);
                     setBackground(customerDb, "#FFFFFF");
@@ -139,6 +143,7 @@
         for (let j = 0; j < allInput.length; j++) {
             if(document.getElementById(allInput[j]).value.length === 0){
                 list.push(allInput[j]);
+                console.log(list)
             }
         }
         if(list.length > 0){
@@ -295,7 +300,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeydown="return event.key !== 'Enter';">
         <p class="p-text-over-underline">Eksisterende kunde</p>
         <hr class="hr-underline" size="4">
         <table id="table-upper">
