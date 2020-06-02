@@ -3,8 +3,6 @@ package com.example.demo.Service;
 import com.example.demo.Model.Staff;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +11,6 @@ import java.util.ArrayList;
 
 @Service
 public class LoginService {
-
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     UserRepository userRepository = new UserRepository();
 
@@ -33,7 +29,7 @@ public class LoginService {
     }
 
     //Bruges én gang første gang, for at kryptere passwords,
-    //da brugere ikke bliver oprettet via hjemmesiden, men manuelt
+    //da brugere ikke bliver oprettet via hjemmesiden, men manuelt i denne version af systemet
     public void encryptPasswords(){
         ArrayList<Staff> staffArray = userRepository.getAllStaff();
         for (Staff staff : staffArray) {

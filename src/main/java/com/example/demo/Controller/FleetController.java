@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
+import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Repository.FleetRepository;
+import com.example.demo.Service.FleetService;
 import com.example.demo.Service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 public class FleetController {
 
     LoginService loginService = new LoginService();
-    FleetRepository fleetRepository = new FleetRepository();
+    FleetService fleetService = new FleetService();
 
     @GetMapping("/get-fleet")
-    public String getFleets(Model model, HttpServletRequest request){
-        model.addAttribute("motorhomes", fleetRepository.getAllMotorhomes());
+    public String getFleets(Model model, HttpServletRequest request) {
+        model.addAttribute("motorhomes", fleetService.getAllMotorhomes());
         return loginService.checkCurrentUser(request, "get-fleet");
     }
 }

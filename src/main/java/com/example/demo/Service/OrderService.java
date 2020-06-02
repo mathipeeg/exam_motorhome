@@ -1,21 +1,15 @@
 package com.example.demo.Service;
 //import com.example.demo.DBManager.OrderException;
+import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
 import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
-import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,13 +21,11 @@ import java.util.concurrent.TimeUnit;
 public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
     FleetRepository fleetRepository = new FleetRepository();
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
 
-    public void submitOrder(CustomerOrder co) throws CustomException {
+    public void submitOrder(CustomerOrder co) {
         Order order = new Order();
-        System.out.println(co.getStartDate());
-        System.out.println(co.getEndDate());
         int customerId;
         if(!co.getExistingEmail().contains("@")){
             orderRepository.newCustomer(co);
@@ -51,7 +43,6 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
-
         orderRepository.newOrder(order);
     }
 
@@ -87,14 +78,15 @@ public class OrderService {
         else return ((priceNightly/100) * 60) + priceNightly;
     }
 
-    public void addExtra(int extraId) throws CustomException {
+    public void addExtra(int extraId) {
         OrderExtras orderExtras = new OrderExtras();
         orderExtras.setExtraId(extraId);
         orderExtras.setOrderId(orderRepository.getLastOrderId());
         orderRepository.addExtra(orderExtras);
     }
 
-    public double totalPrice(Order co, String string) throws CustomException {
+
+    public double totalPrice(Order co, String string){
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -103,19 +95,30 @@ public class OrderService {
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
 
-        for (int i = 0; i < orderRepository.getExtraInfo(co.getId()).size() ; i++) {
-            allExtraPrice+=orderRepository.getExtraInfo(co.getId()).get(i).getPrice();
+        for (OrderExtras extra : orderRepository.getOrderExtra(co.getId())) {
+            allExtraPrice+=extra.getPrice();
         }
-
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
-        if (string.equalsIgnoreCase("totalPriceAll")) return totalPriceAll;
-        else return  nightsTotalPrice;
+
+        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
+        else return nightsTotalPrice;
     }
 
-    public Order getOrder(int lastOrderId) throws CustomException {
-        Order order = orderRepository.getOrder(lastOrderId);
-        order.setStartDate(order.getStartDate());
-        return null;
+    public Order getOrder() {
+        return orderRepository.getOrder(orderRepository.getLastOrderId());
+    }
+
+    public ArrayList<Extras> getAllExtras() throws DatabaseException {
+        return orderRepository.getAllExtras();
+    }
+
+    public Customer getCustomer(Order order) {
+        return orderRepository.getCustomer(order.getCustomerId());
+
+    }
+
+    public ArrayList<OrderExtras> getOrderExtra() throws DatabaseException {
+        return orderRepository.getOrderExtra(orderRepository.getLastOrderId());
     }
 }
