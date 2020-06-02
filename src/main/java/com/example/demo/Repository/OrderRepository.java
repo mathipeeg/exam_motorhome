@@ -3,6 +3,8 @@ package com.example.demo.Repository;
 import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
+
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -24,30 +26,25 @@ public class OrderRepository {
                 return size;
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){
-                e.printStackTrace();
-            }
+            throw new IllegalArgumentException("ID does not exist in database.");
         }
         return null;
     }
 
-    public void addExtra(OrderExtras orderExtras)
-    {
+    public void addExtra(OrderExtras orderExtras) {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, orderExtras.getExtraId());
             prepStatement.setInt(2, orderExtras.getOrderId());
-
             prepStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to the database failed. Try again later.");
         }
     }
 
-    public void newCustomer(CustomerOrder co){
-
+    public void newCustomer(CustomerOrder co){ //UNIK E-MAIL
         try {
             Connection connection = DBManager.getConnection();
             String sql = "INSERT INTO customer VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -61,17 +58,15 @@ public class OrderRepository {
             prepStatement.setDate(7, new java.sql.Date(co.getExpDate().getTime()));
             prepStatement.setInt(8, co.getCvs());
             prepStatement.executeUpdate();
-
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                e.printStackTrace();
+                throw new IllegalArgumentException("Your input was illegal and couldn't be added to the database.");
             }
         }
     }
 
     public int getLastCustomerId() {
         try{
-
             Connection connection = DBManager.getConnection();
             String sql = "SELECT id FROM customer ORDER BY id DESC LIMIT 1";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
@@ -81,8 +76,8 @@ public class OrderRepository {
                 return id;
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+            if(e instanceof SQLIntegrityConstraintViolationException){
+                throw new DatabaseException("Connection to the database failed. Try again later.");
             }
         }
         return -1;
@@ -102,7 +97,7 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new DatabaseException("Connection to the database failed. Try again later.");
             }
         }
         return -1;
@@ -130,7 +125,7 @@ public class OrderRepository {
             }
         } catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new IllegalArgumentException("E-mail doesn't exist in database.");
             }
         }
         return null;
@@ -154,13 +149,12 @@ public class OrderRepository {
 
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
-                e.printStackTrace();
+                throw new NullPointerException("Adding order failed, as a value was null.");
             }
         }
     }
 
-    public ArrayList<Extras> getAllExtras()
-    {
+    public ArrayList<Extras> getAllExtras() {
         ArrayList<Extras> extraArray = new ArrayList<>();
 
         try {
@@ -177,18 +171,17 @@ public class OrderRepository {
             }
             return extraArray;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Connection to the database failed. Try again later.");
         }
-        return null;
     }
 
 
-    public Order getOrder(int getLastOrderId) {
+    public Order getOrder(int id) {
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM `order` WHERE id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId);
+            prepStatement.setInt(1, id);
             ResultSet rs = prepStatement.executeQuery();
             if (rs.next()) {
                 int orderId = rs.getInt("id");
@@ -207,13 +200,13 @@ public class OrderRepository {
             }
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new IllegalArgumentException("ID doesn't exist in database.");
             }
         }
         return null;
     }
 
-    public Customer getCustomerInfo(int id){
+    public Customer getCustomer(int id){
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM customer WHERE id=?";
@@ -235,20 +228,20 @@ public class OrderRepository {
             }
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) { //Undersøg lige den her exception
-                e.printStackTrace();
+                throw new IllegalArgumentException("ID doesn't exist in database.");
             }
         }
         return null;
     }
 
-    public ArrayList<OrderExtras> getExtraInfo(int getLastOrderId) {
+    public ArrayList<OrderExtras> getOrderExtra(int orderId) {
         ArrayList<OrderExtras> getOrderExtrasArray = new ArrayList<>();
 
         try {
             Connection connection = DBManager.getConnection();
             String sql = "SELECT * FROM order_extras INNER JOIN extras ON order_extras.extra_id = extras.id WHERE order_extras.order_id=?";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, getLastOrderId());
+            prepStatement.setInt(1, orderId);
             ResultSet rs = prepStatement.executeQuery();
 
 
@@ -256,17 +249,14 @@ public class OrderRepository {
                 int extraId = rs.getInt("id");
                 String description = rs.getString("description");
                 int price = rs.getInt("price");
-
-
                 OrderExtras orderExtras = new OrderExtras(extraId, description, price);
                 getOrderExtrasArray.add(orderExtras);
             }
             return getOrderExtrasArray;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("ID doesn't exist in database.");
         }
-        return null;
     }
 
 }

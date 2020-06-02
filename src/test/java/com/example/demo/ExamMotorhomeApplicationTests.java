@@ -39,7 +39,7 @@ class ExamMotorhomeApplicationTests {
     }
 
     @Test
-    public void testOrder() {
+    public void searchNonExistingOrder() {
         assertNull(orderRepository.getOrder(1));
         assertNotNull(orderRepository.getOrder(40));
     }
@@ -54,4 +54,6 @@ class ExamMotorhomeApplicationTests {
     public void testLastId() {
         assertEquals(51, orderRepository.getLastOrderId());
     }
+    //Skift funktionnavne
+    //opret kunde ell. lign.
 }
