@@ -169,7 +169,7 @@
                         });
                     }
                 }
-            })
+            });
 
             cardInfo.addEventListener("keyup", function (event) {
                 if (cardInfo.value.length === 11) {
@@ -178,7 +178,7 @@
                         cardDate.focus();
                     }
                 }
-            })
+            });
             cardDate.addEventListener("keyup", function (event) {
                 let year = this.value.split("-")[0];
                 if (!inputDigits.includes(event.key)) {
@@ -187,7 +187,7 @@
                         cardCvs.focus();
                     }
                 }
-            })
+            });
             cardCvs.addEventListener("keyup", function (event) {
                 if (cardCvs.value.length === 3) {
                     setBg(cardCvs, "rgb(152,251,152,0.5)")
@@ -275,7 +275,6 @@
                 let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
                 if (count[booked[i].motorhomeId] >= 3) {
                     if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
-                        //DATES AVAILABLE
                         options.options.namedItem(booked[i].motorhomeId).disabled = true;
                         setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
                     } else {
@@ -296,9 +295,9 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeypress="return event.keyCode !== 13;">
-        <p class="p-create-order">Eksisterende kunde</p>
-        <hr class="hr-create-order" size="4">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+        <p class="p-text-over-underline">Eksisterende kunde</p>
+        <hr class="hr-underline" size="4">
         <table id="table-upper">
             <tr id="existing-email-td"><label for="input-existing"></label></tr>
             <div id="kunde-email-td"><td>
@@ -307,9 +306,10 @@
             </tr>
         </table>
 
-        <p class="p-create-order">Kunde Information</p>
-        <hr class="hr-create-order" size="4">
+        <p class="p-text-over-underline">Kunde Information</p>
+        <hr class="hr-underline" size="4">
         <div style="overflow-x:auto">
+<<<<<<< HEAD
             <table class="table-class">
                 <tbody id="table-class-costumer-info">
                 <tr>
@@ -360,6 +360,57 @@
                     <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
                 </tr>
             </table>
+=======
+        <table class="table-class">
+            <tbody id="table-class-costumer-info">
+            <tr>
+            <tr>
+                <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
+                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
+                <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
+            </tr>
+            <tr>
+                <td class="table-class-td-class"><label for="address">Adresse: </label></td>
+                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
+            </tr>
+            <tr>
+                <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
+                <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                <td class="table-class-td-class"><label for="email">E-mail: </label></td>
+                <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
+            </tr>
+            <tr>
+                <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
+                <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
+                <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
+            </tr>
+            <tr>
+                <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
+                <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+            <p class="p-text-over-underline">Teknisk information</p>
+            <hr class="hr-underline" size="4">
+        <div style="overflow:auto">
+        <table class="table-class">
+            <tr>
+                <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
+                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td>
+                <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
+                <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
+            </tr>
+            <tr>
+                <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
+                <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
+                <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
+                <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
+            </tr>
+        </table>
+>>>>>>> 30bf64c57f2b227ce3502245d188a4393e91ba32
         </div>
         <div class="drop-down-motorhomes">
             <label for="motorhome-id"></label>

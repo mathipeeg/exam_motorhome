@@ -57,7 +57,7 @@ public class UserRepository {
                 return staff;
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+            if(e instanceof SQLIntegrityConstraintViolationException){
                 throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }

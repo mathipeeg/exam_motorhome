@@ -25,6 +25,26 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
     <div class="container">
+<<<<<<< HEAD
+        <p class="p-text-over-underline">Tilføjelser til ordre</p>
+        <hr class="hr-underline" size="4">
+<!--    <table id="add-extras-table">-->
+<!--        <tr th:each="extra : ${extras}">-->
+<!--            <td><input class="add-extra-checkbox" type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}"></td>-->
+<!--            <td><label class="add-extra-label" for="extras" th:text="${extra.description} + ' '"><span class="checkmark"></span></label></td>-->
+<!--            <td id="add-extra-price-td"><label class="add-extra-label" th:text="${extra.price} +'€'"><span class="checkmark"></span></label></td>-->
+<!--        </tr>-->
+<!--        -->
+        <div th:each="extra : ${extras}">
+            <label class="label-checkbox" th:text="${extra.description}">
+                <input type="checkbox" th:id="check" th:value="${extra.id}">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+<!--        </div>-->
+
+<!--    </table>-->
+
     <table>
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" th:id="check" th:value="${extra.id}">
