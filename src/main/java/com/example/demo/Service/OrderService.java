@@ -22,7 +22,7 @@ public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
     FleetRepository fleetRepository = new FleetRepository();
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyyy");
 
     public void submitOrder(CustomerOrder co) {
         Order order = new Order();
@@ -94,13 +94,10 @@ public class OrderService {
         double priceNightly = getSeasonalPrice(season, orderRepository.getSize(fleetRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
-
         for (OrderExtras extra : orderRepository.getOrderExtra(co.getId())) {
             allExtraPrice+=extra.getPrice();
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
-
-
         if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
         else return nightsTotalPrice;
     }
