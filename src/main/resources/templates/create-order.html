@@ -45,7 +45,6 @@
                 console.log(customers[i].email)
                 console.log(element.value)
                 if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
-                    console.log("AHT IT FITS")
                     setValues(customers[i], form);
                     setBackground(customerDb, "rgb(152,251,152,0.5)");
                     break;
@@ -371,19 +370,13 @@
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
                         th:id="${motorhome.id}"
-                        th:value="${motorhome.id}"></option>
+                        th:value="${motorhome.id}">
+                </option>
             </select>
         </div>
-
         <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
-
     </form>
 </div>
-<!--    <div class="footer">-->
-<!--        <p><b>Nordic Rental Motorhomes</b> <br>-->
-<!--                Københavnsvej 334, 2600 Glostrup-->
-<!--                <br> Telefon: 23 65 78 45 </br>-->
-<!--              <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a></p>-->
-<!--    </div>-->
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
