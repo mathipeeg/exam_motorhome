@@ -60,21 +60,21 @@
     }
 </script>
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div id="easter-egg">
-        <p id="easter-p">:3</p>
-    </div>
-    <div class="container">
-        <form class="center" id="login-form">
-            <input type="text" id="login-email" name="email" placeholder="Email" autofocus>
-            <br>
-            <input type="password" id="password" name="password" placeholder="Password">
-        </form>
-        <button class="btn" onclick="login()">Login</button>
-    </div>
-    <div id="failed-login"> <!--todo: DIV SKAL CSS?-->
-        <h3>Info didn't match. Try again.</h3>
-    </div>
+<div th:replace="fragments/header :: header"></div>
+<div id="easter-egg">
+    <p id="easter-p">:3</p>
+</div>
+<div class="container">
+    <form class="center" id="login-form">
+        <input type="text" id="login-email" name="email" placeholder="Email" autofocus>
+        <br>
+        <input type="password" id="password" name="password" placeholder="Password">
+    </form>
+    <button class="btn" onclick="login()">Login</button>
+</div>
+<div id="failed-login"> <!--todo: DIV SKAL CSS?-->
+    <h3>Info didn't match. Try again.</h3>
+</div>
 <!--    <footer>-->
 <!--        <div class="footer"><p>-->
 <!--            <b>Nordic Rental Motorhomes</b><br>-->
