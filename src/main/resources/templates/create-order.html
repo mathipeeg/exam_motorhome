@@ -295,9 +295,9 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeypress="return event.keyCode !== 13;">
-        <p class="p-create-order">Eksisterende kunde</p>
-        <hr class="hr-create-order" size="4">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+        <p class="p-text-over-underline">Eksisterende kunde</p>
+        <hr class="hr-underline" size="4">
         <table id="table-upper">
             <tr id="existing-email-td"><label for="input-existing"></label></tr>
             <div id="kunde-email-td"><td>
@@ -306,8 +306,8 @@
         </tr>
         </table>
 
-        <p class="p-create-order">Kunde Information</p>
-        <hr class="hr-create-order" size="4">
+        <p class="p-text-over-underline">Kunde Information</p>
+        <hr class="hr-underline" size="4">
         <div style="overflow-x:auto">
         <table class="table-class">
             <tbody id="table-class-costumer-info">
@@ -341,8 +341,8 @@
             </tbody>
         </table>
         </div>
-            <p class="p-create-order">Teknisk information</p>
-            <hr class="hr-create-order" size="4">
+            <p class="p-text-over-underline">Teknisk information</p>
+            <hr class="hr-underline" size="4">
         <div style="overflow:auto">
         <table class="table-class">
             <tr>
