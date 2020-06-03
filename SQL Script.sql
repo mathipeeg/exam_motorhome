@@ -194,3 +194,4 @@ create table booked_motorhomes
 alter table booked_motorhomes
 	add constraint booked_motorhomes_motorhome_fk
 		foreign key (motorhome_id) references motorhome (id);
+
