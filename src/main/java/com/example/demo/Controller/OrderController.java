@@ -19,7 +19,7 @@ public class OrderController {
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model) {
-//        fleetService.checkAvailibility();
+        fleetService.checkExpiredBookings();
         model.addAttribute("motorhomes", fleetService.getAllMotorhomes());
         model.addAttribute("customers", userService.getAllCustomers());
         model.addAttribute("bookedHomes", fleetService.getAllBookedMotorhomes());

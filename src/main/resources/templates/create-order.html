@@ -276,18 +276,28 @@
                 let startDate = new Date(startDateSplit[0], parseInt(startDateSplit[1]) - 1, startDateSplit[2]);
                 let endDateSplit = dates[1].value.split("-");
                 let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
-                if (count[booked[i].motorhomeId] >= 3) {
-                    if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
-                        options.options.namedItem(booked[i].motorhomeId).disabled = true;
-                        setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
-                    } else {
-                        options.options.namedItem(booked[i].motorhomeId).disabled = false;
-                        setBg(options.options.namedItem(booked[i].motorhomeId), "#FFFFFF");
+                if(booked[i].motorhomeId === 14 || booked[i].motorhomeId === 15){
+                    if (count[booked[i].motorhomeId] >= 3) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
+                    }
+                } else {
+                    if (count[booked[i].motorhomeId] >= 2) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
                     }
                 }
             }
         });
         /*]]>*/
+    }
+
+    function checkDate(startDate, bookedStart, endDate, bookedEnd, booked, options){
+        if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
+            options.options.namedItem(booked.motorhomeId).disabled = true;
+            setBg(options.options.namedItem(booked.motorhomeId), "rgb(250,128,114,0.6)");
+        } else {
+            options.options.namedItem(booked.motorhomeId).disabled = false;
+            setBg(options.options.namedItem(booked.motorhomeId), "#FFFFFF");
+        }
     }
 
     function setBg(element, colour){
