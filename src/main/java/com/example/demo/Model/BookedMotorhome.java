@@ -1,7 +1,6 @@
 package com.example.demo.Model;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class BookedMotorhome {

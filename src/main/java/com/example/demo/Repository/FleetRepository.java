@@ -1,16 +1,8 @@
 package com.example.demo.Repository;
 
-import com.example.demo.DBManager.DBManager;
-import com.example.demo.DBManager.DatabaseException;
-import com.example.demo.Model.BookedMotorhome;
-import com.example.demo.Model.Motorhome;
+import com.example.demo.DBManager.*;
+import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
-
-import java.awt.image.BufferedImage;
-import java.awt.print.Book;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 

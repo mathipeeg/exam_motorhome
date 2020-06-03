@@ -1,9 +1,6 @@
 package com.example.demo.Controller;
-import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.*;
-import com.example.demo.Repository.*;
 import com.example.demo.Service.*;
-import com.example.demo.Model.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +27,8 @@ public class OrderController {
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) {
-        orderService.submitOrder(customerOrder);
         fleetService.submitBookedHome(customerOrder);
-        System.out.println(customerOrder.getStartDate() + customerOrder.getDropoff() + customerOrder.getFirstName());
+        orderService.submitOrder(customerOrder);
         return "redirect:/add-extras";
     }
 

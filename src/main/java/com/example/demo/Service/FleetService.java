@@ -1,18 +1,11 @@
 package com.example.demo.Service;
 
-import com.example.demo.DBManager.DatabaseException;
-import com.example.demo.Model.BookedMotorhome;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Motorhome;
-import com.example.demo.Model.Order;
+import com.example.demo.Model.*;
 import com.example.demo.Repository.FleetRepository;
-import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class FleetService {

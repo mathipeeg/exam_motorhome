@@ -3,8 +3,6 @@ package com.example.demo.Repository;
 import com.example.demo.DBManager.*;
 import com.example.demo.Model.*;
 import org.springframework.stereotype.Repository;
-
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 

@@ -1,22 +1,12 @@
 package com.example.demo.Service;
-//import com.example.demo.DBManager.OrderException;
-import com.example.demo.DBManager.DatabaseException;
-import com.example.demo.Model.Customer;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Order;
-import com.example.demo.Model.OrderExtras;
-import com.example.demo.Repository.OrderRepository;
-import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
+import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.*;
+import org.springframework.stereotype.Service;
+import java.math.*;
+import java.util.*;
 import com.example.demo.Repository.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -47,10 +37,7 @@ public class OrderService {
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
 
-        System.out.println(order.getStartDate() + " " + order.getEndDate() + " " + order.getPickup() + order.getDropoff() + " and " + order.getCustomerId());
-
         orderRepository.newOrder(order);
-
     }
 
     public double getNights(String startDate, String endDate){
