@@ -107,12 +107,14 @@ public class OrderService {
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
-        BigDecimal bd = new BigDecimal(nightsTotalPrice + totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal bd = new BigDecimal(nightsTotalPrice).setScale(2, RoundingMode.HALF_UP);
         double newInput = bd.doubleValue();
+        BigDecimal bd1 = new BigDecimal(totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        double newInput1 = bd1.doubleValue();
 
 
-        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll + newInput;
-        else return nightsTotalPrice + newInput;
+        if (string.equalsIgnoreCase("totalPrice")) return newInput1;
+        else return newInput;
     }
 
     public Order getOrder() {
