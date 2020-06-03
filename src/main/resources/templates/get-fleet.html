@@ -8,8 +8,9 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container"> <!-- bare ændr navn idk css lmao -->
-    <div><h1 style="text-align: center">Oversigt over alle motorhome modeller</h1></div>
+<div class="container">
+    <div><h1 style="text-align: center">Fleet oversigt</h1></div>
+    <hr class="hr-underline" size="4"><br>
     <table id="fleet-table" class="table-class">
         <tbody id="fleet-tbody">
         <th class="fleet-th"></th>
@@ -17,13 +18,14 @@
         <th class="fleet-th">Str.</th>
         <th class="fleet-th">Pris pr. nat</th>
         <tr id="fleet-tr" th:each="motorhome : ${motorhomes}">
-            <td><img class="img" th:src="@{${motorhome.imgPath}}" alt="test"></td>
-            <td th:text="${motorhome.brandName}"></td>
-            <td th:text="${motorhome.sizeName}"></td>
-            <td th:text="${motorhome.sizePrice}"></td>
+            <td class="fleet-td" id="fleet-img-td"><img class="fleet-img" th:src="@{${motorhome.imgPath}}" alt="test"></td>
+            <td class="fleet-td" id="fleet-name-td" th:text="${motorhome.brandName}"></td>
+            <td class="fleet-td" id="fleet-size-td" th:text="${motorhome.sizeName}"></td>
+            <td class="fleet-td" id="fleet-price-td" th:text="${motorhome.sizePrice} + '€'"></td>
         </tr>
         </tbody>
     </table>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

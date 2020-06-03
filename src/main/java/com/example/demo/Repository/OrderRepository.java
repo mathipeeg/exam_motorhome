@@ -243,8 +243,6 @@ public class OrderRepository {
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, orderId);
             ResultSet rs = prepStatement.executeQuery();
-
-
             while (rs.next()) {
                 int extraId = rs.getInt("id");
                 String description = rs.getString("description");
@@ -258,5 +256,4 @@ public class OrderRepository {
             throw new IllegalArgumentException("ID doesn't exist in database.");
         }
     }
-
 }

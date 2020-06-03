@@ -27,13 +27,13 @@
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
-    }
-    //
+    };
+
     document.addEventListener("keyup", function(event){
         if (event.key === "Enter"){
             checkInputOnEnter(document.forms["create-customer-form"]);
         }
-    })
+    });
 
     function autofillCustomer(){
         let element = document.getElementById("input-existing");
@@ -69,6 +69,7 @@
             setBg(document.getElementById(array[i]), colour);
         }
     }
+
 
     function removeValues(form) {
         for (let i = 0; i < customerDb.length; i++) {
@@ -138,6 +139,7 @@
         for (let j = 0; j < allInput.length; j++) {
             if(document.getElementById(allInput[j]).value.length === 0){
                 list.push(allInput[j]);
+                console.log(list)
             }
         }
         if(list.length > 0){
@@ -272,18 +274,28 @@
                 let startDate = new Date(startDateSplit[0], parseInt(startDateSplit[1]) - 1, startDateSplit[2]);
                 let endDateSplit = dates[1].value.split("-");
                 let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
-                if (count[booked[i].motorhomeId] >= 3) {
-                    if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
-                        options.options.namedItem(booked[i].motorhomeId).disabled = true;
-                        setBg(options.options.namedItem(booked[i].motorhomeId), "rgb(250,128,114,0.6)");
-                    } else {
-                        options.options.namedItem(booked[i].motorhomeId).disabled = false;
-                        setBg(options.options.namedItem(booked[i].motorhomeId), "#FFFFFF");
+                if(booked[i].motorhomeId === 14 || booked[i].motorhomeId === 15){
+                    if (count[booked[i].motorhomeId] >= 3) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
+                    }
+                } else {
+                    if (count[booked[i].motorhomeId] >= 2) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
                     }
                 }
             }
         });
         /*]]>*/
+    }
+
+    function checkDate(startDate, bookedStart, endDate, bookedEnd, booked, options){
+        if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
+            options.options.namedItem(booked.motorhomeId).disabled = true;
+            setBg(options.options.namedItem(booked.motorhomeId), "rgb(250,128,114,0.6)");
+        } else {
+            options.options.namedItem(booked.motorhomeId).disabled = false;
+            setBg(options.options.namedItem(booked.motorhomeId), "#FFFFFF");
+        }
     }
 
     function setBg(element, colour){
@@ -294,7 +306,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeydown="return event.key !== 'Enter';">
         <p class="p-text-over-underline">Eksisterende kunde</p>
         <hr class="hr-underline" size="4">
         <table id="table-upper">
@@ -302,82 +314,77 @@
             <div id="kunde-email-td"><td>
                 <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
-        </tr>
+            </tr>
         </table>
 
         <p class="p-text-over-underline">Kunde Information</p>
         <hr class="hr-underline" size="4">
         <div style="overflow-x:auto">
-        <table class="table-class">
-            <tbody id="table-class-costumer-info">
-            <tr>
-            <tr>
-                <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
-                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
-                <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
-                <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="address">Adresse: </label></td>
-                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
-                <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
-                <td class="table-class-td-class"><label for="email">E-mail: </label></td>
-                <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
-                <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-                <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
-                <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
-                <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table-class">
+                <tbody id="table-class-costumer-info">
+                <tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
+                    <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                    <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
+                    <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="address">Adresse: </label></td>
+                    <!-- TODO Opsæt adresse i flere felter-->
+                    <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
+                    <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                    <td class="table-class-td-class"><label for="email">E-mail: </label></td>
+                    <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
+                    <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                    <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
+                    <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
+                    <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-            <p class="p-text-over-underline">Teknisk information</p>
-            <hr class="hr-underline" size="4">
+        <p class="p-text-over-underline">Teknisk information</p>
+        <hr class="hr-underline" size="4">
         <div style="overflow:auto">
-        <table class="table-class">
-            <tr>
-                <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
-                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td>
-                <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
-                <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
-                <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
-                <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
-                <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
-            </tr>
-        </table>
+            <table class="table-class">
+                <tr>
+                    <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
+                    <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
+                    <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
+                    <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
+                    <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
+                    <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
+                    <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
+                </tr>
+            </table>
         </div>
         <div class="drop-down-motorhomes">
             <label for="motorhome-id"></label>
             <select class="form-control" id="motorhome-id" name="motorhomeId">
-               <option>Motorhome types</option>
+                <option>Motorhome types</option>
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
                         th:id="${motorhome.id}"
-                        th:value="${motorhome.id}"></option>
+                        th:value="${motorhome.id}">
+                </option>
             </select>
         </div>
-
         <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
-
     </form>
 </div>
-<!--    <div class="footer">-->
-<!--        <p><b>Nordic Rental Motorhomes</b> <br>-->
-<!--                Københavnsvej 334, 2600 Glostrup-->
-<!--                <br> Telefon: 23 65 78 45 </br>-->
-<!--              <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a></p>-->
-<!--    </div>-->
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

@@ -15,7 +15,6 @@
         }
         window.location.href = "http://localhost:8080/order-submitted";
     }
-
     function addExtras(id) {
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/addExtra?extraId="+id, true);
@@ -24,48 +23,17 @@
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
-    <div class="container">
+    <div class="container-add-extras">
         <p class="p-text-over-underline">Tilføjelser til ordre</p>
         <hr class="hr-underline" size="4">
-<!--    <table id="add-extras-table">-->
-<!--        <tr th:each="extra : ${extras}">-->
-<!--            <td><input class="add-extra-checkbox" type="checkbox" id="extras" name="extras" value="test" th:id="check" th:value="${extra.id}"></td>-->
-<!--            <td><label class="add-extra-label" for="extras" th:text="${extra.description} + ' '"><span class="checkmark"></span></label></td>-->
-<!--            <td id="add-extra-price-td"><label class="add-extra-label" th:text="${extra.price} +'€'"><span class="checkmark"></span></label></td>-->
-<!--        </tr>-->
-<!--        -->
-        <div th:each="extra : ${extras}">
-            <label class="label-checkbox" th:text="${extra.description}">
-                <input type="checkbox" th:id="check" th:value="${extra.id}">
-                <span class="checkmark"></span>
-            </label>
-        </div>
-<!--        </div>-->
-
-<!--    </table>-->
-
-    <table>
+    <table class="table-class">
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" th:id="check" th:value="${extra.id}">
-            <label for="extras" th:text="${extra.description}"></label></td>
+                <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
-
     </table>
-<!--    <div th:each="extra : ${extras}">-->
-<!--        <label class="label-checkbox" th:text="${extra.description}">-->
-<!--            <input type="checkbox" class="checkmark" th:id="check" th:value="${extra.id}">-->
-<!--            <span class="checkmark"></span>-->
-<!--        </label>-->
-<!--    </div>-->
-        <button onclick="getExtras()" id="add-extras">Add extras</button>
+        <button class="btn" onclick="getExtras()" id="add-extras">Add extras</button>
     </div>
-    <footer>
-        <div class="footer">
-            <p><b>Nordic Rental Motorhomes</b> <br>
-                Københavnsvej 334, 2600 Glostrup
-                <br> Telefon: 23 65 78 45 </br>
-                <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a></p>
-        </div>
-    </footer>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

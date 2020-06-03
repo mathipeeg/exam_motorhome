@@ -27,19 +27,6 @@ public class FleetService {
         return fleetRepository.getMotorhomeInfo(order.getMotorhomeId());
     }
 
-    public void checkAvailibility() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyy-MM-dd");
-        Date date = new Date();
-        String today = formatter.format(date);
-        ArrayList<BookedMotorhome> bookedArray = fleetRepository.getAllBookedHomes();
-        for (BookedMotorhome booked : bookedArray) {
-            if (booked.getEndDate().toString().equalsIgnoreCase(today)){
-                Motorhome motorhome = fleetRepository.getMotorhome(booked.getMotorhomeId());
-                fleetRepository.removeBookedHome(booked);
-            }
-        }
-    }
-
     public ArrayList<BookedMotorhome> getAllBookedMotorhomes() {
         return fleetRepository.getAllBookedHomes();
     }
@@ -50,5 +37,17 @@ public class FleetService {
         bookedMotorhome.setStartDate(customerOrder.getStartDate());
         bookedMotorhome.setEndDate(customerOrder.getEndDate());
         fleetRepository.bookMotorhome(bookedMotorhome);
+    }
+
+    public void checkExpiredBookings() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String currentDate = formatter.format(date);
+        ArrayList<BookedMotorhome> bookedArray = fleetRepository.getAllBookedHomes();
+        for (BookedMotorhome booked : bookedArray) {
+            if (formatter.format(booked.getEndDate()).equalsIgnoreCase(currentDate)){
+                fleetRepository.removeBookedHome(booked);
+            }
+        }
     }
 }

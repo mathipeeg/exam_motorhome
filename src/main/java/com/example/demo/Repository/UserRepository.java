@@ -21,7 +21,6 @@ public class UserRepository {
 
             if(rs.next()) {
                 password = rs.getString("password");
-
             }
             if (password != null) {
                 if (BCrypt.checkpw(loginPassword, password)) {

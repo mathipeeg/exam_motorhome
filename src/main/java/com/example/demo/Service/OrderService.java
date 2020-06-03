@@ -1,5 +1,4 @@
 package com.example.demo.Service;
-//import com.example.demo.DBManager.OrderException;
 import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
@@ -7,10 +6,8 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
@@ -26,7 +23,7 @@ public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
     FleetRepository fleetRepository = new FleetRepository();
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyyy");
 
     public void submitOrder(CustomerOrder co) {
         Order order = new Order();
@@ -101,7 +98,6 @@ public class OrderService {
         double priceNightly = getSeasonalPrice(season, orderRepository.getSize(fleetRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
-
         for (OrderExtras extra : orderRepository.getOrderExtra(co.getId())) {
             allExtraPrice+=extra.getPrice();
         }
