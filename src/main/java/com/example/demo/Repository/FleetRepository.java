@@ -114,21 +114,6 @@ public class FleetRepository {
         }
     }
 
-    public void updateMotorhomeAmount(int motorhomeId, int amount) {
-        try {
-            Connection connection = DBManager.getConnection();
-            String sql = "UPDATE motorhome SET amount = ? WHERE motorhome.id = ?";
-            PreparedStatement prepStatement = connection.prepareStatement(sql);
-            prepStatement.setInt(1, amount);
-            prepStatement.setInt(2, motorhomeId);
-            prepStatement.executeUpdate();
-        }catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){
-                throw new IllegalArgumentException("Your input was illegal and couldn't be added to the database.");
-            }
-        }
-    }
-
     public ArrayList<BookedMotorhome> getAllBookedHomes() {
         ArrayList<BookedMotorhome> allMotorhomesArray = new ArrayList<>();
 

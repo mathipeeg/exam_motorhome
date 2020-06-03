@@ -27,6 +27,7 @@
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
+        test();
     };
 
     document.addEventListener("keyup", function(event){
@@ -301,6 +302,12 @@
     function setBg(element, colour){
         element.style.backgroundColor = colour;
     }
+
+    function test() {
+        document.getElementById("pick-up").addEventListener("click", function (e) {
+            console.log(document.getElementById("test").value);
+        })
+    }
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -331,7 +338,6 @@
                 </tr>
                 <tr>
                     <td class="table-class-td-class"><label for="address">Adresse: </label></td>
-                    <!-- TODO Opsæt adresse i flere felter-->
                     <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
                 </tr>
                 <tr>
@@ -359,9 +365,21 @@
             <table class="table-class">
                 <tr>
                     <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
-                    <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
+<!--                    <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> &lt;!&ndash;todo vælge default pickup og dropoff &ndash;&gt;-->
+                    <td id="pick-up">
+                        <datalist id="pick-up-datalist">
+                            <option th:each="place : ${places}" th:text="${place}"  ></option>
+                        </datalist>
+                        <input th:value="${place}" type="text" list="pick-up-datalist" name="pickup"/>
+                    </td>
                     <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
-                    <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
+<!--                    <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>-->
+                    <td id="drop-off">
+                        <datalist id="drop-off-datalist">
+                            <option th:each="place : ${places}" th:text="${place}"></option>
+                        </datalist>
+                        <input th:value="${place}" type="text" list="drop-off-datalist" name="dropoff"/>
+                    </td>
                 </tr>
                 <tr>
                     <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
