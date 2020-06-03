@@ -1,5 +1,4 @@
 package com.example.demo.Service;
-//import com.example.demo.DBManager.OrderException;
 import com.example.demo.DBManager.DatabaseException;
 import com.example.demo.Model.Customer;
 import com.example.demo.Model.CustomerOrder;
@@ -7,7 +6,6 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -46,7 +44,11 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
+
+        System.out.println(order.getStartDate() + " " + order.getEndDate() + " " + order.getPickup() + order.getDropoff() + " and " + order.getCustomerId());
+
         orderRepository.newOrder(order);
+
     }
 
     public double getNights(String startDate, String endDate){
@@ -90,6 +92,9 @@ public class OrderService {
 
 
     public double totalPrice(Order co, String string){
+
+
+
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -101,12 +106,15 @@ public class OrderService {
             allExtraPrice+=extra.getPrice();
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
-        BigDecimal bd = new BigDecimal(nightsTotalPrice + totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+
+        BigDecimal bd = new BigDecimal(nightsTotalPrice).setScale(2, RoundingMode.HALF_UP);
         double newInput = bd.doubleValue();
+        BigDecimal bd1 = new BigDecimal(totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        double newInput1 = bd1.doubleValue();
 
 
-        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll + newInput;
-        else return nightsTotalPrice + newInput;
+        if (string.equalsIgnoreCase("totalPrice")) return newInput1;
+        else return newInput;
     }
 
     public Order getOrder() {
