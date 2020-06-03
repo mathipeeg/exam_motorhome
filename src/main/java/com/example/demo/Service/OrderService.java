@@ -7,6 +7,10 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
@@ -87,6 +91,9 @@ public class OrderService {
 
 
     public double totalPrice(Order co, String string){
+
+
+
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -100,9 +107,12 @@ public class OrderService {
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
+        BigDecimal bd = new BigDecimal(nightsTotalPrice + totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        double newInput = bd.doubleValue();
 
-        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
-        else return nightsTotalPrice;
+
+        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll + newInput;
+        else return nightsTotalPrice + newInput;
     }
 
     public Order getOrder() {
