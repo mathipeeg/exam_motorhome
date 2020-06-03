@@ -7,6 +7,9 @@ import com.example.demo.Model.Order;
 import com.example.demo.Model.OrderExtras;
 import com.example.demo.Repository.OrderRepository;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import com.example.demo.Model.*;
 import com.example.demo.Repository.*;
@@ -102,8 +105,12 @@ public class OrderService {
             allExtraPrice+=extra.getPrice();
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
-        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
-        else return nightsTotalPrice;
+        BigDecimal bd = new BigDecimal(nightsTotalPrice + totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        double newInput = bd.doubleValue();
+
+
+        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll + newInput;
+        else return nightsTotalPrice + newInput;
     }
 
     public Order getOrder() {
