@@ -20,6 +20,8 @@ public class OrderController {
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model) {
         fleetService.checkExpiredBookings();
+        String[] places = {"NRM HQ Københavnsvej 334, 2600 Glostrup", "Kaastrup Lufthavn", "Aarhus Lufthavn"};
+        model.addAttribute("places", places);
         model.addAttribute("motorhomes", fleetService.getAllMotorhomes());
         model.addAttribute("customers", userService.getAllCustomers());
         model.addAttribute("bookedHomes", fleetService.getAllBookedMotorhomes());
@@ -28,8 +30,9 @@ public class OrderController {
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) {
-        fleetService.submitBookedHome(customerOrder);
         orderService.submitOrder(customerOrder);
+        fleetService.submitBookedHome(customerOrder);
+        System.out.println(customerOrder.getStartDate() + customerOrder.getDropoff() + customerOrder.getFirstName());
         return "redirect:/add-extras";
     }
 

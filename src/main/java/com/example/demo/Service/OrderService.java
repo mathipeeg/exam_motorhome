@@ -43,7 +43,11 @@ public class OrderService {
         order.setEndDate(co.getEndDate());
         order.setNights((int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate())));
         order.setDeposit(priceNightly * 2);
+
+        System.out.println(order.getStartDate() + " " + order.getEndDate() + " " + order.getPickup() + order.getDropoff() + " and " + order.getCustomerId());
+
         orderRepository.newOrder(order);
+
     }
 
     public double getNights(String startDate, String endDate){

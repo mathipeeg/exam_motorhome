@@ -34,7 +34,7 @@ public class OrderRepository {
     public void addExtra(OrderExtras orderExtras) {
         try {
             Connection connection = DBManager.getConnection();
-            String sql = "INSERT INTO order_extras VALUES(default, ?, ?)";
+            String sql = "INSERT INTO motorhomeexam.order_extras VALUES(default, ?, ?)";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, orderExtras.getExtraId());
             prepStatement.setInt(2, orderExtras.getOrderId());
@@ -47,7 +47,7 @@ public class OrderRepository {
     public void newCustomer(CustomerOrder co){ //UNIK E-MAIL
         try {
             Connection connection = DBManager.getConnection();
-            String sql = "INSERT INTO customer VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO motorhomeexam.customer VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setString(1, co.getFirstName());
             prepStatement.setString(2, co.getLastName());
@@ -132,10 +132,9 @@ public class OrderRepository {
     }
 
     public void newOrder(Order order) {
-
         try {
             Connection connection = DBManager.getConnection();
-            String sql = "INSERT INTO `order` VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO motorhomeexam.`order` VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             prepStatement.setInt(1, order.getMotorhomeId());
             prepStatement.setInt(2, order.getCustomerId());
@@ -146,7 +145,6 @@ public class OrderRepository {
             prepStatement.setInt(7, order.getNights());
             prepStatement.setDouble(8, order.getDeposit());
             prepStatement.executeUpdate();
-
         }catch(SQLException e){
             if(e instanceof SQLIntegrityConstraintViolationException){
                 throw new NullPointerException("Adding order failed, as a value was null.");
