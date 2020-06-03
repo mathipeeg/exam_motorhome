@@ -7,117 +7,117 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-    <div class="container">
-        <p class="p-create-order">Kunde Information</p>
-        <hr class="hr-create-order" size="4">
-        <table>
-            <div>
-                <tr>
-                    <td class="td-order-submitted" th:text="'Order ID: '"></td>
-                    <td class="td-order-submitted" th:text="${order.id}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'First Name: '"></td>
-                    <td th:text="${customer.firstName}"></td>
-                </tr>
-                <tr>
-                    <td class="td-order-submitted" th:text="'Last Name: '"></td>
-                    <td class="td-order-submitted" th:text="${customer.lastName}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Telephone: '"></td>
-                    <td th:text="${customer.telephone}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Email: '"></td>
-                    <td th:text="${customer.email}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Address: '"></td>
-                    <td th:text="${customer.address}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'CardInfo: '"></td>
-                    <td th:text="${customer.cardInfo}"></td>
-                </tr>
-            </div>
-        </table>
+<div class="container">
+    <p class="p-text-over-underline">Kunde Information</p>
+    <hr class="hr-underline" size="4">
+    <table>
+        <div>
+            <tr>
+                <td class="td-order-submitted" th:text="'Order ID: '"></td>
+                <td class="td-order-submitted" th:text="${order.id}"></td>
+            </tr>
+            <tr>
+                <td th:text="'First Name: '"></td>
+                <td th:text="${customer.firstName}"></td>
+            </tr>
+            <tr>
+                <td class="td-order-submitted" th:text="'Last Name: '"></td>
+                <td class="td-order-submitted" th:text="${customer.lastName}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Telephone: '"></td>
+                <td th:text="${customer.telephone}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Email: '"></td>
+                <td th:text="${customer.email}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Address: '"></td>
+                <td th:text="${customer.address}"></td>
+            </tr>
+            <tr>
+                <td th:text="'CardInfo: '"></td>
+                <td th:text="${customer.cardInfo}"></td>
+            </tr>
+        </div>
+    </table>
 
-        <br>
+    <br>
 
-        <p class="p-create-order">Teknisk information</p>
-        <hr class="hr-create-order" size="4">
-        <table>
-            <div>
-                <tr>
-                    <td th:text="'Startdate: '"></td>
-                    <td th:text="${order.startDate}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Enddate: '"></td>
-                    <td th:text="${order.endDate}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Nights: '"></td>
-                    <td th:text="${order.nights}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Price: '"></td>
-                    <td th:text="${nightstotalprice} + '€'"></td>
-                </tr>
-                <tr>
-                    <td class="td-order-submitted" th:text="'Deposit: '"></td>
-                    <td class="td-order-submitted" th:text="${order.deposit} + ' €'"></td>
-                </tr>
-            </div>
+    <p class="p-text-over-underline">Teknisk information</p>
+    <hr class="hr-underline" size="4">
+    <table>
+        <div>
+            <tr>
+                <td th:text="'Startdate: '"></td>
+                <td th:text="${order.startDate}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Enddate: '"></td>
+                <td th:text="${order.endDate}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Nights: '"></td>
+                <td th:text="${order.nights}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Price: '"></td>
+                <td th:text="${nightstotalprice} + '€'"></td>
+            </tr>
+            <tr>
+                <td class="td-order-submitted" th:text="'Deposit: '"></td>
+                <td class="td-order-submitted" th:text="${order.deposit} + ' €'"></td>
+            </tr>
+        </div>
 
-            <div>
-                <tr>
-                    <td th:text="'Pickup: '" ></td>
-                    <td th:text="${order.pickup}"></td>
-                </tr>
-                <tr>
-                    <td th:text="'Dropoff: '" ></td>
-                    <td th:text="${order.dropoff}"></td>
-                </tr>
-            </div>
-        </table>
+        <div>
+            <tr>
+                <td th:text="'Pickup: '" ></td>
+                <td th:text="${order.pickup}"></td>
+            </tr>
+            <tr>
+                <td th:text="'Dropoff: '" ></td>
+                <td th:text="${order.dropoff}"></td>
+            </tr>
+        </div>
+    </table>
 
-        <br>
+    <br>
 
-        <p class="p-create-order">Motorhome information</p>
-        <hr class="hr-create-order" size="4">
-        <table>
-            <div>
-                <tr>
-                    <td th:text="'Brand Name: '"></td>
-                    <td th:text="${motorhome.brandName}"></td>
-                </tr>
-                <tr>
-                    <td class="td-order-submitted" th:text="'Size ' + ${motorhome.sizeName}"></td>
-                    <td class="td-order-submitted" th:text="${motorhome.sizePrice} + '€'"></td>
-                </tr>
-            </div>
+    <p class="p-text-over-underline">Motorhome information</p>
+    <hr class="hr-underline" size="4">
+    <table>
+        <div>
+            <tr>
+                <td th:text="'Brand Name: '"></td>
+                <td th:text="${motorhome.brandName}"></td>
+            </tr>
+            <tr>
+                <td class="td-order-submitted" th:text="'Size ' + ${motorhome.sizeName}"></td>
+                <td class="td-order-submitted" th:text="${motorhome.sizePrice} + '€'"></td>
+            </tr>
+        </div>
 
-            <div>
-                <td><p class="p-order-submitted">Extras</p></td>
-                <tr th:each="orderextras : ${orderextra}">
-                    <td th:text="${orderextras.description}"></td>
-                    <td th:text="${orderextras.price} + '€'"></td>
-                </tr>
-            </div>
-        </table>
+        <div>
+            <td><p class="p-order-submitted">Extras</p></td>
+            <tr th:each="orderextras : ${orderextra}">
+                <td th:text="${orderextras.description}"></td>
+                <td th:text="${orderextras.price} + '€'"></td>
+            </tr>
+        </div>
+    </table>
 
-        <p class="p-create-order">Total Price</p>
-        <hr class="hr-create-order" size="4">
-        <table>
-            <div>
-                <tr>
-                    <td th:text="'Subtotal: '"></td>
-                    <td th:text="${totalprice} + '€'"></td>
-                </tr>
-            </div>
-        </table>
-    </div>
+    <p class="p-text-over-underline">Total Price</p>
+    <hr class="hr-underline" size="4">
+    <table>
+        <div>
+            <tr>
+                <td th:text="'Subtotal: '"></td>
+                <td th:text="${totalprice} + '€'"></td>
+            </tr>
+        </div>
+    </table>
+</div>
 </body>
 </html>

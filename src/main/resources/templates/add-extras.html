@@ -23,23 +23,17 @@
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div class="container">
-    <p class="p-text-over-underline">Tilføjelser til ordre</p>
-    <hr class="hr-underline" size="4">
-    <div th:each="extra : ${extras}">
-        <label class="label-checkbox" th:text="${extra.description}">
-            <input type="checkbox" th:id="check" th:value="${extra.id}">
-            <span class="checkmark"></span>
-        </label>
-    </div>
-    <table>
+    <div class="container-add-extras">
+        <p class="p-text-over-underline">Tilføjelser til ordre</p>
+        <hr class="hr-underline" size="4">
+    <table class="table-class">
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" th:id="check" th:value="${extra.id}">
                 <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
     </table>
-    <button onclick="getExtras()" id="add-extras">Add extras</button>
-</div>
+        <button class="btn" onclick="getExtras()" id="add-extras">Add extras</button>
+    </div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
