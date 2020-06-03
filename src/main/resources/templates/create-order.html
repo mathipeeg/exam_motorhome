@@ -55,7 +55,6 @@
             /*]]>*/
         })
     }
-
     function setValues(customer, form){
         form["first-name"].value = customer.firstName;
         form["last-name"].value = customer.lastName;
@@ -66,7 +65,6 @@
         form["card-date"].value = customer.expDate;
         form["card-cvs"].value = customer.cvs;
     }
-
     function setBackground(array, colour) {
         for (let i = 0; i < array.length; i++) {
             setBg(document.getElementById(array[i]), colour);
@@ -369,6 +367,9 @@
                         <input th:value="${place}" type="text" list="pick-up-datalist" name="pickup"/>
                     </td>
                     <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
+<<<<<<< HEAD
+                    <td class="table-class-td-class-fucker"><input class="table-class-input" type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
+=======
 <!--                    <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>-->
                     <td id="drop-off">
                         <datalist id="drop-off-datalist">
@@ -376,12 +377,13 @@
                         </datalist>
                         <input th:value="${place}" type="text" list="drop-off-datalist" name="dropoff"/>
                     </td>
+>>>>>>> 33b45bb8672fedfddaedc20b293040a0642158db
                 </tr>
                 <tr>
                     <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
-                    <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
+                    <td class="table-class-td-class-"><input class="table-class-input" type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
                     <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
-                    <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
+                    <td class="table-class-td-class-fucker"><input class="table-class-input" type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
                 </tr>
             </table>
         </div>
