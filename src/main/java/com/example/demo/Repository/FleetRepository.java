@@ -20,7 +20,7 @@ public class FleetRepository {
 
         try {
             Connection connection = DBManager.getConnection();
-            String sql = "SELECT * FROM motorhome inner join brand on motorhome.brand_id = brand.id inner join  size on motorhome.size_id =size.id";
+            String sql = "SELECT * FROM motorhome inner join brand on motorhome.brand_id = brand.id inner join size on motorhome.size_id = size.id";
             PreparedStatement prepStatement = connection.prepareStatement(sql);
             ResultSet rs = prepStatement.executeQuery();
 
