@@ -1,31 +1,20 @@
 package com.example.demo.Service;
-//import com.example.demo.DBManager.OrderException;
+
 import com.example.demo.DBManager.DatabaseException;
-import com.example.demo.Model.Customer;
-import com.example.demo.Model.CustomerOrder;
-import com.example.demo.Model.Order;
-import com.example.demo.Model.OrderExtras;
-import com.example.demo.Repository.OrderRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-
 import com.example.demo.Model.*;
+import org.springframework.stereotype.Service;
+import java.math.*;
+import java.util.*;
 import com.example.demo.Repository.*;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.*;
 import java.util.concurrent.TimeUnit;
-
 
 @Service
 public class OrderService {
 
     OrderRepository orderRepository = new OrderRepository();
     FleetRepository fleetRepository = new FleetRepository();
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyy");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM-yyyy");
 
     public void submitOrder(CustomerOrder co) {
         Order order = new Order();
@@ -89,7 +78,11 @@ public class OrderService {
         orderRepository.addExtra(orderExtras);
     }
 
-    public double totalPrice(Order co, String string) {
+
+    public double totalPrice(Order co, String string){
+
+
+
         getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
 
         int nights = (int)getNights(dateFormat.format(co.getStartDate()), dateFormat.format(co.getEndDate()));
@@ -97,14 +90,19 @@ public class OrderService {
         double priceNightly = getSeasonalPrice(season, orderRepository.getSize(fleetRepository.getMotorhome(co.getMotorhomeId()).getSizeId()).getPrice());
         double nightsTotalPrice = (nights * priceNightly);
         double allExtraPrice = 0;
-
         for (OrderExtras extra : orderRepository.getOrderExtra(co.getId())) {
             allExtraPrice+=extra.getPrice();
         }
         double totalPriceAll = nightsTotalPrice + allExtraPrice + co.getDeposit();
 
-        if (string.equalsIgnoreCase("totalPrice")) return totalPriceAll;
-        else return nightsTotalPrice;
+        BigDecimal bd = new BigDecimal(nightsTotalPrice).setScale(2, RoundingMode.HALF_UP);
+        double newInput = bd.doubleValue();
+        BigDecimal bd1 = new BigDecimal(totalPriceAll).setScale(2, RoundingMode.HALF_UP);
+        double newInput1 = bd1.doubleValue();
+
+
+        if (string.equalsIgnoreCase("totalPrice")) return newInput1;
+        else return newInput;
     }
 
     public Order getOrder() {
@@ -117,6 +115,7 @@ public class OrderService {
 
     public Customer getCustomer(Order order) {
         return orderRepository.getCustomer(order.getCustomerId());
+
     }
 
     public ArrayList<OrderExtras> getOrderExtra() throws DatabaseException {

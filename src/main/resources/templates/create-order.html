@@ -13,7 +13,7 @@
     let inputDigits = ["Delete", "Backspace", "Tab", "Escape", "Shift", "CapsLock", "NumLock", "Alt", "Control", "F1", "F2", "F3", "F4",
         "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]
     let customerDb = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs"];
-    let allInput = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs", "pick-up", "drop-off", "start-date", "end-date"];
+    let allInput = ["first-name", "last-name", "telephone", "email", "address", "card-info", "card-date", "card-cvs", "pick-up-input", "drop-off-input", "start-date", "end-date"];
 
     window.onload = function (){
         validateCard();
@@ -22,17 +22,18 @@
         eventOnEnter();
         autofocus();
         autofillCustomer();
+        checkAvailibility();
         checkInput("input-length-js", 4);
         checkInput("email", "@");
         checkInput("date", 2);
         checkInput("motorhome", 2);
-    }
+    };
 
     document.addEventListener("keyup", function(event){
         if (event.key === "Enter"){
             checkInputOnEnter(document.forms["create-customer-form"]);
         }
-    })
+    });
 
     function autofillCustomer(){
         let element = document.getElementById("input-existing");
@@ -44,6 +45,7 @@
                 if(element.value.toLowerCase() === customers[i].email.toLowerCase()){
                     setValues(customers[i], form);
                     setBackground(customerDb, "rgb(152,251,152,0.5)");
+                    break;
                 } else {
                     removeValues(form);
                     setBackground(customerDb, "#FFFFFF");
@@ -52,7 +54,6 @@
             /*]]>*/
         })
     }
-
     function setValues(customer, form){
         form["first-name"].value = customer.firstName;
         form["last-name"].value = customer.lastName;
@@ -63,12 +64,12 @@
         form["card-date"].value = customer.expDate;
         form["card-cvs"].value = customer.cvs;
     }
-
     function setBackground(array, colour) {
         for (let i = 0; i < array.length; i++) {
             setBg(document.getElementById(array[i]), colour);
         }
     }
+
 
     function removeValues(form) {
         for (let i = 0; i < customerDb.length; i++) {
@@ -168,7 +169,7 @@
                         });
                     }
                 }
-            })
+            });
 
             cardInfo.addEventListener("keyup", function (event) {
                 if (cardInfo.value.length === 11) {
@@ -177,7 +178,7 @@
                         cardDate.focus();
                     }
                 }
-            })
+            });
             cardDate.addEventListener("keyup", function (event) {
                 let year = this.value.split("-")[0];
                 if (!inputDigits.includes(event.key)) {
@@ -186,7 +187,7 @@
                         cardCvs.focus();
                     }
                 }
-            })
+            });
             cardCvs.addEventListener("keyup", function (event) {
                 if (cardCvs.value.length === 3) {
                     setBg(cardCvs, "rgb(152,251,152,0.5)")
@@ -211,7 +212,6 @@
             for (let i = 0; i < dates.length; i++) {
                 dates[i].addEventListener("keydown", function (event) {
                     let year = this.value.split("-")[0];
-                    console.log(year)
                     if (year.charAt(0) === "2") {
                         setBg(dates[i], "rgb(152,251,152,0.5)");
                     } else {
@@ -228,7 +228,10 @@
                     setBg(element.options[selected], "rgba(152,251,152,0.5)");
                     for (let i = 0; i < element.options.length; i++) {
                         if (element.options[i].index !== selected) {
-                            setBg(element.options[i], "#FFFFFF")
+                            let item = element.options.namedItem(element.options[i].id);
+                            if (item !== null && !item.disabled){
+                                setBg(element.options[i], "#FFFFFF")
+                            }
                         }
                     }
                 } else {
@@ -250,6 +253,50 @@
         }
     }
 
+    function checkAvailibility() {
+        /*<![CDATA[*/
+        let booked = /*[[${bookedHomes}]]*/ 'default';
+        let options = document.getElementById("motorhome-id");
+        document.getElementById("motorhome-id").addEventListener("click", function (event) {
+            let count = {};
+            for (const i of booked) {
+                count[i.motorhomeId] = (count[i.motorhomeId]||0) + 1;
+            }
+            for (let i = 0; i < booked.length; i++) {
+                let bookedStartSplit = booked[i].startDate.split("-");
+                let bookedStart = new Date(bookedStartSplit[0], parseInt(bookedStartSplit[1]) - 1, bookedStartSplit[2]);
+                let bookedEndSplit = booked[i].endDate.split("-");
+                let bookedEnd = new Date(bookedEndSplit[0], parseInt(bookedEndSplit[1]) - 1, bookedEndSplit[2]);
+
+                let dates = document.getElementsByClassName("date");
+                let startDateSplit = dates[0].value.split("-");
+                let startDate = new Date(startDateSplit[0], parseInt(startDateSplit[1]) - 1, startDateSplit[2]);
+                let endDateSplit = dates[1].value.split("-");
+                let endDate = new Date(endDateSplit[0], parseInt(endDateSplit[1]) - 1, endDateSplit[2]);
+                if(booked[i].motorhomeId === 14 || booked[i].motorhomeId === 15){
+                    if (count[booked[i].motorhomeId] >= 3) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
+                    }
+                } else {
+                    if (count[booked[i].motorhomeId] >= 2) {
+                        checkDate(startDate, bookedStart, endDate, bookedEnd, booked[i], options);
+                    }
+                }
+            }
+        });
+        /*]]>*/
+    }
+
+    function checkDate(startDate, bookedStart, endDate, bookedEnd, booked, options){
+        if (startDate >= bookedStart && startDate <= bookedEnd || endDate >= bookedStart && endDate <= bookedEnd) {
+            options.options.namedItem(booked.motorhomeId).disabled = true;
+            setBg(options.options.namedItem(booked.motorhomeId), "rgb(250,128,114,0.6)");
+        } else {
+            options.options.namedItem(booked.motorhomeId).disabled = false;
+            setBg(options.options.namedItem(booked.motorhomeId), "#FFFFFF");
+        }
+    }
+
     function setBg(element, colour){
         element.style.backgroundColor = colour;
     }
@@ -258,81 +305,93 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container">
-    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeypress="return event.keyCode !== 13;">
-        <p class="p-create-order">Eksisterende kunde</p>
-        <hr class="hr-create-order" size="4">
+    <form id="create-customer-form" th:action="@{/submit-order}" method="post" onkeydown="return event.key !== 'Enter';">
+        <p class="p-text-over-underline">Eksisterende kunde</p>
+        <hr class="hr-underline" size="4">
         <table id="table-upper">
             <tr id="existing-email-td"><label for="input-existing"></label></tr>
             <div id="kunde-email-td"><td>
                 <input class="input-length-js" id="input-existing" type="text" name="existingEmail" placeholder="Indtast eksisterende e-mail"></td>
             </div>
-        </tr>
+            </tr>
         </table>
 
-        <p class="p-create-order">Kunde Information</p>
-        <hr class="hr-create-order" size="4">
+        <p class="p-text-over-underline">Kunde Information</p>
+        <hr class="hr-underline" size="4">
         <div style="overflow-x:auto">
-        <table class="table-class">
-            <tbody id="table-class-costumer-info">
-            <tr>
-            <tr>
-                <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
-                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
-                <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
-                <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="address">Adresse: </label></td>
-                <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
-                <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
-                <td class="table-class-td-class"><label for="email">E-mail: </label></td>
-                <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
-                <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
-                <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
-                <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
-                <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table-class">
+                <tbody id="table-class-costumer-info">
+                <tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="first-name">Fornavn: </label></td>
+                    <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="first-name" name="firstName" autofocus="autofocus" placeholder="Fornavn"></td>
+                    <td class="table-class-td-class"><label for="last-name">Efternavn: </label></td>
+                    <td class="table-class-td-class"><input type="text" class="input-length-js" id="last-name" name="lastName" placeholder="Efternavn"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="address">Adresse: </label></td>
+                    <td class="table-class-td-class-left"><input type="text" class="input-length-js" id="address" name="address" placeholder="Adresse"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="telephone">Telefon:</label></td> <!-- -->
+                    <td class="table-class-td-class-left"><input type="text" minlength="8" maxlength="8" id="telephone" name="telephone" placeholder="Telefonnr."></td>
+                    <td class="table-class-td-class"><label for="email">E-mail: </label></td>
+                    <td class="table-class-td-class"><input type="text" id="email" name="email" placeholder="E-mail"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="card-info">Kort information: </label></td>
+                    <td class="table-class-td-class-left"><input type="text" minlength="11" maxlength="11" id="card-info" name="cardInfo" placeholder="Kort informationer"></td>
+                    <td class="table-class-td-class"><label for="card-date">Udløbsdato: </label></td>
+                    <td class="table-class-td-class"><input type="date" id="card-date" name="expDate" placeholder="Udløbsdato"></td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="card-cvs">Kontrolcifre:</label></td>
+                    <td class="table-class-td-class-left"><input type="text" minlength="3" maxlength="3" id="card-cvs" name="cvs" placeholder="CVS"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-            <p class="p-create-order">Teknisk information</p>
-            <hr class="hr-create-order" size="4">
+        <p class="p-text-over-underline">Teknisk information</p>
+        <hr class="hr-underline" size="4">
         <div style="overflow:auto">
-        <table class="table-class">
-            <tr>
-                <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
-                <td class="table-class-td-class"><input type="text" class="input-length-js" id="pick-up" name="pickup"></td> <!--todo vælge default pickup og dropoff -->
-                <td class="table-class-td-class"><label for="drop-off">Dropoff:</label></td>
-                <td class="table-class-td-class-fucker"><input type="text" class="input-length-js" id="drop-off" name="dropoff"></td>
-            </tr>
-            <tr>
-                <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
-                <td class="table-class-td-class"><input type="date" class="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
-                <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
-                <td class="table-class-td-class-fucker"><input type="date" class="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
-            </tr>
-        </table>
+            <table class="table-class">
+                <tr>
+                    <td class="table-class-td-class"><label for="pick-up">Pickup:</label></td>
+                    <td id="pick-up">
+                        <datalist id="pick-up-datalist">
+                            <option th:each="place : ${places}" th:text="${place}"></option>
+                        </datalist>
+                        <input th:value="${place}" type="text" list="pick-up-datalist" name="pickup" id="pick-up-input"/>
+                    </td>
+                    <td id="drop-off">
+                        <datalist id="drop-off-datalist">
+                            <option th:each="place : ${places}" th:text="${place}"></option>
+                        </datalist>
+                        <input th:value="${place}" type="text" list="drop-off-datalist" name="dropoff" id="drop-off-input"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-class-td-class"><label for="start-date">Startdato: </label></td>
+                    <td class="table-class-td-class-"><input class="table-class-input date" type="date" id="start-date" name="startDate" placeholder="dd-MM-yyyy"></td>
+                    <td class="table-class-td-class"><label for="end-date">Slutdato:</label></td>
+                    <td class="table-class-td-class-fucker"><input class="table-class-input date" type="date" id="end-date" name="endDate" placeholder="dd-MM-yyyy"></td>
+                </tr>
+            </table>
         </div>
         <div class="drop-down-motorhomes">
             <label for="motorhome-id"></label>
             <select class="form-control" id="motorhome-id" name="motorhomeId">
-               <option>Motorhome types</option>
+                <option>Motorhome types</option>
                 <option th:each="motorhome : ${motorhomes}"
                         th:text="${motorhome.sizeName} + ' ' + ${motorhome.brandName}"
-                        th:value="${motorhome.id}"></option>
+                        th:id="${motorhome.id}"
+                        th:value="${motorhome.id}">
+                </option>
             </select>
         </div>
         <div> <button class="btn"type="submit" form="create-customer-form">OPRET ORDRE</button></div>
     </form>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

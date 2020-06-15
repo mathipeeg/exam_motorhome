@@ -167,7 +167,7 @@ alter table motorhome
 	add img varchar(100) not null;
 
 UPDATE motorhome SET img='../static/img/motorhome-1.jpg' where size_id=1;
-UPDATE motorhome SET img='../static/img/motorhome-2.jpg' where size_id=2;
+UPDATE motorhome SET img='../static/img/motorhome-2.png' where size_id=2;
 UPDATE motorhome SET img='../static/img/motorhome-3.jpg' where size_id=3;
 
 create unique index customer_email_uindex
@@ -175,3 +175,22 @@ create unique index customer_email_uindex
 
 create unique index staff_email_uindex
 	on staff (email);
+
+alter table motorhome
+	add amount int not null;
+
+UPDATE motorhome SET motorhome.amount=3;
+
+create table booked_motorhomes
+(
+	id int auto_increment,
+	motorhome_id int not null,
+	start_date date not null,
+	end_date date not null,
+	constraint booked_motorhomes_pk
+		primary key (id)
+);
+
+alter table booked_motorhomes
+	add constraint booked_motorhomes_motorhome_fk
+		foreign key (motorhome_id) references motorhome (id);

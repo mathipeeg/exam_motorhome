@@ -21,7 +21,6 @@ public class UserRepository {
 
             if(rs.next()) {
                 password = rs.getString("password");
-
             }
             if (password != null) {
                 if (BCrypt.checkpw(loginPassword, password)) {
@@ -57,7 +56,7 @@ public class UserRepository {
                 return staff;
             }
         } catch(SQLException e){
-            if(e instanceof SQLIntegrityConstraintViolationException){ //Undersøg lige den her exception
+            if(e instanceof SQLIntegrityConstraintViolationException){
                 throw new IllegalArgumentException("Email or password isn't correct.");
             }
         }

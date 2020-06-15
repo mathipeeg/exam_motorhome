@@ -3,12 +3,9 @@ package com.example.demo.Service;
 import com.example.demo.Model.Staff;
 import com.example.demo.Repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.ArrayList;
 
 @Service

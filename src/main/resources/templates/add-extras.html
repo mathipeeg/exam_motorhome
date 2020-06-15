@@ -15,7 +15,6 @@
         }
         window.location.href = "http://localhost:8080/order-submitted";
     }
-
     function addExtras(id) {
         let xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/addExtra?extraId="+id, true);
@@ -24,29 +23,17 @@
 </script>
 <body>
 <div th:replace="fragments/header :: header"></div>
-    <div class="container">
-    <table>
+    <div class="container-add-extras">
+        <p class="p-text-over-underline">Tilføjelser til ordre</p>
+        <hr class="hr-underline" size="4">
+    <table class="table-class">
         <tr th:each="extra : ${extras}">
             <td><input type="checkbox" id="extras" name="extras" th:id="check" th:value="${extra.id}">
-            <label for="extras" th:text="${extra.description}"></label></td>
+                <label for="extras" th:text="${extra.description}"></label></td>
         </tr>
-
     </table>
-<!--    <div th:each="extra : ${extras}">-->
-<!--        <label class="label-checkbox" th:text="${extra.description}">-->
-<!--            <input type="checkbox" class="checkmark" th:id="check" th:value="${extra.id}">-->
-<!--            <span class="checkmark"></span>-->
-<!--        </label>-->
-<!--    </div>-->
-        <button onclick="getExtras()" id="add-extras">Add extras</button>
+        <button class="btn" onclick="getExtras()" id="add-extras">Add extras</button>
     </div>
-    <footer>
-        <div class="footer">
-            <p><b>Nordic Rental Motorhomes</b> <br>
-                Københavnsvej 334, 2600 Glostrup
-                <br> Telefon: 23 65 78 45 </br>
-                <a style="text-decoration: none" href="mailto:info@nordicrental.dk" class="mail">mail: info@nordicrental.dk</a></p>
-        </div>
-    </footer>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

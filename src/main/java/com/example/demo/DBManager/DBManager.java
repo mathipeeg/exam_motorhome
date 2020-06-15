@@ -1,11 +1,7 @@
 package com.example.demo.DBManager;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.Properties;
 
 public class DBManager //Klasse til at repræsentere DBManager service

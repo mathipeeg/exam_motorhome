@@ -9,20 +9,25 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class OrderController {
-    OrderService orderService;
-    LoginService loginService;
-    FleetService fleetService;
-    UserService userService;
+    OrderService orderService = new OrderService();
+    LoginService loginService = new LoginService();
+    FleetService fleetService = new FleetService();
+    UserService userService = new UserService();
 
     @GetMapping("/create-order")
     public String createOrder(HttpServletRequest request, Model model) {
+        fleetService.checkExpiredBookings();
+        String[] places = {"NRM HQ Københavnsvej 334, 2600 Glostrup", "Kaastrup Lufthavn", "Aarhus Lufthavn"};
+        model.addAttribute("places", places);
         model.addAttribute("motorhomes", fleetService.getAllMotorhomes());
         model.addAttribute("customers", userService.getAllCustomers());
+        model.addAttribute("bookedHomes", fleetService.getAllBookedMotorhomes());
         return loginService.checkCurrentUser(request, "create-order");
     }
 
     @PostMapping("/submit-order")
     public String submitOrder(@ModelAttribute CustomerOrder customerOrder) {
+        fleetService.submitBookedHome(customerOrder);
         orderService.submitOrder(customerOrder);
         return "redirect:/add-extras";
     }

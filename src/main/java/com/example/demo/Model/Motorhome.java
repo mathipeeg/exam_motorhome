@@ -8,29 +8,35 @@ public class Motorhome {
     private int brandId;
     private int sizeId;
     private String imgPath;
+    private int amount;
     private String brandName;
     private String sizeName;
     private int sizePrice;
 
-    public Motorhome(int id, int brandId, int sizeId) {
+    public Motorhome(int id, int brandId, int sizeId, String imgPath, int amount) {
         this.id = id;
         this.brandId = brandId;
         this.sizeId = sizeId;
+        this.imgPath = imgPath;
+        this.amount = amount;
     }
 
-    public Motorhome(int id, int brandId, int sizeId, String brandName, String sizeName) {
+    public Motorhome(int id, int brandId, int sizeId, String imgPath, int amount, String brandName, String sizeName) {
         this.id = id;
         this.brandId = brandId;
         this.sizeId = sizeId;
+        this.imgPath = imgPath;
+        this.amount = amount;
         this.brandName = brandName;
         this.sizeName = sizeName;
     }
 
-    public Motorhome(int id, int brandId, int sizeId, String brandName, String sizeName, int sizePrice)
-    {
+    public Motorhome(int id, int brandId, int sizeId, String imgPath, int amount, String brandName, String sizeName, int sizePrice) {
         this.id = id;
         this.brandId = brandId;
         this.sizeId = sizeId;
+        this.imgPath = imgPath;
+        this.amount = amount;
         this.brandName = brandName;
         this.sizeName = sizeName;
         this.sizePrice = sizePrice;
@@ -105,5 +111,13 @@ public class Motorhome {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
