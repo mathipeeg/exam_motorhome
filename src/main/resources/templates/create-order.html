@@ -54,6 +54,7 @@
             /*]]>*/
         })
     }
+    
     function setValues(customer, form){
         form["first-name"].value = customer.firstName;
         form["last-name"].value = customer.lastName;
@@ -64,6 +65,7 @@
         form["card-date"].value = customer.expDate;
         form["card-cvs"].value = customer.cvs;
     }
+
     function setBackground(array, colour) {
         for (let i = 0; i < array.length; i++) {
             setBg(document.getElementById(array[i]), colour);
